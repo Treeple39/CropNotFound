@@ -102,3 +102,24 @@ InitTestScene*.unity*
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 忽略第三方插件包和对应的 .meta
+/Assets/Camera Filter Pack/
+/Assets/Camera Filter Pack.meta
+
+/Assets/Spine/
+/Assets/Spine Examples/
+/Assets/Spine Examples.meta
+/Assets/Spine.meta
+
+/Assets/DOTween/
+/Assets/DOTween.meta
+
+/Assets/AmplifyShaderEditor/
+/Assets/AmplifyShaderEditor.meta
+
+/Assets/Plugins/
+/Assets/Plugins.meta
+
+/Assets/com.coffee.ui-particle/
+/Assets/com.coffee.ui-particle.meta
