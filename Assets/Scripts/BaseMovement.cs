@@ -8,6 +8,14 @@ public class BaseMovement : MonoBehaviour
     protected float _moveSpeed = 5f;  // 默认移动速度，子类可以修改
     public bool canMove = true;
     
+    // 移动状态变量
+    protected Vector3 targetPosition;
+    protected Vector3 moveDirection;
+    protected float moveDuration;
+    protected float moveTimer;
+    protected bool isMoving = false;
+    protected Vector3 startPosition;
+    
     // 移动速度属性，允许子类重写
     public virtual float moveSpeed
     {
@@ -15,16 +23,38 @@ public class BaseMovement : MonoBehaviour
         protected set { _moveSpeed = value; }
     }
     
+    // 是否正在移动的属性
+    public bool IsMoving
+    {
+        get { return isMoving; }
+    }
+    
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        // 在Update中执行平滑移动
+        if (isMoving)
+        {
+            moveTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(moveTimer / moveDuration);
+            
+            // 使用Lerp进行插值平滑移动
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+            
+            // 检查是否完成移动
+            if (t >= 1.0f)
+            {
+                // 确保位置准确
+                transform.position = targetPosition;
+                isMoving = false;
+            }
+        }
     }
     
     public virtual void Move(Vector3 direction, float moveTime)
@@ -32,39 +62,27 @@ public class BaseMovement : MonoBehaviour
         if (!canMove) return;
         
         // 使用移动时间而不是距离
-        // 如果moveTime为0，则立即移动；否则使用协程在指定时间内平滑移动
+        moveDirection = direction.normalized;
+        moveDuration = moveTime;
+        
+        // 如果moveTime为0，则立即移动；否则开始平滑移动
         if (moveTime <= 0)
         {
             // 立即移动
-            Vector3 movement = direction.normalized * moveSpeed;
+            Vector3 movement = moveDirection * moveSpeed;
             transform.position += movement;
         }
         else
         {
-            // 开启协程进行平滑移动
-            StartCoroutine(SmoothMove(direction, moveTime));
+            // 设置移动参数
+            startPosition = transform.position;
+            targetPosition = startPosition + moveDirection * moveSpeed * moveTime;
+            moveTimer = 0f;
+            isMoving = true;
         }
     }
     
-    // 平滑移动协程
-    protected virtual IEnumerator SmoothMove(Vector3 direction, float moveTime)
-    {
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = startPosition + direction.normalized * moveSpeed * moveTime;
-        float elapsedTime = 0;
-        
-        while (elapsedTime < moveTime)
-        {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        
-        // 确保最终位置准确
-        transform.position = targetPosition;
-    }
-    
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         // 检查碰撞的物体是否可移动
         if (!collision.gameObject.GetComponent<BaseMovement>())
