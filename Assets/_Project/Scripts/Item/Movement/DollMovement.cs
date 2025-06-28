@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DollMovement : BaseMovement
 {
@@ -18,6 +20,8 @@ public class DollMovement : BaseMovement
     private bool isWaiting = false; // 是否在等待中
     private bool hasReachedTarget = false; // 是否已经到达目标点
 
+    private float facingDir = 1;
+    private bool facingRight = true;
     #region 状态机
     public Enemy enemy;
     private bool isInitialized = false;
@@ -70,7 +74,8 @@ public class DollMovement : BaseMovement
     protected override void Update()
     {
         base.Update();
-        
+       // FlipController();
+
         // 如果正在等待
         if (isWaiting)
         {
@@ -123,4 +128,24 @@ public class DollMovement : BaseMovement
         // 使用新的单参数Move方法实现连续移动
         Move(direction);
     }
+
+    public void Flip()
+    {
+        facingDir = facingDir * -1;
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
+    }
+    public void FlipController()
+    {
+        if (enemy.rb.velocity.x > 0 &&!facingRight)
+        {
+            Flip();
+        }
+        else if (enemy.rb.velocity.x < 0&&facingRight)
+        {
+            Flip();
+   
+        }
+    }
+
 }

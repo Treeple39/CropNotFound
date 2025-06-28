@@ -14,11 +14,22 @@ public class BottleMovement : BaseMovement
     private float currentStayTime;                        // 当前停留时间
     private Vector3 startPosition;                        // 初始位置
     private Collider bottleCollider;                      // 瓶子的碰撞器
-    
+
+    #region 状态机
+    public Enemy enemy;
+    private bool isInitialized = false;
+    #endregion
     protected override void Start()
     {
         base.Start();
-        
+        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("缺少Enemy组件!", gameObject);
+            enabled = false;
+            return;
+        }
+
         // 保存初始位置
         startPosition = transform.position;
         
@@ -32,26 +43,48 @@ public class BottleMovement : BaseMovement
         // 确保障碍物层包含Default层
         obstacleLayer = LayerMask.GetMask("Default");
         Debug.Log($"瓶子将避开Default层的所有物体，LayerMask值: {obstacleLayer}");
-        
+        StartCoroutine(DelayedInit());
         // 设置初始停留时间
         SetNewStayTime();
     }
-    
+    private IEnumerator DelayedInit()
+    {
+        yield return null;
+
+        if (enemy.idleState == null || enemy.fleeState == null)
+        {
+            Debug.LogError("Enemy状态未初始化!");
+            yield break;
+        }
+        isInitialized = true;
+        enemy.stateMachine.ChangeState(enemy.idleState);
+    }
+
     protected override void Update()
     {
         base.Update();
         
         // 更新停留计时器
         stayTimer += Time.deltaTime;
-        
+         
         // 如果停留时间结束，进行传送
         if (stayTimer >= currentStayTime)
         {
-            TeleportToRandomPosition();
-            SetNewStayTime();
+            enemy.stateMachine.ChangeState(enemy.shineState);
+            StartCoroutine(ChangeStateWithDelay());
+            
         }
     }
-    
+    private IEnumerator ChangeStateWithDelay()
+    {
+        // 等待0.5秒
+        yield return new WaitForSeconds(0.5f);
+
+        // 切换状态
+        enemy.stateMachine.ChangeState(enemy.idleState);
+        TeleportToRandomPosition();
+        SetNewStayTime();
+    }
     // 设置新的停留时间
     private void SetNewStayTime()
     {
