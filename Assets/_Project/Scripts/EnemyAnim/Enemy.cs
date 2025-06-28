@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         movement = GetComponent<BaseMovement>();
 
         idleState = new EnemyIdleState(stateMachine, this, "Idle");
-        dashState = new EnemyDashState(stateMachine, this, "dash");
+        dashState = new EnemyDashState(stateMachine, this, "Dash");
         fleeState = new EnemyFleeState(stateMachine, this, "Flee");
         dieState = new EnemyDieState(stateMachine, this, "Die");
         shineState = new EnemyShineState(stateMachine, this, "Shine");

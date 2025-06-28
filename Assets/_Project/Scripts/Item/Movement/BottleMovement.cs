@@ -8,13 +8,11 @@ public class BottleMovement : BaseMovement
     [SerializeField] private float maxStayTime = 7f;      // 最大停留时间（秒）
     [SerializeField] private float teleportRadius = 10f;  // 传送半径范围
     [SerializeField] private int maxTeleportAttempts = 10; // 最大传送尝试次数
-    [SerializeField] private float minDistance = 0.5f;    // 与其他物体的最小距离
+    [SerializeField] private LayerMask obstacleLayer = 1; // 障碍物层，设为Default层（值为1，对应第0层）
     
     private float stayTimer;                              // 停留计时器
     private float currentStayTime;                        // 当前停留时间
-    private Vector3 bottleInitialPosition;                // 初始位置
-    private bool isTeleporting = false;                   // 是否正在传送中
-    private bool hasInitialTeleported = false;            // 是否已经进行了初始传送
+    private Collider bottleCollider;                      // 瓶子的碰撞器
 
     #region 状态机
     public Enemy enemy;
@@ -32,14 +30,18 @@ public class BottleMovement : BaseMovement
         }
 
         // 保存初始位置
-        bottleInitialPosition = transform.position;
+        startPosition = transform.position;
         
-        // 确保ItemGenerator已初始化
-        if (ItemGenerator.Instance == null)
+        // 获取碰撞器
+        bottleCollider = GetComponent<Collider>();
+        if (bottleCollider == null)
         {
-            Debug.LogWarning("ItemGenerator未初始化，位置检测可能无法正常工作");
+            Debug.LogWarning("瓶子没有碰撞器组件，无法检测重叠");
         }
         
+        // 确保障碍物层包含Default层
+        obstacleLayer = LayerMask.GetMask("Default");
+        Debug.Log($"瓶子将避开Default层的所有物体，LayerMask值: {obstacleLayer}");
         StartCoroutine(DelayedInit());
         // 设置初始停留时间
         SetNewStayTime();
@@ -61,57 +63,33 @@ public class BottleMovement : BaseMovement
     {
         base.Update();
         
-        // 如果正在传送中，不进行计时
-        if (isTeleporting)
-            return;
-            
         // 更新停留计时器
         stayTimer += Time.deltaTime;
          
         // 如果停留时间结束，进行传送
-        if (stayTimer >= currentStayTime && !isTeleporting && hasInitialTeleported)
+        if (stayTimer >= currentStayTime)
         {
-            isTeleporting = true;
             enemy.stateMachine.ChangeState(enemy.shineState);
             StartCoroutine(ChangeStateWithDelay());
-        }
-        
-        // 如果还没有进行过初始传送，执行初始传送
-        // 这样可以确保瓶子在游戏开始时不立即传送
-        if (!hasInitialTeleported && isInitialized)
-        {
-            hasInitialTeleported = true;
-            Debug.Log("瓶子初始化完成，开始第一次计时");
+            
         }
     }
-    
     private IEnumerator ChangeStateWithDelay()
     {
-        Debug.Log("瓶子开始闪烁准备传送");
-        
         // 等待0.5秒
         yield return new WaitForSeconds(0.5f);
 
         // 切换状态
         enemy.stateMachine.ChangeState(enemy.idleState);
         TeleportToRandomPosition();
-        
-        // 传送后设置新的停留时间和重置传送状态
         SetNewStayTime();
-        
-        // 添加短暂延迟，确保不会立即触发下一次传送
-        yield return new WaitForSeconds(0.2f);
-        
-        // 传送完成，重置传送标志
-        isTeleporting = false;
     }
-    
     // 设置新的停留时间
     private void SetNewStayTime()
     {
         stayTimer = 0f;
         currentStayTime = Random.Range(minStayTime, maxStayTime);
-        Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒，当前位置: {transform.position}");
+        Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒");
     }
     
     // 传送到随机位置
@@ -119,13 +97,13 @@ public class BottleMovement : BaseMovement
     {
         // 持续尝试找到一个没有重叠的位置
         int attempts = 0;
-        while (attempts < maxTeleportAttempts)
+        while (true)
         {
             attempts++;
             
             // 生成一个在圆形区域内的随机点（在XY平面上）
             Vector2 randomOffset = Random.insideUnitCircle * teleportRadius;
-            Vector3 randomPosition = bottleInitialPosition + new Vector3(randomOffset.x, randomOffset.y, 0);
+            Vector3 randomPosition = startPosition + new Vector3(randomOffset.x, randomOffset.y, 0);
             
             // 检查新位置是否有重叠
             if (!IsOverlapping(randomPosition))
@@ -136,26 +114,34 @@ public class BottleMovement : BaseMovement
                 return;
             }
         }
-        
-        Debug.LogWarning($"瓶子尝试{maxTeleportAttempts}次后未能找到有效位置");
     }
     
     // 检查指定位置是否与其他物体重叠
     private bool IsOverlapping(Vector3 position)
     {
-        // 如果ItemGenerator未初始化，直接返回false
-        if (ItemGenerator.Instance == null)
-            return false;
+        if (bottleCollider == null) return false;
         
-        // 遍历所有已生成的物体Transform
-        foreach (Transform otherTransform in ItemGenerator.Instance.spawnedTransforms)
+        // 保存原始位置
+        Vector3 originalPosition = transform.position;
+        
+        // 临时移动到新位置进行检查
+        transform.position = position;
+        
+        // 检测是否与Default层的物体重叠
+        Collider[] colliders = Physics.OverlapBox(
+            bottleCollider.bounds.center,
+            bottleCollider.bounds.extents,
+            transform.rotation,
+            obstacleLayer
+        );
+        
+        // 恢复原位置
+        transform.position = originalPosition;
+        
+        // 如果检测到碰撞器（排除自身），则认为有重叠
+        foreach (var collider in colliders)
         {
-            // 跳过自己
-            if (otherTransform == transform)
-                continue;
-                
-            // 如果距离小于最小距离，则认为有重叠
-            if (Vector3.Distance(position, otherTransform.position) < minDistance)
+            if (collider != bottleCollider)
             {
                 return true;
             }
@@ -169,9 +155,5 @@ public class BottleMovement : BaseMovement
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, teleportRadius);
-        
-        // 额外显示最小距离
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, minDistance);
     }
 }
