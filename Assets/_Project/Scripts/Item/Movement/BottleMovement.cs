@@ -13,6 +13,8 @@ public class BottleMovement : BaseMovement
     private float stayTimer;                              // 停留计时器
     private float currentStayTime;                        // 当前停留时间
     private Vector3 bottleInitialPosition;                // 初始位置
+    private bool isTeleporting = false;                   // 是否正在传送中
+    private bool hasInitialTeleported = false;            // 是否已经进行了初始传送
 
     #region 状态机
     public Enemy enemy;
@@ -59,33 +61,57 @@ public class BottleMovement : BaseMovement
     {
         base.Update();
         
+        // 如果正在传送中，不进行计时
+        if (isTeleporting)
+            return;
+            
         // 更新停留计时器
         stayTimer += Time.deltaTime;
          
         // 如果停留时间结束，进行传送
-        if (stayTimer >= currentStayTime)
+        if (stayTimer >= currentStayTime && !isTeleporting && hasInitialTeleported)
         {
+            isTeleporting = true;
             enemy.stateMachine.ChangeState(enemy.shineState);
             StartCoroutine(ChangeStateWithDelay());
-            
+        }
+        
+        // 如果还没有进行过初始传送，执行初始传送
+        // 这样可以确保瓶子在游戏开始时不立即传送
+        if (!hasInitialTeleported && isInitialized)
+        {
+            hasInitialTeleported = true;
+            Debug.Log("瓶子初始化完成，开始第一次计时");
         }
     }
+    
     private IEnumerator ChangeStateWithDelay()
     {
+        Debug.Log("瓶子开始闪烁准备传送");
+        
         // 等待0.5秒
         yield return new WaitForSeconds(0.5f);
 
         // 切换状态
         enemy.stateMachine.ChangeState(enemy.idleState);
         TeleportToRandomPosition();
+        
+        // 传送后设置新的停留时间和重置传送状态
         SetNewStayTime();
+        
+        // 添加短暂延迟，确保不会立即触发下一次传送
+        yield return new WaitForSeconds(0.2f);
+        
+        // 传送完成，重置传送标志
+        isTeleporting = false;
     }
+    
     // 设置新的停留时间
     private void SetNewStayTime()
     {
         stayTimer = 0f;
         currentStayTime = Random.Range(minStayTime, maxStayTime);
-        Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒");
+        Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒，当前位置: {transform.position}");
     }
     
     // 传送到随机位置
