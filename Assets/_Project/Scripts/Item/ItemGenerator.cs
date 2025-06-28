@@ -63,8 +63,8 @@ public class ItemGenerator : MonoBehaviour
     public List<Transform> spawnedTransforms = new List<Transform>();
     
     // 地图边界
-    public Vector3 mapMin = new Vector3(-20f, -20f, 0f);
-    public Vector3 mapMax = new Vector3(20f, 20f, 0f);
+    public Vector3 mapMin = new Vector3(-40f, -40f, 0f);
+    public Vector3 mapMax = new Vector3(30f, 15f, 0f);
 
     // 用于追踪可移动物体的数量
     private int movableItemCount = 0;
@@ -180,12 +180,13 @@ public class ItemGenerator : MonoBehaviour
         {
             // 随机生成位置
             float x = Random.Range(mapMin.x, mapMax.x);
-            float z = Random.Range(mapMin.z, mapMax.z);
-            Vector3 position = new Vector3(x, 0, z);
+            float y = Random.Range(mapMin.y, mapMax.y);
+            Vector3 position = new Vector3(x, y, 0);
 
             // 检查是否在TileMap上
             if (!IsPositionOnFloor(position))
             {
+                Debug.Log("位置不在TileMap上");
                 attempts++;
                 continue;
             }
@@ -359,8 +360,8 @@ public class ItemGenerator : MonoBehaviour
         {
             // 随机生成位置
             float x = Random.Range(mapMin.x, mapMax.x);
-            float z = Random.Range(mapMin.z, mapMax.z);
-            Vector3 position = new Vector3(x, 0, z);
+            float y = Random.Range(mapMin.y, mapMax.y);
+            Vector3 position = new Vector3(x, y, 0);
 
             // 检查是否在TileMap上
             if (!IsPositionOnFloor(position))
