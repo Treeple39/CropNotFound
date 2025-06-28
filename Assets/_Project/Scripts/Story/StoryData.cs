@@ -20,7 +20,8 @@ namespace CustomStorySystem
         public string Cha2Action;
         public float CoordinateX2;
         public string Cha2ImageSource;
-        // 更多字段...
+        public string InsertImage1Path;
+        public string InsertImage2Path;
         public string BackgroundImagePath;
         public string BackgroundAudioPath;
     }

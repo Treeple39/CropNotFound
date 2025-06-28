@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using CustomStorySystem; // 引用我们自己的命名空间
+using CustomStorySystem;
+using DG.Tweening; // 引用我们自己的命名空间
 
 public class StoryManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class StoryManager : MonoBehaviour
     public Text contentText;
     public GameObject dialoguePanel;
     public GameObject choicePanel;
+    public Image InsertImage1;
+    public Image InsertImage2;
     public Button[] choiceButtons;
 
     [Header("效果参数")]
@@ -27,8 +30,18 @@ public class StoryManager : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
 
+    public float scrollUnrollDuration = 1.0f;
+
     // 存储角色初始位置 (这个可以保留，以备将来需要复位功能)
     private Dictionary<Image, Vector2> originalPositions = new Dictionary<Image, Vector2>();
+    private Dictionary<Image, Vector2> originalImageSizes = new Dictionary<Image, Vector2>();
+
+    private bool waitingForClick = false;
+    private Image currentInsertImage = null;
+    private string nextImagePath = "";
+    private bool isImageShowing = false;
+    private bool waitingForSecondImage = false;
+    private bool isFirstImageShowing = false;
 
     void Start()
     {
@@ -43,6 +56,17 @@ public class StoryManager : MonoBehaviour
         // 保存初始位置
         if (character1Image != null) originalPositions[character1Image] = character1Image.rectTransform.anchoredPosition;
         if (character2Image != null) originalPositions[character2Image] = character2Image.rectTransform.anchoredPosition;
+
+        if (InsertImage1 != null)
+        {
+            originalImageSizes[InsertImage1] = InsertImage1.rectTransform.sizeDelta;
+            InsertImage1.gameObject.SetActive(false);
+        }
+        if (InsertImage2 != null)
+        {
+            originalImageSizes[InsertImage2] = InsertImage2.rectTransform.sizeDelta;
+            InsertImage2.gameObject.SetActive(false);
+        }
 
         // 【优化1】: 剧情开始时，立即隐藏所有元素，而不是等待淡出
         HideAllImmediately();
@@ -60,10 +84,24 @@ public class StoryManager : MonoBehaviour
             {
                 CompleteLine();
             }
+            else if (waitingForSecondImage)
+            {
+                // 点击后显示第二张图片
+                waitingForSecondImage = false;
+                if (!string.IsNullOrEmpty(currentLine.InsertImage2Path))
+                {
+                    ProcessInsertImage(InsertImage2, currentLine.InsertImage2Path, false);
+                }
+                else
+                {
+                    // 没有第二张图片了，继续剧情
+                    GoToNextLine();
+                }
+            }
             else
             {
                 // 确保没有正在执行的协程时才进入下一句
-                if (typingCoroutine == null)
+                if (typingCoroutine == null && !isFirstImageShowing)
                 {
                     GoToNextLine();
                 }
@@ -92,6 +130,17 @@ public class StoryManager : MonoBehaviour
         // 确保对话框显示，选项框隐藏
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
+        InsertImage1.gameObject.SetActive(false);
+        InsertImage2.gameObject.SetActive(false);
+
+        // 添加对话框淡入效果
+        if (!dialoguePanel.GetComponent<CanvasGroup>())
+        {
+            dialoguePanel.AddComponent<CanvasGroup>();
+        }
+        CanvasGroup dialogueCG = dialoguePanel.GetComponent<CanvasGroup>();
+        dialogueCG.alpha = 0;
+        dialogueCG.DOFade(1, fadeDuration);
 
         ProcessCharacterAction(character1Image, currentLine.Cha1Action, currentLine.CoordinateX1, currentLine.Cha1ImageSource);
         ProcessCharacterAction(character2Image, currentLine.Cha2Action, currentLine.CoordinateX2, currentLine.Cha2ImageSource);
@@ -99,6 +148,85 @@ public class StoryManager : MonoBehaviour
         speakerNameText.text = currentLine.ContentSpeaker;
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeLineCoroutine(currentLine.Content));
+
+        // 处理插入图片 - 先显示第一张(如果有)
+        if (!string.IsNullOrEmpty(currentLine.InsertImage1Path))
+        {
+            isFirstImageShowing = true;
+            ProcessInsertImage(InsertImage1, currentLine.InsertImage1Path, true);
+        }
+        else if (!string.IsNullOrEmpty(currentLine.InsertImage2Path))
+        {
+            // 如果没有第一张但有第二张，直接显示第二张
+            ProcessInsertImage(InsertImage2, currentLine.InsertImage2Path, false);
+        }
+    }
+    /// <summary>
+    /// 处理插入图片的显示/隐藏和卷轴效果
+    /// </summary>
+    /// <summary>
+    /// 处理插入图片的显示/隐藏和卷轴效果
+    /// </summary>
+    /// <param name="image">要处理的图片组件</param>
+    /// <param name="imagePath">图片资源路径</param>
+    /// <param name="isFirstImage">是否是第一张图片(需要等待点击显示第二张)</param>
+    void ProcessInsertImage(Image image, string imagePath, bool isFirstImage)
+    {
+        if (image == null) return;
+
+        // 如果提供了图片路径
+        if (!string.IsNullOrEmpty(imagePath))
+        {
+            // 加载图片资源
+            Sprite newSprite = Resources.Load<Sprite>(imagePath);
+            if (newSprite != null)
+            {
+                image.sprite = newSprite;
+
+                // 激活图片并设置初始大小为0
+                image.gameObject.SetActive(true);
+                image.rectTransform.sizeDelta = new Vector2(0, originalImageSizes[image].y);
+
+                // 使用DOTween实现卷轴展开效果
+                image.rectTransform.DOSizeDelta(originalImageSizes[image], scrollUnrollDuration)
+                    .SetEase(Ease.OutQuad);
+
+                // 同时添加淡入效果
+                image.color = new Color(1, 1, 1, 0);
+                image.DOFade(1, scrollUnrollDuration)
+                    .OnComplete(() =>
+                    {
+                        if (isFirstImage && !string.IsNullOrEmpty(currentLine.InsertImage2Path))
+                        {
+                            // 如果是第一张图片且有第二张图片，等待点击
+                            waitingForSecondImage = true;
+                        }
+                        else
+                        {
+                            // 否则重置状态
+                            isFirstImageShowing = false;
+                        }
+                    });
+            }
+            else
+            {
+                Debug.LogWarning($"无法加载图片资源: {imagePath}");
+                image.gameObject.SetActive(false);
+                isFirstImageShowing = false;
+            }
+        }
+        else
+        {
+            // 如果没有图片路径，隐藏图片（带淡出效果）
+            if (image.gameObject.activeSelf)
+            {
+                image.DOFade(0, fadeDuration).OnComplete(() =>
+                {
+                    image.gameObject.SetActive(false);
+                    isFirstImageShowing = false;
+                });
+            }
+        }
     }
 
     void ProcessCharacterAction(Image characterImage, string action, float xPos, string imageSource)
@@ -108,9 +236,9 @@ public class StoryManager : MonoBehaviour
         // 只有在提供了新的图片资源时才更新Sprite
         if (!string.IsNullOrEmpty(imageSource))
         {
-            characterImage.sprite = Resources.Load<Sprite>(imageSource);
+            characterImage.sprite = Resources.Load<Sprite>("Characters/" + imageSource);
         }
-
+        xPos *= 1.5f;
         switch (action)
         {
             case "AppearAt":
@@ -159,7 +287,7 @@ public class StoryManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         StartCoroutine(FadeImage(character1Image, 0f));
         StartCoroutine(FadeImage(character2Image, 0f));
-        
+
 
         choicePanel.SetActive(true);
 
