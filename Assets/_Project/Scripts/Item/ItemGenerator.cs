@@ -53,7 +53,7 @@ public class ItemGenerator : MonoBehaviour
     {
         // 从Resources文件夹加载预制体
         // 注意：预制体应该放在Resources文件夹下
-        prefabs = Resources.LoadAll<GameObject>("_Project/Prefabs");
+        prefabs = Resources.LoadAll<GameObject>("Prefabs");
         
         if (prefabs == null || prefabs.Length == 0)
         {
@@ -190,6 +190,21 @@ public class ItemGenerator : MonoBehaviour
                     Debug.LogWarning($"物体 {item.name} 没有BaseMovement组件");
                 }
                 
+                SpriteRenderer spriteRenderer = item.GetComponent<SpriteRenderer>();
+                int color = Random.Range(0, 3);
+                if (color == 0)
+                {
+                    spriteRenderer.color = Color.red;
+                }
+                else if (color == 1)
+                {
+                    spriteRenderer.color = Color.blue;
+                }
+                else if (color == 2)
+                {
+                    spriteRenderer.color = Color.green;
+                }
+
                 return true;
             }
             else

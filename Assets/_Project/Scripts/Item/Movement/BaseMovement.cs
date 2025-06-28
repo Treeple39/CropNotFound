@@ -109,7 +109,7 @@ public class BaseMovement : MonoBehaviour
     protected virtual void OnCollisionEnter(Collision collision)
     {
         // 检查碰撞的物体是否可移动
-        if (!collision.gameObject.GetComponent<BaseMovement>())
+        if ((!collision.gameObject.GetComponent<BaseMovement>().canMove) && collision.gameObject.tag == "Enemy")
         {
             // 将不可移动物体改为可移动物体
             MakeMovable(collision.gameObject);
