@@ -41,7 +41,7 @@ public class ItemGenerator : MonoBehaviour
     public SpawnProbability spawnProbability = new SpawnProbability();
 
     // 用于获取当前分数
-    private ScoreManager scoreManager;
+  //  private ScoreManager scoreManager;
     private float spawnTimer = 0f;
 
     // 物品类型枚举
@@ -86,8 +86,8 @@ public class ItemGenerator : MonoBehaviour
         LoadPrefabs();
         
         // 获取得分管理器
-        scoreManager = FindObjectOfType<ScoreManager>();
-        if (scoreManager == null)
+    //    scoreManager = FindObjectOfType<ScoreManager>();
+    //    if (scoreManager == null)
         {
             Debug.LogWarning("未找到ScoreManager，难度调整可能无法正常工作");
         }
@@ -378,7 +378,7 @@ public class ItemGenerator : MonoBehaviour
     // 更新难度等级
     private void UpdateDifficultyLevel()
     {
-        if (scoreManager != null)
+       /* if (scoreManager != null)
         {
             // 根据当前分数计算难度等级
             int score = scoreManager.GetScore();
@@ -389,7 +389,7 @@ public class ItemGenerator : MonoBehaviour
                 difficultyLevel = newDifficultyLevel;
                 Debug.Log($"难度等级更新为：{difficultyLevel}");
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
