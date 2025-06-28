@@ -15,6 +15,7 @@ public class SpineAnimationController : MonoBehaviour
 
     private Spine.AnimationState state;
     private Skeleton skeleton;
+    private string currentTrack0AnimationName;
 
     void Reset()
     {
@@ -46,10 +47,31 @@ public class SpineAnimationController : MonoBehaviour
         var current = state.GetCurrent(trackIndex)?.Animation.Name;
         if (current == animationName) return;
         var entry = state.SetAnimation(trackIndex, animationName, loop);
+
+        // 如果是在主轨道(轨道0)上播放，我们就记录下这个动画的名字
+        if (trackIndex == 0)
+        {
+            currentTrack0AnimationName = animationName;
+        }
         if (!loop && onComplete != null)
             entry.Complete += e => onComplete();
     }
+    /// <summary>
+    /// 获取主轨道(Track 0)上当前正在播放的动画名称。
+    /// </summary>
+    /// <returns>动画名称字符串</returns>
+    public string GetCurrentAnimationName(int trackIndex = 0)
+    {
+        // 方案一：直接返回我们自己记录的变量
+        if (trackIndex == 0)
+        {
+            return currentTrack0AnimationName;
+        }
 
+        // 方案二（更通用）：直接从Spine状态获取，以备将来查询其他轨道
+        var trackEntry = state.GetCurrent(trackIndex);
+        return trackEntry?.Animation.Name; // 使用空值传播操作符，如果trackEntry为null则返回null
+    }
     /// <summary>
     /// 简写：同 Play
     /// </summary>

@@ -6,7 +6,7 @@ public class FootstepPlayer : MonoBehaviour
 {
     public List<AudioClip> footsteps;
     [Header("基础步频（秒）")]
-    public float baseInterval = 0.4f;
+    public float baseInterval = 1f;
     [Header("步频抖动范围（±秒）")]
     public float intervalVariance = 0.1f;
 
