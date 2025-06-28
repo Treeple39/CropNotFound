@@ -442,6 +442,14 @@ PrefabInstance:
       value: MagicCircleTemplate
       objectReference: {fileID: 0}
     - target: {fileID: 8181221128210915071, guid: 007239652581447f29da4023fa6d87f6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 8181221128210915071, guid: 007239652581447f29da4023fa6d87f6, type: 3}
+      propertyPath: m_Color.a
+      value: 0.22745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 8181221128210915071, guid: 007239652581447f29da4023fa6d87f6, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 9d9e659694aa64dcb94495d9aea89996, type: 2}
@@ -697,6 +705,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3187671493977584540, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: pointLifeTime
+      value: 6.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3187671493977584540, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: maxTrailPoints
+      value: 272
+      objectReference: {fileID: 0}
     - target: {fileID: 3699553862837497362, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -741,6 +757,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5129840739595395112, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6970517029914217380, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -752,6 +772,30 @@ PrefabInstance:
     - target: {fileID: 7362129546080187521, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: maxSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: dashSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: baseThrust
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915022199747962519, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: rotationSpeed
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -788,7 +832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magicCirclePrefab: {fileID: 953260790}
-  spawnEffectPrefab: {fileID: 5641212801993493344, guid: 4cb0a27541900e846ab01a9c842f088d, type: 3}
+  spawnEffectPrefab: {fileID: 0}
   fadeDuration: 2
   sizeMultiplier: 0.03
 --- !u!4 &1895738605
