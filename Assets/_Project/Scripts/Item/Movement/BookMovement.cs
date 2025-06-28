@@ -12,7 +12,7 @@ public class BookMovement : BaseMovement
     [SerializeField] private Transform player;                // 玩家对象引用
 
     private float currentMoveTime;                            // 当前移动时间
-    private float moveTimer;                                  // 移动计时器
+    private float randomMoveTimer;                            // 随机移动计时器（重命名以避免与BaseMovement中的moveTimer冲突）
     private Vector3 randomDirection;                          // 随机移动方向
     private bool isFleeingFromPlayer = false;                 // 是否正在从玩家处逃离
 
@@ -45,10 +45,10 @@ public class BookMovement : BaseMovement
         CheckForPlayer();
         
         // 更新移动计时器
-        moveTimer += Time.deltaTime;
+        randomMoveTimer += Time.deltaTime;
         
         // 如果当前移动时间已到，选择新的随机方向
-        if (moveTimer >= currentMoveTime && !isFleeingFromPlayer)
+        if (randomMoveTimer >= currentMoveTime && !isFleeingFromPlayer)
         {
             ChooseNewRandomDirection();
         }
@@ -85,7 +85,7 @@ public class BookMovement : BaseMovement
     private void ChooseNewRandomDirection()
     {
         // 重置移动计时器
-        moveTimer = 0f;
+        randomMoveTimer = 0f;
         
         // 随机生成新的移动时间
         currentMoveTime = Random.Range(minMoveTime, maxMoveTime);

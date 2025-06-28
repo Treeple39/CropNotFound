@@ -9,7 +9,7 @@ public class ChairMovement : BaseMovement
     [SerializeField] private float runAwaySpeed = 3f;         // 逃跑速度
     [SerializeField] private Transform player;                // 玩家对象引用
     
-    private bool isRunningAway = false;                       // 是否正在逃跑
+    public bool isRunningAway = false;                       // 是否正在逃跑
     private float runAwayTimer = 0f;                          // 逃跑计时器
    
     #region 状态机
@@ -113,6 +113,7 @@ public class ChairMovement : BaseMovement
         isRunningAway = false;
         runAwayTimer = 0f;
         enemy.stateMachine.ChangeState(enemy.idleState);
+        StopMove();
 
         Debug.Log("椅子停止逃跑");
     }
