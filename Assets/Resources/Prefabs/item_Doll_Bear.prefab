@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9207089546236848635}
   - component: {fileID: 4538781110773885417}
   m_Layer: 0
-  m_Name: item_toy_bear
+  m_Name: item_Doll_Bear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
