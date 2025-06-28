@@ -17,7 +17,7 @@ namespace Assets._Project.Scripts.EnemyAnim
             base.Enter();
             //DieAnim dieAnim = new DieAnim();
             //dieAnim.StarExplode(enemy.transform.position);
-            //Delete();
+            Delete();
 
         }
         private IEnumerator Delete()

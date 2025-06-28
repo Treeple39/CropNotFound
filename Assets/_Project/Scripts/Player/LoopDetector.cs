@@ -154,6 +154,8 @@ public class LoopDetector : MonoBehaviour
                 st.renderer.material.color = enemyHighlightColor;
                 // 标记死掉
                 st.enemyComponent.dead = true;
+               
+
                 // 如果你有 Kill() 方法，也可以改成：
                 // st.enemyComponent.Kill();
             }
