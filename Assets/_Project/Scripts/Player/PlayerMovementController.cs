@@ -24,15 +24,16 @@ public class PlayerMovementController : MonoBehaviour
     private bool isDashing;
     private float dashTimer;
     private float dashCooldownTimer;
-    
-    // 【修改】这是解决核心问题的关键：一个冲刺“请求”标志
+
     private bool dashRequested;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<PlayerInputController>();
-        // dashKey = inputController.dashKey; // 【修改】不再需要这行
+    }
+    void Start()
+    {
         previousPosition = rb.position;
     }
 
@@ -78,7 +79,7 @@ public class PlayerMovementController : MonoBehaviour
             isDashing = true;
             dashTimer = dashDuration;
             dashCooldownTimer = dashCooldown;
-            
+
             // 直接在冲刺开始时设置一次速度
             currentVelocity = (Vector2)transform.up * dashSpeed;
             rb.velocity = currentVelocity;
@@ -94,12 +95,12 @@ public class PlayerMovementController : MonoBehaviour
             if (dashTimer <= 0f)
             {
                 isDashing = false;
-                
+
                 // 【修改】冲刺结束后，重置 currentVelocity
                 // 这样 HandleMovement 会从当前实际速度（可能为0）开始计算，而不是从冲刺速度开始减速
                 // 如果希望保留冲刺后的惯性，可以设置为 rb.velocity
                 // 如果希望冲刺后立即停下并可控，可以设置为 Vector2.zero
-                currentVelocity = Vector2.zero; 
+                currentVelocity = Vector2.zero;
             }
             // 【修改】冲刺期间，速度已经在开始时设置好了，物理引擎会维持它。
             // 除非你想抵抗外力，否则不需要每一帧都设置。这里我们保持简单，只在开始时设置。
@@ -129,7 +130,7 @@ public class PlayerMovementController : MonoBehaviour
 
         rb.velocity = currentVelocity;
     }
-    
+
     public Vector2 GetVelocity()
     {
         return (rb.position - previousPosition) / Time.fixedDeltaTime;
