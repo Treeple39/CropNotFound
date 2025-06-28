@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UIMainMenu : MonoBehaviour
 {
-    [SerializeField] private string sceneName = "MainScene";
+    [SerializeField] private string sceneName = "Animation";
 
     public void ContinueGame()
     {
