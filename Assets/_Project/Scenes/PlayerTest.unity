@@ -300,6 +300,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 719077191643562117, guid: dbfc584d025754c14b5bf1e15cf125c9, type: 3}
+      propertyPath: bgmPlaylist.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 719077191643562117, guid: dbfc584d025754c14b5bf1e15cf125c9, type: 3}
+      propertyPath: bgmPlaylist.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4c4ba0102065547de9e031e0b29b3e96, type: 3}
     - target: {fileID: 2544710185950955091, guid: dbfc584d025754c14b5bf1e15cf125c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.67309535
