@@ -1,158 +1,114 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovementController : MonoBehaviour
+[RequireComponent(typeof(PlayerInputController))]
+public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-    public float maxVelocity = 10f;
-    public float acceleration = 5f;
-    public float deceleration = 8f;
+    [Header("直接移动参数")]
+    public float maxSpeed = 10f;
+    public float deadZoneRadius = 0.5f;
+    public float maxThrustRadius = 5f;
 
-    [Header("Dash Settings")]
-    public float dashSpeed = 15f;       // 冲刺速度
-    public float dashDuration = 0.2f;   // 冲刺持续时间
-    public float dashCooldown = 1.0f;   // 冲刺冷却时间
-    // public KeyCode dashKey; // 【修改】从 InputController 直接获取，不再需要此字段
+    [Header("冲刺参数")]
+    public float dashSpeed = 20f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 1.0f;
 
-    [Header("Effects")]
+    [Header("特效")]
     public GameObject dashEffectPrefab;
 
     private Rigidbody2D rb;
     private PlayerInputController inputController;
-    private Vector2 currentVelocity;
-    private Vector2 previousPosition;
 
-    // Dash 内部状态
     private bool isDashing;
     private float dashTimer;
     private float dashCooldownTimer;
-
-    private bool dashRequested;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<PlayerInputController>();
     }
-    void Start()
-    {
-        previousPosition = rb.position;
-    }
 
     void Update()
     {
-        // 1) 【修改】在 Update 中检测输入，并设置“请求”标志
-        // 如果已经有请求了，就不要再检测，防止一帧内多次请求（虽然不太可能）
-        if (!dashRequested)
-        {
-            // 【修改】直接从 inputController 读取按键，支持运行时更改
-            if (Input.GetKeyDown(inputController.dashKey))
-            {
-                dashRequested = true;
-            }
-        }
-
-        // 2) 冷却计时，用 Time.deltaTime，这部分逻辑是正确的
-        if (dashCooldownTimer > 0f)
-            dashCooldownTimer -= Time.deltaTime;
+        HandleTimersAndInput();
     }
 
     void FixedUpdate()
     {
-        HandleRotation();
-        HandleDash();      // 优先处理冲刺，因为它会覆盖移动
-        HandleMovement();  // 只有在不冲刺时才处理普通移动
-        previousPosition = rb.position;
-    }
-
-    private void HandleRotation()
-    {
-        float rot = -inputController.RotationInput
-                    * inputController.rotationSpeed
-                    * Time.fixedDeltaTime;
-        rb.MoveRotation(rb.rotation + rot);
-    }
-
-    private void HandleDash()
-    {
-        if (dashRequested && !isDashing && dashCooldownTimer <= 0f)
-        {
-            isDashing = true;
-            dashTimer = dashDuration;
-            dashCooldownTimer = dashCooldown;
-
-            Vector2 dashDirection = transform.up;
-            currentVelocity = dashDirection * dashSpeed;
-            rb.velocity = currentVelocity;
-
-            if (dashEffectPrefab != null)
-            {
-                // 1. 计算特效的位置 (只改变XY, Z使用预制体的值)
-                Vector3 effectPosition = new Vector3(
-                    transform.position.x,
-                    transform.position.y,
-                    dashEffectPrefab.transform.position.z
-                );
-                // 1. 获取期望的方向向量
-                Vector2 effectDirection = -dashDirection;
-
-                // 2. 使用 Atan2 将方向向量转换为世界角度（弧度），再转换为度
-                float worldAngle = Mathf.Atan2(effectDirection.y, effectDirection.x) * Mathf.Rad2Deg;
-
-                // 3. 根据你的预制体特性，应用映射公式来计算最终的X轴旋转值
-                float rotationX = -worldAngle;
-
-
-
-                // 5. 使用计算出的正确角度来创建最终的旋转
-                Quaternion finalRotation = Quaternion.Euler(rotationX, 0, 0);
-
-                // 3. 使用 Instantiate 创建特效
-                Instantiate(dashEffectPrefab, effectPosition, finalRotation);
-            }
-        }
-
-        dashRequested = false;
-
-        // 【修改】冲刺结束时不再需要手动停止特效，因为它会自己销毁
         if (isDashing)
         {
-            dashTimer -= Time.fixedDeltaTime;
-            if (dashTimer <= 0f)
-            {
-                isDashing = false;
-                currentVelocity = Vector2.zero;
-            }
-        }
-    }
-
-    private void HandleMovement()
-    {
-        // 如果正在冲刺，就跳过常规移动逻辑
-        if (isDashing)
-            return;
-
-        Vector2 forward = transform.up;
-        if (inputController.IsAccelerating)
-        {
-            Vector2 target = forward * moveSpeed;
-            currentVelocity = Vector2.Lerp(
-                currentVelocity, target, acceleration * Time.fixedDeltaTime);
-            currentVelocity = Vector2.ClampMagnitude(
-                currentVelocity, maxVelocity);
+            HandleDashingState();
         }
         else
         {
-            currentVelocity = Vector2.Lerp(
-                currentVelocity, Vector2.zero, deceleration * Time.fixedDeltaTime);
+            // ★★★★★【核心修改】★★★★★
+            // 只有在玩家按住鼠标左键时，才执行引导逻辑
+            if (inputController.IsMovementEngaged)
+            {
+                HandleInstantRotation();
+                HandleDirectMovement();
+            }
+            // 当松开鼠标时，我们不执行任何操作。
+            // Rigidbody2D的Linear Drag属性会自动让飞船平滑地减速停下。
+            // ★★★★★★★★★★★★★★★★★★★
         }
-
-        rb.velocity = currentVelocity;
     }
 
-    public Vector2 GetVelocity()
+    private void HandleDirectMovement()
     {
-        return (rb.position - previousPosition) / Time.fixedDeltaTime;
+        Vector2 directionVector = inputController.MouseWorldPosition - rb.position;
+        float distanceToMouse = directionVector.magnitude;
+        float speedRatio = 0f;
+
+        if (distanceToMouse > deadZoneRadius)
+        {
+            speedRatio = Mathf.InverseLerp(deadZoneRadius, maxThrustRadius, distanceToMouse);
+            speedRatio = Mathf.Clamp01(speedRatio);
+        }
+
+        float desiredSpeed = maxSpeed * speedRatio;
+        Vector2 newVelocity = directionVector.normalized * desiredSpeed;
+        rb.velocity = newVelocity;
+    }
+
+    private void HandleInstantRotation()
+    {
+        Vector2 direction = inputController.MouseWorldPosition - rb.position;
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+            rb.rotation = targetAngle;
+        }
+    }
+
+    // --- 冲刺和计时器逻辑 (保持不变) ---
+    private void HandleTimersAndInput()
+    {
+        if (dashCooldownTimer > 0f) { dashCooldownTimer -= Time.deltaTime; }
+        if (inputController.DashPressed && !isDashing && dashCooldownTimer <= 0f) { StartDash(); }
+    }
+
+    private void StartDash()
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
+        Vector2 dashDirection = transform.up;
+        rb.velocity = dashDirection * dashSpeed;
+        if (dashEffectPrefab != null)
+        {
+            Vector2 effectDirection = -dashDirection;
+            float angle = Mathf.Atan2(effectDirection.y, effectDirection.x) * Mathf.Rad2Deg;
+            Quaternion effectRotation = Quaternion.Euler(0, 0, angle + 90f);
+            Instantiate(dashEffectPrefab, transform.position, effectRotation);
+        }
+    }
+
+    private void HandleDashingState()
+    {
+        dashTimer -= Time.fixedDeltaTime;
+        if (dashTimer <= 0f) { isDashing = false; }
     }
 }
