@@ -16,7 +16,7 @@
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
     {
-      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样（教程）", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"健康游戏忠告","InsertImage2Path":"防癫痫 警告",
+      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样（教程）", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
       "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
