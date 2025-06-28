@@ -6,7 +6,8 @@ public class BaseMovement : MonoBehaviour
 {
     protected float _moveSpeed = 5f;  // 默认移动速度，子类可以修改
     public bool canMove = true;
-
+    
+    protected Rigidbody2D rb;
     
     // 移动状态变量
     protected Vector3 targetPosition;
@@ -33,34 +34,45 @@ public class BaseMovement : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
+        // 获取Rigidbody2D组件
+        rb = GetComponent<Rigidbody2D>();
+        
+        // 如果没有Rigidbody2D组件，添加一个
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+            // 默认设置，可根据需要调整
+            rb.gravityScale = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation; // 防止旋转
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        // 持续移动
-        if (isContinuousMoving && canMove)
-        {
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        }
-        
-        // 在Update中执行平滑移动
         if (isMoving)
         {
             moveTimer += Time.deltaTime;
-            float t = Mathf.Clamp01(moveTimer / moveDuration);
             
-            // 使用Lerp进行插值平滑移动
-            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-            
-            // 检查是否完成移动
-            if (t >= 1.0f)
+            // 检查是否达到指定的移动时间
+            if (moveTimer >= moveDuration)
             {
-                // 确保位置准确
-                transform.position = targetPosition;
+                // 移动时间结束，停止移动
+                if (rb != null)
+                {
+                    rb.velocity = Vector2.zero;
+                }
                 isMoving = false;
             }
+        }
+    }
+    
+    // 在FixedUpdate中处理物理移动
+    protected virtual void FixedUpdate()
+    {
+        if (isContinuousMoving && canMove && rb != null)
+        {
+            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
         }
     }
     
@@ -70,7 +82,13 @@ public class BaseMovement : MonoBehaviour
         
         moveDirection = direction.normalized;
         isContinuousMoving = true;
-        isMoving = false; // 停止任何正在进行的平滑移动
+        isMoving = false; // 停止任何正在进行的定时移动
+        
+        // 直接设置速度
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+        }
     }
     
     public virtual void Move(Vector3 direction, float moveTime)
@@ -80,23 +98,16 @@ public class BaseMovement : MonoBehaviour
         // 停止连续移动
         isContinuousMoving = false;
         
-        // 使用移动时间而不是距离
+        // 设置移动参数
         moveDirection = direction.normalized;
         moveDuration = moveTime;
+        moveTimer = 0f;
         
-        // 如果moveTime为0，则立即移动；否则开始平滑移动
-        if (moveTime <= 0)
+        // 直接设置速度，让物体按指定方向和速度移动
+        if (rb != null)
         {
-            Vector3 movement = moveDirection * moveSpeed;
-            transform.position += movement;
-        }
-        else
-        {
-            // 设置移动参数
-            startPosition = transform.position;
-            targetPosition = startPosition + moveDirection * moveSpeed * moveTime;
-            moveTimer = 0f;
-            isMoving = true;
+            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+            isMoving = true; // 启动计时器，在指定时间后停止移动
         }
     }
     
@@ -104,12 +115,19 @@ public class BaseMovement : MonoBehaviour
     {
         isContinuousMoving = false;
         isMoving = false;
+        
+        // 停止Rigidbody2D的运动
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
     
-    protected virtual void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        // 检查碰撞的物体是否可移动
-        if ((!collision.gameObject.GetComponent<BaseMovement>().canMove) && collision.gameObject.tag == "Enemy")
+        // 检查碰撞的物体是否存在BaseMovement组件
+        BaseMovement collidedMovement = collision.gameObject.GetComponent<BaseMovement>();
+        if (collidedMovement != null && !collidedMovement.canMove && collision.gameObject.tag == "Enemy")
         {
             // 将不可移动物体改为可移动物体
             MakeMovable(collision.gameObject);

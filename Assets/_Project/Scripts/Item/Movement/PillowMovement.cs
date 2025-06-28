@@ -16,7 +16,8 @@ public class PillowMovement : BaseMovement
     private bool isStunned = false;
     private Transform playerTransform;
 
-    private Vector3 lastMoveDirection;
+    // 将lastMoveDirection改为Vector2，更符合Rigidbody2D操作
+    private Vector2 lastMoveDirection;
 
     // 眩晕状态的计时器
     private float stunTimer = 0f;
@@ -71,8 +72,16 @@ public class PillowMovement : BaseMovement
             CheckPlayerProximity();
         }
         
-        // 记录当前移动方向用于反射计算
-        lastMoveDirection = moveDirection;
+        // 记录当前移动方向用于反射计算，转换为Vector2格式
+        if (rb != null && rb.velocity.sqrMagnitude > 0.01f)
+        {
+            lastMoveDirection = rb.velocity.normalized;
+        }
+        else
+        {
+            // 如果速度太小，则使用当前moveDirection
+            lastMoveDirection = new Vector2(moveDirection.x, moveDirection.y).normalized;
+        }
         
         // 调用基类Update执行移动
         base.Update();
@@ -82,17 +91,19 @@ public class PillowMovement : BaseMovement
     {
         if (isStunned || isPanicking) return;
         
-        // 生成一个随机方向
+        // 生成一个随机方向 (2D空间中的随机角度)
         float randomAngle = Random.Range(0f, 360f);
-        Vector3 newDirection = new Vector3(
+        Vector2 newDirection = new Vector2(
             Mathf.Cos(randomAngle * Mathf.Deg2Rad),
-            0,
             Mathf.Sin(randomAngle * Mathf.Deg2Rad)
-        );
+        ).normalized;
+        
+        // 使用Vector3格式传递给Move方法
+        Vector3 moveDir = new Vector3(newDirection.x, newDirection.y, 0);
         
         // 确保使用缓慢速度移动
         moveSpeed = slowSpeed;
-        Move(newDirection);
+        Move(moveDir);
     }
 
     private void CheckPlayerProximity()
@@ -100,7 +111,7 @@ public class PillowMovement : BaseMovement
         if (playerTransform == null || isPanicking) return;
         
         // 计算与玩家的距离
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         
         // 如果玩家在检测范围内，进入恐慌模式
         if (distanceToPlayer <= playerDetectionRadius)
@@ -114,34 +125,52 @@ public class PillowMovement : BaseMovement
         isPanicking = true;
         panicTimer = panicDuration;
         
-        // 计算远离玩家的方向
-        Vector3 directionAwayFromPlayer = (transform.position - playerTransform.position).normalized;
+        // 计算远离玩家的方向 (2D)
+        Vector2 directionAwayFromPlayer = ((Vector2)(transform.position - playerTransform.position)).normalized;
+        
+        // 转换为Vector3格式
+        Vector3 moveDir = new Vector3(directionAwayFromPlayer.x, directionAwayFromPlayer.y, 0);
         
         // 切换到高速状态
         moveSpeed = fastSpeed;
-        Move(directionAwayFromPlayer);
+        Move(moveDir);
     }
 
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter(collision);
+        base.OnCollisionEnter2D(collision);
         
         // 处理碰撞反射
         HandleReflection(collision);
     }
     
-    private void HandleReflection(Collision collision)
+    // 添加OnCollisionStay2D来处理持续碰撞情况
+    protected virtual void OnCollisionStay2D(Collision2D collision)
+    {
+        // 如果物体被卡住或粘连，尝试调整方向
+        if (rb != null && rb.velocity.magnitude < 0.2f && !isStunned)
+        {
+            // 获取当前碰撞点的法线
+            ContactPoint2D contact = collision.GetContact(0);
+            Vector2 normal = contact.normal;
+            
+            // 尝试沿着法线稍微偏移一下方向，避免粘连
+            Vector2 adjustedDirection = lastMoveDirection + normal * 0.5f;
+            Move(new Vector3(adjustedDirection.x, adjustedDirection.y, 0));
+        }
+    }
+    
+    private void HandleReflection(Collision2D collision)
     {
         // 获取碰撞点的法线
-        ContactPoint contact = collision.contacts[0];
-        Vector3 normal = contact.normal;
+        ContactPoint2D contact = collision.GetContact(0);
+        Vector2 normal = contact.normal;
         
         // 计算反射方向: R = V - 2(V·N)N，其中V是入射向量，N是法线向量
-        Vector3 reflectedDirection = Vector3.Reflect(lastMoveDirection, normal);
-        reflectedDirection.y = 0; // 保持在水平面内移动
+        Vector2 reflectedDirection = Vector2.Reflect(lastMoveDirection, normal);
         
         // 应用反射方向（保持当前速度状态）
-        Move(reflectedDirection);
+        Move(new Vector3(reflectedDirection.x, reflectedDirection.y, 0));
     }
     
     // 可视化检测范围（仅在编辑器中可见）
