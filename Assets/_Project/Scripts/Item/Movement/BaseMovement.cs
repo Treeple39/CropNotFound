@@ -118,7 +118,7 @@ public class BaseMovement : MonoBehaviour
     
     protected virtual void MakeMovable(GameObject gameObject)
     {
-        BaseMovement movement = gameObject.AddComponent<BaseMovement>();
+        BaseMovement movement = gameObject.GetComponent<BaseMovement>();
         movement.canMove = true;
         
         Debug.Log($"物体 {gameObject.name} 已变为可移动状态");

@@ -150,7 +150,6 @@ public class LoopDetector : MonoBehaviour
 
     float Cross(Vector2 u, Vector2 v) => u.x * v.y - u.y * v.x;
 
-    // 鞋带公式面积
     float CalculateArea(List<Vector3> pts)
     {
         int cnt = pts.Count;
