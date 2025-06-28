@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BookMovement : BaseMovement
 {
-    [SerializeField] private float minMoveTime = 0.5f;        // 最小移动时间
-    [SerializeField] private float maxMoveTime = 2.0f;        // 最大移动时间
-    [SerializeField] private float bookSpeed = 3.0f;          // 书本移动速度
+    [SerializeField] private float minMoveTime = 0.01f;        // 最小移动时间
+    [SerializeField] private float maxMoveTime = 0.3f;        // 最大移动时间
+    [SerializeField] private float minBookSpeed = 2.0f;          // 书本移动速度
+    [SerializeField] private float maxBookSpeed = 6.0f;          // 书本移动速度
     [SerializeField] private float playerDetectionRadius = 3f; // 检测玩家的半径
     [SerializeField] private Transform player;                // 玩家对象引用
 
@@ -20,7 +21,7 @@ public class BookMovement : BaseMovement
         base.Start();
         
         // 设置书本的移动速度
-        moveSpeed = bookSpeed;
+        moveSpeed = 3f;
         
         // 如果未指定玩家，尝试在场景中查找玩家对象
         if (player == null)
@@ -94,7 +95,7 @@ public class BookMovement : BaseMovement
             Random.Range(-1f, 1f),
             0 
         ).normalized;
-        
+        moveSpeed = Random.Range(minBookSpeed, maxBookSpeed);
         // 使用单参数Move函数持续移动
         Move(randomDirection);
         
@@ -105,7 +106,7 @@ public class BookMovement : BaseMovement
     private void FleeFromPlayer()
     {
         isFleeingFromPlayer = true;
-        
+        moveSpeed = maxBookSpeed;
         // 计算远离玩家的方向
         Vector3 awayFromPlayerDirection = (transform.position - player.position).normalized;
         
