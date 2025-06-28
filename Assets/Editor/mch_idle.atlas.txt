@@ -1,0 +1,11 @@
+mch_idle.png
+size:267,205
+filter:Linear,Linear
+mch_idle
+bounds:2,2,201,226
+offsets:7,6,215,238
+rotate:90
+mch_idle_eye
+bounds:230,112,91,35
+offsets:60,91,215,238
+rotate:90

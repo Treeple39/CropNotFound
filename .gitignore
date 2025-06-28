@@ -127,6 +127,13 @@ desktop.ini
 /Assets/ParticleEffectForUGUI-main/
 /Assets/ParticleEffectForUGUI-main.meta
 
+# 忽略 TextMesh Pro 主文件夹及所有子内容
 /Assets/TextMesh Pro/
-/Assets/TextMesh Pro Examples/
+/Assets/TextMesh Pro.meta
+
+# 忽略 Examples & Extras 这个子文件夹（含所有文件）  
+/Assets/TextMesh Pro/Examples & Extras/
+/Assets/TextMesh Pro/Examples & Extras.meta
+
+# 忽略 Package Registry 中的 TMP 包
 /Packages/com.unity.textmeshpro/
