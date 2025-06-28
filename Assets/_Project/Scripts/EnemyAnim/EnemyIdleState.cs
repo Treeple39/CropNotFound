@@ -12,7 +12,7 @@ public class EnemyIdleState : EnemyState
     {
         base.Enter();
     }
-
+      
     public override void Exit()
     {
         base.Exit();

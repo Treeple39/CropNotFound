@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DollMovement : BaseMovement
 {
     [SerializeField] private float movementDistance = 3f; // 移动距离
     [SerializeField] private float dollSpeed = 3f; // 娃娃移动速度
-    [SerializeField] private float waitTimeBetweenMoves = 0.5f; // 两次移动间的等待时间
+    [SerializeField] private float waitTimeBetweenMoves = 1f; // 两次移动间的等待时间
 
     public Vector3 targetPoint1; // 第一个目标点
     public Vector3 targetPoint2; // 第二个目标点
@@ -17,10 +18,22 @@ public class DollMovement : BaseMovement
     private bool isWaiting = false; // 是否在等待中
     private bool hasReachedTarget = false; // 是否已经到达目标点
 
+    #region 状态机
+    public Enemy enemy;
+    private bool isInitialized = false;
+    #endregion
+
     protected override void Start()
     {
         base.Start();
-        
+        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("缺少Enemy组件!", gameObject);
+            enabled = false;
+            return;
+        }
+
         // 设置娃娃的移动速度
         moveSpeed = dollSpeed;
         
@@ -37,9 +50,21 @@ public class DollMovement : BaseMovement
         
         // 设置初始目标点
         currentTarget = targetPoint1;
-        
+        StartCoroutine(DelayedInit());
         // 开始第一次移动
         MoveToCurrentTarget();
+    }
+    private IEnumerator DelayedInit()
+    {
+        yield return null;
+
+        if (enemy.idleState == null || enemy.fleeState == null)
+        {
+            Debug.LogError("Enemy状态未初始化!");
+            yield break;
+        }
+        isInitialized = true;
+        enemy.stateMachine.ChangeState(enemy.fleeState);
     }
 
     protected override void Update()
@@ -53,6 +78,7 @@ public class DollMovement : BaseMovement
             if (waitTimer >= waitTimeBetweenMoves)
             {
                 isWaiting = false;
+                enemy.stateMachine.ChangeState(enemy.fleeState);
                 MoveToCurrentTarget();
             }
             return;
@@ -67,7 +93,9 @@ public class DollMovement : BaseMovement
             
             // 强制设置位置到精确的目标点，避免误差累积
             transform.position = currentTarget;
-            
+
+            enemy.stateMachine.ChangeState(enemy.idleState);
+
             SwitchTarget();
             isWaiting = true;
             waitTimer = 0f;
@@ -84,8 +112,9 @@ public class DollMovement : BaseMovement
     // 向当前目标点移动
     private void MoveToCurrentTarget()
     {
-        if (!gameObject.activeSelf) return;
         
+        if (!gameObject.activeSelf) return;
+
         hasReachedTarget = false;
         
         // 计算移动方向
