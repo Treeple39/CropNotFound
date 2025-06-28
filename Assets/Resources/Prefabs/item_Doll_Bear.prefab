@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 5641131482611929962}
   - component: {fileID: 9207089546236848635}
   - component: {fileID: 4538781110773885417}
-  m_Layer: 0
+  - component: {fileID: 2581171682010963286}
+  m_Layer: 8
   m_Name: item_Doll_Bear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 8d43993175e19a4448a3816fb12c3a3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93c38bedbe3f2743960377fa4185193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
 --- !u!114 &5641131482611929962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,11 +116,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   moveDirection: {x: 0, y: 0, z: 0}
-  movementDistance: 3
+  moveDuration: 2
   dollSpeed: 3
   waitTimeBetweenMoves: 0.5
-  targetPoint1: {x: 0, y: 0, z: 0}
-  targetPoint2: {x: 0, y: 0, z: 0}
+  stunDuration: 2
   enemy: {fileID: 6256669589556292288}
 --- !u!95 &9207089546236848635
 Animator:
@@ -186,3 +187,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.76, y: 2.05}
   m_EdgeRadius: 0
+--- !u!50 &2581171682010963286
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6420355748046384940}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

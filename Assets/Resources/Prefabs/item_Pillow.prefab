@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4943495996917134494}
   - component: {fileID: 6355413546368832453}
   - component: {fileID: 2456299269890292916}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: item_Pillow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 05a68203915ce714bb0a0abeff8195b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
