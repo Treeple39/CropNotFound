@@ -157,7 +157,7 @@ public class LoopDetector : MonoBehaviour
                 // 标记死掉
                 st.enemyComponent.dead = true;
                 StarExplode(st.transform.position);
-                StartCoroutine(DelayedDestroy(st.transform, 0.5f));
+                StartCoroutine(DelayedDestroy(st.transform, 0.3f));
                 // 如果你有 Kill() 方法，也可以改成：
                 // st.enemyComponent.Kill();
             }

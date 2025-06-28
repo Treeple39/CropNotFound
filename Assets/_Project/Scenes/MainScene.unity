@@ -193,7 +193,6 @@ GameObject:
   - component: {fileID: 75956122}
   - component: {fileID: 75956124}
   - component: {fileID: 75956125}
-  - component: {fileID: 75956126}
   m_Layer: 0
   m_Name: Chair_Yellow
   m_TagString: Untagged
@@ -423,6 +422,18 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2855151776134062287, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: FlashX
+      value: 
+      objectReference: {fileID: 7657915137937597054, guid: 849607878a747764cbaaaf7c232cb04d, type: 3}
+    - target: {fileID: 2855151776134062287, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: enemiesToTrack.Array.data[0]
+      value: 
+      objectReference: {fileID: 428494416}
+    - target: {fileID: 2855151776134062287, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+      propertyPath: enemiesToTrack.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2937090904998230156, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -516,6 +527,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ee65c696c0d44bdcad06629d088d2f8, type: 3}
+--- !u!114 &428494416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6256669589556292288, guid: 76b1da07bc27e9f46bdd0fcea22036ab, type: 3}
+  m_PrefabInstance: {fileID: 8637669456444808740}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93c38bedbe3f2743960377fa4185193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5152,7 +5174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1775475957
 MonoBehaviour:
   m_ObjectHideFlags: 0
