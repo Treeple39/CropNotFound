@@ -36,28 +36,32 @@ public class LoopDetector : MonoBehaviour
     // 内部类：包装 Enemy 组件和渲染组件
     private class EnemyState
     {
-        public Enemy    enemyComponent; // 你的 Enemy 脚本
+        public Enemy enemyComponent; // 你的 Enemy 脚本
         public Transform transform;     // 用于位置检测
-        public Renderer  renderer;      // 用于高亮
-        public Color     originalColor;
+        public Renderer renderer;      // 用于高亮
+        public Color originalColor;
     }
 
+
     [Header("引用设置")]
-    public MagicCircleController magicCircleController;
+    // public MagicCircleController magicCircleController; // 【修改】不再需要魔法阵
+    [Tooltip("拖入一个挂载了PolygonDrawer脚本的空GameObject预制体")]
+    public GameObject polygonDrawerPrefab; // ★★★ 新增 ★★★
+
     [Tooltip("拖入所有要检测的 Enemy 脚本组件")]
     public List<Enemy> enemiesToTrack = new List<Enemy>();
     public Color enemyHighlightColor = Color.yellow;
 
     [Header("闭环检测")]
-    public int   minPointsForLoop = 10;
-    public float minLoopArea      = 1.0f;
+    public int minPointsForLoop = 10;
+    public float minLoopArea = 1.0f;
 
     [Header("显示参数")]
-    public float loopDisplayTime  = 20f;
+    public float loopDisplayTime = 20f;
 
-    private List<DetectedLoop> activeLoops    = new List<DetectedLoop>();
-    private List<Vector3>      tempLoopPoints = new List<Vector3>();
-    private List<EnemyState>   trackedEnemies = new List<EnemyState>();
+    private List<DetectedLoop> activeLoops = new List<DetectedLoop>();
+    private List<Vector3> tempLoopPoints = new List<Vector3>();
+    private List<EnemyState> trackedEnemies = new List<EnemyState>();
 
     void Start()
     {
@@ -67,11 +71,12 @@ public class LoopDetector : MonoBehaviour
             if (enemy == null) continue;
             var rend = enemy.GetComponent<Renderer>();
             if (rend == null) continue;
-            trackedEnemies.Add(new EnemyState {
+            trackedEnemies.Add(new EnemyState
+            {
                 enemyComponent = enemy,
-                transform      = enemy.transform,
-                renderer       = rend,
-                originalColor  = rend.material.color
+                transform = enemy.transform,
+                renderer = rend,
+                originalColor = rend.material.color
             });
         }
     }
@@ -100,13 +105,26 @@ public class LoopDetector : MonoBehaviour
 
                 if (CalculateArea(tempLoopPoints) >= minLoopArea)
                 {
-                    // 占位用的空 GameObject
-                    var go = new GameObject("Loop_Invisible");
-                    go.transform.SetParent(transform);
-                    activeLoops.Add(new DetectedLoop(go, tempLoopPoints, loopDisplayTime));
+                    // ★★★★★【核心修改】★★★★★
+                    // 1. 检查预制体是否存在
+                    if (polygonDrawerPrefab == null)
+                    {
+                        Debug.LogError("请在LoopDetector的Inspector中指定PolygonDrawer预制体！");
+                        return false;
+                    }
 
-                    if (magicCircleController != null)
-                        magicCircleController.SpawnMagicCircle(tempLoopPoints, loopDisplayTime);
+                    // 2. 实例化预制体
+                    GameObject polygonObject = Instantiate(polygonDrawerPrefab, Vector3.zero, Quaternion.identity);
+
+                    // 3. 获取其上的PolygonDrawer组件
+                    PolygonDrawer drawer = polygonObject.GetComponent<PolygonDrawer>();
+
+                    // 4. 调用绘制方法
+                    if (drawer != null)
+                    {
+                        drawer.DrawAndAnimatePulse(tempLoopPoints);
+                    }
+                    // ★★★★★★★★★★★★★★★★★★★
 
                     // 高亮并"杀死"被圈住的敌人
                     NotifyAndKillEnemiesInside(tempLoopPoints);
@@ -119,7 +137,6 @@ public class LoopDetector : MonoBehaviour
 
         return false;
     }
-
     void Update()
     {
         // 更新所有环的存续时间，过期就销毁
@@ -172,7 +189,7 @@ public class LoopDetector : MonoBehaviour
         if (objTransform != null)
         {
             yield return new WaitForSeconds(delay);
-            
+
             // 二次检查对象是否仍然存在
             if (objTransform != null)
             {
@@ -200,17 +217,17 @@ public class LoopDetector : MonoBehaviour
     bool SegmentsIntersect(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
     {
         Vector2 r = a2 - a1, s = b2 - b1;
-        float  rs = r.x * s.y - r.y * s.x;
+        float rs = r.x * s.y - r.y * s.x;
         if (Mathf.Approximately(rs, 0f)) return false;
         Vector2 qp = b1 - a1;
-        float  t  = (qp.x * s.y - qp.y * s.x) / rs;
-        float  u  = (qp.x * r.y - qp.y * r.x) / rs;
+        float t = (qp.x * s.y - qp.y * s.x) / rs;
+        float u = (qp.x * r.y - qp.y * r.x) / rs;
         return t > 0f && t < 1f && u > 0f && u < 1f;
     }
 
     float CalculateArea(List<Vector3> pts)
     {
-        int   cnt  = pts.Count;
+        int cnt = pts.Count;
         float area = 0f;
         for (int i = 0, j = cnt - 1; i < cnt; j = i++)
             area += pts[j].x * pts[i].y - pts[i].x * pts[j].y;
