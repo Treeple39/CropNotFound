@@ -56,13 +56,30 @@ public class LoopDetector : MonoBehaviour
     private List<Vector3> tempLoopPoints = new List<Vector3>();
     private List<EnemyState> trackedEnemies = new List<EnemyState>();
 
+    public Enemy _enemy;
+
+
     void Start()
     {
+<<<<<<< HEAD
         // 【修改】不再需要检查预制体
         // if (loopRendererPrefab == null || loopRendererPrefab.GetComponent<LineRenderer>() == null) ...
 
         // 缓存敌人状态
         foreach (Transform enemyTransform in enemiesToTrack)
+=======
+        // 准备 LineRenderer
+        loopRenderer = GetComponent<LineRenderer>();
+        loopRenderer.positionCount = 0;
+        loopRenderer.loop = true;
+        loopRenderer.useWorldSpace = true;
+        loopRenderer.startWidth = loopRenderer.endWidth = loopWidth;
+        loopRenderer.startColor = loopRenderer.endColor = loopColor;
+        loopRenderer.enabled = false;
+        _enemy = GetComponent<Enemy>();
+        // 缓存 enemy 原始颜色
+        if (enemy != null)
+>>>>>>> fcd2aae8ac25c83cb4f5f8123d9665f7df8493b5
         {
             if (enemyTransform == null) continue;
             Renderer enemyRenderer = enemyTransform.GetComponent<Renderer>();
@@ -149,6 +166,7 @@ public class LoopDetector : MonoBehaviour
                 enemyState.renderer.material.color = enemyState.originalColor;
         }
 
+<<<<<<< HEAD
         foreach (var loop in activeLoops)
         {
             foreach (var enemyState in trackedEnemies)
@@ -161,6 +179,27 @@ public class LoopDetector : MonoBehaviour
                 }
             }
         }
+=======
+    private void ClearLoop()
+    {
+        loopDetected = false;
+        loopRenderer.enabled = false;
+        loopPoints.Clear();
+        // 恢复 enemy 颜色
+        if (enemyRenderer != null)
+            enemyRenderer.material.color = enemyOriginalColor;
+    }
+
+    private void HighlightEnemy()
+    {
+        if (enemyRenderer == null)
+            return;
+
+        Vector2 e = enemy.position;
+        bool inside = IsPointInPolygon(e, loopPoints);
+        enemyRenderer.material.color = inside ? enemyHighlightColor : enemyOriginalColor;
+
+>>>>>>> fcd2aae8ac25c83cb4f5f8123d9665f7df8493b5
     }
 
     // 射线法点-多边形检测

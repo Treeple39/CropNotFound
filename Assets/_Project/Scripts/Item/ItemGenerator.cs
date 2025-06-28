@@ -9,13 +9,12 @@ public class ItemGenerator : MonoBehaviour
     public GameObject[] prefabs;
 
     // 全局参数
-    public int ItemTotalCount = 30;    // 物体总数
-    public int ChairCount = 5;         // 椅子总数
-    public int DollCount = 5;          // 玩偶总数
-    public int BottleCount = 5;        // 奶瓶总数
-    public int PillowCount = 5;        // 枕头总数
-    public int BookCount = 5;          // 书籍总数
-    public int SlippersCount = 5;      // 拖鞋总数
+    public int ChairCount;         // 椅子总数
+    public int DollCount;          // 玩偶总数
+    public int BottleCount;        // 奶瓶总数
+    public int PillowCount;        // 枕头总数
+    public int BookCount;          // 书籍总数
+    public int SlippersCount;      // 拖鞋总数
     public float ItemMinDistance = 0.5f; // 物体最小间距
     public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
 
@@ -34,8 +33,8 @@ public class ItemGenerator : MonoBehaviour
     private List<Vector3> spawnedPositions = new List<Vector3>();
     
     // 地图边界
-    public Vector3 mapMin = new Vector3(-10f, -10f, 0f);
-    public Vector3 mapMax = new Vector3(10f, 10f, 0f);
+    public Vector3 mapMin = new Vector3(-20f, -20f, 0f);
+    public Vector3 mapMax = new Vector3(20f, 20f, 0f);
 
     // 用于追踪可移动物体的数量
     private int movableItemCount = 0;
@@ -53,7 +52,7 @@ public class ItemGenerator : MonoBehaviour
     {
         // 从Resources文件夹加载预制体
         // 注意：预制体应该放在Resources文件夹下
-        prefabs = Resources.LoadAll<GameObject>("_Project/Prefabs");
+        prefabs = Resources.LoadAll<GameObject>("Prefabs/Item");
         
         if (prefabs == null || prefabs.Length == 0)
         {
@@ -74,19 +73,15 @@ public class ItemGenerator : MonoBehaviour
             { ItemType.Slippers, SlippersCount }
         };
 
-        // 确保物品总数不超过各类物品之和
-        int totalItemsFromCategories = remainingItems.Values.Sum();
-        if (ItemTotalCount > totalItemsFromCategories)
-        {
-            ItemTotalCount = totalItemsFromCategories;
-            Debug.LogWarning("物体总数已调整为各类物品总和: " + ItemTotalCount);
-        }
+        // 计算物品总数为各类物品总和
+        int itemTotalCount = remainingItems.Values.Sum();
+        Debug.Log("物体总数: " + itemTotalCount);
 
         // 计算应该有多少物体是可移动的
-        int targetMovableItems = Mathf.RoundToInt(ItemTotalCount * MovableItemRatio);
+        int targetMovableItems = Mathf.RoundToInt(itemTotalCount * MovableItemRatio);
         movableItemCount = 0; // 初始化可移动物体计数
 
-        while (generatedCount < ItemTotalCount)
+        while (generatedCount < itemTotalCount)
         {
             // 随机选择物品类型
             List<ItemType> availableTypes = remainingItems.Where(kv => kv.Value > 0).Select(kv => kv.Key).ToList();
@@ -159,7 +154,7 @@ public class ItemGenerator : MonoBehaviour
                 // 决定这个物体是否可移动
                 bool shouldBeMovable;
                 
-                if (movableItemCount < targetMovableItems && currentCount + 1 == ItemTotalCount)
+                if (movableItemCount < targetMovableItems && currentCount + 1 == targetMovableItems)
                 {
                     // 如果是最后一个物体，且可移动物体不足，则一定要设为可移动
                     shouldBeMovable = true;
@@ -190,6 +185,21 @@ public class ItemGenerator : MonoBehaviour
                     Debug.LogWarning($"物体 {item.name} 没有BaseMovement组件");
                 }
                 
+                SpriteRenderer spriteRenderer = item.GetComponent<SpriteRenderer>();
+                int color = Random.Range(0, 3);
+                if (color == 0)
+                {
+                    spriteRenderer.color = Color.red;
+                }
+                else if (color == 1)
+                {
+                    spriteRenderer.color = Color.blue;
+                }
+                else if (color == 2)
+                {
+                    spriteRenderer.color = Color.green;
+                }
+
                 return true;
             }
             else

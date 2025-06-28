@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 04a03551458da154685680c747de8644
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FlashX: {fileID: 7657915137937597054, guid: 849607878a747764cbaaaf7c232cb04d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

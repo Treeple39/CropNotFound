@@ -24,12 +24,39 @@ public class WanderEnemy : BaseMovement
     private Transform player;          // 玩家引用
     private Vector3 detectedPlayerPos;
 
+    #region 状态机
+    public Enemy enemy;
+    private bool isInitialized = false;
+    #endregion
+
     protected override void Start()
     {
         base.Start();
+        moveSpeed = 3f;
+        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("缺少Enemy组件!", gameObject);
+            enabled = false;
+            return;
+        }
         player = GameObject.FindGameObjectWithTag("Player").transform;
         wanderTimer = wanderInterval;
         wanderCenter = transform.position; // 初始化巡逻中心
+        StartCoroutine(DelayedInit());
+    }
+
+    private IEnumerator DelayedInit()
+    {
+        yield return null;
+
+        if (enemy.idleState == null || enemy.dashState == null)
+        {
+            Debug.LogError("Enemy状态未初始化!");
+            yield break;
+        }
+        isInitialized = true;
+        enemy.stateMachine.ChangeState(enemy.idleState);
     }
 
     protected override void Update()
@@ -68,6 +95,7 @@ public class WanderEnemy : BaseMovement
 
         float chargeTime = chargeDistance / chargeSpeed;
         Move(chargeDir, chargeTime);
+        enemy.stateMachine.ChangeState(enemy.dashState);
 
         Invoke(nameof(CheckChargeResult), chargeTime);
     }
@@ -76,7 +104,8 @@ public class WanderEnemy : BaseMovement
     private void CheckChargeResult()
     {
         isCharging = false;
-        moveSpeed = _moveSpeed; 
+        moveSpeed = _moveSpeed;
+        enemy.stateMachine.ChangeState(enemy.idleState);
 
         StartCooldown();
     }
@@ -110,15 +139,15 @@ public class WanderEnemy : BaseMovement
     }
 
     // 碰撞检测
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter(collision);
+        base.OnCollisionEnter2D(collision);
 
         if (isCharging && collision.gameObject.CompareTag("Player"))
         {
             // 命中玩家后立即停止冲锋
             CancelInvoke(nameof(CheckChargeResult));
-            StopMove();
+            enemy.stateMachine.ChangeState(enemy.idleState);
             StartCooldown();
         }
     }
