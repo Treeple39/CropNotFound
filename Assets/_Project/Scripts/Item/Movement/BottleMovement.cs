@@ -98,7 +98,7 @@ public class BottleMovement : BaseMovement
     {
         // 持续尝试找到一个没有重叠的位置
         int attempts = 0;
-        while (true)
+        while (attempts < 5)
         {
             attempts++;
             
