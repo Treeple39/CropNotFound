@@ -57,7 +57,7 @@ public class ItemGenerator : MonoBehaviour
 
     // 记录已生成物品的位置
     private List<Vector3> spawnedPositions = new List<Vector3>();
-
+    
     // 地图边界
     public Vector3 mapMin = new Vector3(-20f, -20f, 0f);
     public Vector3 mapMax = new Vector3(20f, 20f, 0f);
@@ -174,9 +174,9 @@ public class ItemGenerator : MonoBehaviour
 
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
-            foreach (Vector3 pos in spawnedPositions)
+            foreach (Transform transform in spawnedTransforms)
             {
-                if (Vector3.Distance(position, pos) < ItemMinDistance)
+                if (Vector3.Distance(position, transform.position) < ItemMinDistance)
                 {
                     tooClose = true;
                     break;
@@ -195,7 +195,7 @@ public class ItemGenerator : MonoBehaviour
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
                 spawnedPositions.Add(position);
-
+                
                 // 计算当前可移动物体的理想数量
                 int idealMovableCount = Mathf.RoundToInt((currentCount + 1) * MovableItemRatio);
 
@@ -328,9 +328,9 @@ public class ItemGenerator : MonoBehaviour
 
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
-            foreach (Vector3 pos in spawnedPositions)
+            foreach (Transform transform in spawnedTransforms)
             {
-                if (Vector3.Distance(position, pos) < ItemMinDistance)
+                if (Vector3.Distance(position, transform.position) < ItemMinDistance)
                 {
                     tooClose = true;
                     break;
@@ -349,7 +349,7 @@ public class ItemGenerator : MonoBehaviour
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
                 spawnedPositions.Add(position);
-
+                
                 // 获取并设置BaseMovement组件 - 所有持续生成的物体都是可移动的
                 BaseMovement movement = item.GetComponent<BaseMovement>();
                 if (movement != null)
@@ -406,12 +406,6 @@ public class ItemGenerator : MonoBehaviour
                 SpawnContinuousItem();
             }
         }
-    }
-
-    // 提供公共方法让其他脚本获取物品位置
-    public List<Vector3> GetSpawnedPositions()
-    {
-        return spawnedPositions;
     }
 
     // 提供公共方法让其他脚本请求生成特定物品
