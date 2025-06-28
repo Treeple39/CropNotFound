@@ -1,6 +1,7 @@
 using Autodesk.Fbx;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LoopDetector : MonoBehaviour
@@ -33,13 +34,15 @@ public class LoopDetector : MonoBehaviour
         }
     }
 
-    // 内部类：包装 Enemy 组件和渲染组件
-    private class EnemyState
+    // 内部类：包装 Enemy 组件和渲染组件    
+    private class TrackableObject
     {
-        public Enemy enemyComponent; // 你的 Enemy 脚本
-        public Transform transform;     // 用于位置检测
-        public Renderer renderer;      // 用于高亮
+        public GameObject gameObject; // 直接引用GameObject
+        public Transform transform;
+        public Renderer renderer;
         public Color originalColor;
+        // 如果需要，也可以保留对特定组件的引用
+        // public Enemy enemyComponent; 
     }
 
 
@@ -61,25 +64,8 @@ public class LoopDetector : MonoBehaviour
 
     private List<DetectedLoop> activeLoops = new List<DetectedLoop>();
     private List<Vector3> tempLoopPoints = new List<Vector3>();
-    private List<EnemyState> trackedEnemies = new List<EnemyState>();
+    private List<TrackableObject> trackedObjects = new List<TrackableObject>();
 
-    void Start()
-    {
-        // 初始化每个 EnemyState
-        foreach (var enemy in enemiesToTrack)
-        {
-            if (enemy == null) continue;
-            var rend = enemy.GetComponent<Renderer>();
-            if (rend == null) continue;
-            trackedEnemies.Add(new EnemyState
-            {
-                enemyComponent = enemy,
-                transform = enemy.transform,
-                renderer = rend,
-                originalColor = rend.material.color
-            });
-        }
-    }
 
     /// <summary>
     /// 传入玩家轨迹，检测并生成新环
@@ -151,39 +137,79 @@ public class LoopDetector : MonoBehaviour
     }
 
     /// <summary>
-    /// 检测哪些敌人在圈内，给它们高亮并把它们标记为 dead = true
+    /// 检测哪些在ItemGenerator列表中的物体在圈内，并处理它们
     /// </summary>
     private void NotifyAndKillEnemiesInside(List<Vector3> loopPts)
     {
-        // 1) 重置所有敌人颜色
-        foreach (var st in trackedEnemies)
-            st.renderer.material.color = st.originalColor;
+        // ★★★★★【核心修改：直接从 ItemGenerator 获取列表】★★★★★
 
-        // 2) 中心点（可选，或直接用各自位置）
-        Vector3 center = Vector3.zero;
-        foreach (var p in loopPts) center += p;
-        center /= loopPts.Count;
-
-        // 3) 对每个敌人做点-多边形检测
-        foreach (var st in trackedEnemies)
+        // 1. 检查 ItemGenerator 实例是否存在
+        if (ItemGenerator.Instance == null)
         {
-            Vector2 pos2d = st.transform.position;
+            Debug.LogWarning("找不到 ItemGenerator 实例，无法检测物体。");
+            return;
+        }
+
+        // 2. 直接获取已生成物体的Transform列表
+        List<Transform> allSpawnedTransforms = ItemGenerator.Instance.spawnedTransforms;
+        Debug.Log(allSpawnedTransforms);
+
+        // 3. 将Transform列表转换为我们内部的 TrackableObject 结构
+        //    这里我们不再需要Select和Where，因为我们可以直接在循环中处理
+        List<TrackableObject> objectsToTest = new List<TrackableObject>();
+        foreach (Transform itemTransform in allSpawnedTransforms)
+        {
+            // 安全检查：如果物体在上一轮被销毁了，列表中可能会留下null引用
+            if (itemTransform == null) continue;
+
+            var rend = itemTransform.GetComponent<Renderer>();
+            // 如果物体有Renderer组件，就把它加入到待检测列表中
+            if (rend != null)
+            {
+                objectsToTest.Add(new TrackableObject
+                {
+                    gameObject = itemTransform.gameObject,
+                    transform = itemTransform,
+                    renderer = rend,
+                    originalColor = rend.material.color,
+                    // enemyComponent = itemTransform.GetComponent<Enemy>() // 如果需要Enemy组件
+                });
+            }
+        }
+
+        Debug.Log($"从ItemGenerator获取了 {objectsToTest.Count} 个可被圈选的物体进行检测。");
+
+        // 4. 对每个待检测的物体做点-多边形检测
+        List<GameObject> objectsToDestroy = new List<GameObject>();
+        foreach (var obj in objectsToTest)
+        {
+            Vector2 pos2d = obj.transform.position;
             if (IsPointInPolygon(pos2d, loopPts))
             {
                 // 高亮
-                st.renderer.material.color = enemyHighlightColor;
-                // 标记死掉
-                st.enemyComponent.dead = true;
+                obj.renderer.material.color = enemyHighlightColor;
 
-                StarExplode(st.transform.position);
-                Destroy(st.enemyComponent.gameObject);
-                //StartCoroutine(DelayedDestroy(st.transform, 0.3f));
-                // 如果你有 Kill() 方法，也可以改成：
-                // st.enemyComponent.Kill();
+                // 执行特效
+                StarExplode(obj.transform.position);
+
+                // 将待销毁的GameObject加入列表
+                objectsToDestroy.Add(obj.gameObject);
             }
         }
-    }
 
+        // 5. 统一销毁被圈中的物体，并从ItemGenerator的列表中移除它们
+        foreach (GameObject objToDestroy in objectsToDestroy)
+        {
+            // 从ItemGenerator的列表中移除对应的Transform
+            // 我们需要找到它的Transform来移除
+            // Transform transformToRemove = objToDestroy.transform;
+            // ItemGenerator.Instance.spawnedTransforms.Remove(transformToRemove);
+
+            // 销毁GameObject
+            Debug.Log("Destroy" + objToDestroy.GetType());
+            Destroy(objToDestroy);
+        }
+    }
     private IEnumerator DelayedDestroy(Transform objTransform, float delay)
     {
         if (objTransform != null)

@@ -1297,6 +1297,100 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1420688145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1420688147}
+  - component: {fileID: 1420688146}
+  m_Layer: 0
+  m_Name: ItemGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1420688146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420688145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d14f631732108644b707a69aba9bedc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs: []
+  ChairCount: 0
+  DollCount: 0
+  BottleCount: 0
+  PillowCount: 0
+  BookCount: 0
+  SlippersCount: 0
+  ItemMinDistance: 0.5
+  MovableItemRatio: 0.5
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  raycastDistance: 10
+  difficultyLevel: 1
+  continuousSpawnInterval: 2
+  maxDifficultyLevel: 4
+  spawnProbability:
+    chairProb:
+    - 0.02
+    - 0.06
+    - 0.1
+    - 0.15
+    dollProb:
+    - 0.9
+    - 0.7
+    - 0.5
+    - 0.25
+    bottleProb:
+    - 0.02
+    - 0.06
+    - 0.1
+    - 0.15
+    pillowProb:
+    - 0.02
+    - 0.06
+    - 0.1
+    - 0.15
+    bookProb:
+    - 0.02
+    - 0.06
+    - 0.1
+    - 0.15
+    slippersProb:
+    - 0.02
+    - 0.06
+    - 0.1
+    - 0.15
+  spawnedTransforms: []
+  mapMin: {x: -20, y: -20, z: 0}
+  mapMax: {x: 20, y: 20, z: 0}
+--- !u!4 &1420688147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420688145}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.723552, y: -11.947205, z: 0.35881895}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520120913
 GameObject:
   m_ObjectHideFlags: 0
@@ -17767,6 +17861,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 807498633231546826, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3660533145578256362, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -18105,3 +18203,4 @@ SceneRoots:
   - {fileID: 1540787470}
   - {fileID: 1520688706}
   - {fileID: 337693352}
+  - {fileID: 1420688147}
