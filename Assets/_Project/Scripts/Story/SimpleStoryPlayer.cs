@@ -18,6 +18,7 @@ public class SimpleStoryPlayer : MonoBehaviour
     public Text contentText;
     public Image dialogueBoxImage;
     public GameObject choicePanel;
+    public Image blackImage;
     public Button[] choiceButtons;
 
     [Header("配置")]
@@ -52,8 +53,9 @@ public class SimpleStoryPlayer : MonoBehaviour
 
         if (dialogueBoxImage != null)
         {
-            dialogueBoxImage.gameObject.SetActive(true); // <--- 【新增】在这里添加这一行
+            dialogueBoxImage.gameObject.SetActive(true); 
         }
+        
 
         ClearUI();
     }

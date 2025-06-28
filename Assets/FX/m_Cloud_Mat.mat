@@ -1,0 +1,291 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: m_Cloud_Mat
+  m_Shader: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHABLEND_ON
+  m_InvalidKeywords: []
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - GRABPASS
+  m_LockedProperties: _Float144
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Gradienttex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 26be285cc5e956841926a87f4ae87f62, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _dissolvetex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _flowmaptex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _maintex:
+        m_Texture: {fileID: 2800000, guid: dba2f1f278108324ab1571de9bcffb61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _matcap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _noise:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _noisemask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normallight:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _parallax:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _vertextex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _vertextex1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaCutoff: 0.5
+    - _BlendOp: 0
+    - _BumpScale: 1
+    - _CameraFadingEnabled: 0
+    - _CameraFarFadeDistance: 2
+    - _CameraNearFadeDistance: 1
+    - _ColorMode: 0
+    - _Color_Group2: 0
+    - _Cull: 2
+    - _Custom_Group1: 0
+    - _Cutoff: 0.5
+    - _Depthfade_Group1: 0
+    - _Disolove_Group: 0
+    - _DistortionBlend: 0.5
+    - _DistortionEnabled: 0
+    - _DistortionStrength: 1
+    - _DistortionStrengthScaled: 0
+    - _DstBlend: 10
+    - _EmissionEnabled: 0
+    - _FlipbookMode: 0
+    - _Float0: 0
+    - _Float1: 10
+    - _Float10: 0
+    - _Float11: 0
+    - _Float12: 0
+    - _Float129: 0
+    - _Float130: 0
+    - _Float131: 0
+    - _Float132: 0.5
+    - _Float133: 0.5
+    - _Float134: 0
+    - _Float135: 1
+    - _Float137: 0
+    - _Float139: 0
+    - _Float14: 1
+    - _Float140: 0
+    - _Float141: 0
+    - _Float142: 0
+    - _Float143: 0
+    - _Float144: 0
+    - _Float145: 0
+    - _Float146: 0
+    - _Float15: 1
+    - _Float16: 0
+    - _Float17: 0
+    - _Float18: 0
+    - _Float19: 1
+    - _Float2: 0
+    - _Float20: 0
+    - _Float22: 0
+    - _Float25: 0
+    - _Float28: 1
+    - _Float29: 0
+    - _Float30: 1
+    - _Float31: 0
+    - _Float32: 0
+    - _Float33: 0
+    - _Float34: 1
+    - _Float35: 0
+    - _Float36: 1
+    - _Float37: 1
+    - _Float38: 0
+    - _Float39: 0
+    - _Float4: 0
+    - _Float40: 0
+    - _Float41: 0
+    - _Float42: 0
+    - _Float43: 0
+    - _Float44: 0
+    - _Float45: 0
+    - _Float46: 0
+    - _Float47: 0
+    - _Float48: 0
+    - _Float49: 0
+    - _Float5: 0
+    - _Float50: 0
+    - _Float51: 0
+    - _Float52: 0
+    - _Float53: 0
+    - _Float54: 0
+    - _Float55: 0
+    - _Float56: 0
+    - _Float57: 0
+    - _Float6: 0
+    - _Float60: 15
+    - _Float61: 0
+    - _Float62: 0
+    - _Float63: 0
+    - _Float64: 0
+    - _Float65: 0
+    - _Float66: 0
+    - _Float67: 0
+    - _Float68: 0
+    - _Float69: 0
+    - _Float70: 0
+    - _Float71: 0
+    - _Float72: 0
+    - _Float73: 0
+    - _Float74: 0
+    - _Float75: 0
+    - _Float76: 0
+    - _Float77: 0
+    - _Float78: 0
+    - _Float79: 0
+    - _Float8: 0.5
+    - _Float80: 0
+    - _Float81: 0
+    - _Float82: 0
+    - _Float83: 0
+    - _Float84: 0
+    - _Float85: 0
+    - _Float86: 0
+    - _Float87: 0
+    - _Float88: 0
+    - _Float89: 0
+    - _Float9: 0
+    - _Fresnel_Group2: 0
+    - _LightingEnabled: 0
+    - _Maintex_Group: 1
+    - _Maintex_Group1: 0
+    - _Maintex_Group2: 0
+    - _Maintex_Group3: 0
+    - _Maintex_Group4: 0
+    - _Maintex_Group5: 0
+    - _Mask_Group: 0
+    - _Mode: 2
+    - _Noise_Group: 0
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    - _SoftParticlesEnabled: 0
+    - _SoftParticlesFarFadeDistance: 1
+    - _SoftParticlesNearFadeDistance: 0
+    - _SrcBlend: 5
+    - _Vertex_Group: 0
+    - _ZWrite: 0
+    - _Ztestmode: 4
+    - _Ztestmode1: 0
+    - _Ztestmode2: 0
+    - _maintex_alpha: 0
+    - _mask01_alpha: 0
+    - _mask02_alpha: 0
+    - _power3: 1
+    - _refplane: 1
+    m_Colors:
+    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1: {r: 1, g: 1, b: 1, a: 1}
+    - _Color3: {r: 1, g: 1, b: 1, a: 1}
+    - _Color4: {r: 0.490566, g: 0.490566, b: 0.490566, a: 1}
+    - _Color5: {r: 1, g: 1, b: 1, a: 1}
+    - _Color6: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector0: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector10: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector11: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector12: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector13: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector15: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector17: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector19: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector23: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector25: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector32: {r: 0, g: 1, b: 0, a: 1}
+    - _Vector33: {r: 0, g: 1, b: 0, a: 1}
+    - _Vector34: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector35: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector5: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector7: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector9: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

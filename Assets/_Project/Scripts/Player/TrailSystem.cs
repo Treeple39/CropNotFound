@@ -9,28 +9,28 @@ public class TrailSystem : MonoBehaviour
     public LoopDetector loopDetector;   // 拖入 LoopDetector 的组件引用
 
     [Header("Trail Settings")]
-    public int   maxTrailPoints       = 100;    // 最大点数
-    public float pointLifeTime        = 2f;     // 点的最大存活时间（秒）
-    public float minTimeBetweenPoints = 0.05f;  // 记录时间间隔
-    public float minDistanceBetweenPoints = 0.05f; // 记录距离阈值
+    public int   maxTrailPoints       = 100;
+    public float pointLifeTime        = 2f;
+    public float minTimeBetweenPoints = 0.05f;
+    public float minDistanceBetweenPoints = 0.05f;
     public Color trailColor           = Color.cyan;
     public float trailWidth           = 0.2f;
 
-    // 内部存储：带时间戳的点
     private struct TrailPoint
     {
         public Vector3 position;
         public float   time;
-        public TrailPoint(Vector3 pos, float t)
-        {
-            position = pos;
-            time     = t;
-        }
+        public TrailPoint(Vector3 pos, float t) { position = pos; time = t; }
     }
-    private Queue<TrailPoint> trailPoints = new Queue<TrailPoint>();
+    
+    // 【修改】将Queue改为List，因为它更方便地移除范围内的元素
+    private List<TrailPoint> trailPoints = new List<TrailPoint>();
     private LineRenderer      lineRenderer;
     private float             lastRecordTime;
     private Vector3           lastRecordPos;
+    
+    // 【新增】用于传递给LoopDetector的位置列表，避免每帧都创建新列表
+    private List<Vector3> positionListForDetector = new List<Vector3>();
 
     void Start()
     {
@@ -40,7 +40,7 @@ public class TrailSystem : MonoBehaviour
         lineRenderer.useWorldSpace = true;
         lineRenderer.startWidth    = lineRenderer.endWidth = trailWidth;
 
-        // 使用 Sprites/Default Shader 支持顶点色渐变
+  
         Shader spriteShader = Shader.Find("Sprites/Default");
         if (spriteShader == null)
         {
@@ -50,18 +50,9 @@ public class TrailSystem : MonoBehaviour
         var mat = new Material(spriteShader) { color = Color.white };
         lineRenderer.material = mat;
 
-        // 白色透明→白色不透明渐变
         var grad = new Gradient();
-        grad.colorKeys = new[]
-        {
-            new GradientColorKey(Color.white, 0f),
-            new GradientColorKey(Color.white, 1f)
-        };
-        grad.alphaKeys = new[]
-        {
-            new GradientAlphaKey(0f, 0f), // 最旧的点完全透明
-            new GradientAlphaKey(1f, 1f)  // 最新的点完全不透明
-        };
+        grad.colorKeys = new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) };
+        grad.alphaKeys = new[] { new GradientAlphaKey(0f, 0f), new GradientAlphaKey(1f, 1f) };
         lineRenderer.colorGradient = grad;
 
         lastRecordPos  = player.position;
@@ -73,32 +64,47 @@ public class TrailSystem : MonoBehaviour
         float now = Time.time;
         Vector3 pos = player.position;
 
-        // 1) 根据时间和距离记录新点
+        // 1) 记录新点
         if (now - lastRecordTime >= minTimeBetweenPoints &&
             Vector3.Distance(pos, lastRecordPos) >= minDistanceBetweenPoints)
         {
-            trailPoints.Enqueue(new TrailPoint(pos, now));
+            // 【修改】使用List的Add方法
+            trailPoints.Add(new TrailPoint(pos, now));
             lastRecordPos  = pos;
             lastRecordTime = now;
         }
 
-        // 2) 剔除超时或超长的旧点
+        // 2) 剔除旧点
         float expireTime = now - pointLifeTime;
-        while (trailPoints.Count > 0 && trailPoints.Peek().time < expireTime)
-            trailPoints.Dequeue();
+        // 【修改】使用List的RemoveAll，更高效地移除满足条件的旧点
+        trailPoints.RemoveAll(p => p.time < expireTime);
         while (trailPoints.Count > maxTrailPoints)
-            trailPoints.Dequeue();
+        {
+            // 【修改】如果超出最大数量，从列表的开头移除最旧的点
+            trailPoints.RemoveAt(0);
+        }
 
         // 3) 刷新可视化
         RefreshTrail();
 
-        // 4) 传给 LoopDetector
-        if (loopDetector != null)
+        if (loopDetector != null && trailPoints.Count > 1)
         {
-            // 只取位置部分
-            var positions = new Queue<Vector3>();
-            foreach (var tp in trailPoints) positions.Enqueue(tp.position);
-            loopDetector.DetectLoop(positions);
+            // 准备位置列表
+            positionListForDetector.Clear();
+            foreach (var tp in trailPoints)
+            {
+                positionListForDetector.Add(tp.position);
+            }
+
+            // 调用新的检测方法
+            if (loopDetector.DetectAndCreateLoops(positionListForDetector, out int newStartIndex))
+            {
+                // 保留从交点开始的新轨迹
+                if (newStartIndex > 0 && newStartIndex < trailPoints.Count)
+                {
+                    trailPoints.RemoveRange(0, newStartIndex);
+                }
+            }
         }
     }
 
@@ -112,17 +118,15 @@ public class TrailSystem : MonoBehaviour
         }
 
         var pts = new Vector3[count];
-        int i = 0;
-        foreach (var tp in trailPoints)
-            pts[i++] = tp.position;
-
+        for (int i = 0; i < count; i++)
+        {
+            pts[i] = trailPoints[i].position;
+        }
+        
         lineRenderer.positionCount = count;
-        lineRenderer.SetPositions(pts);
+        //lineRenderer.SetPositions(pts);
     }
 
-    /// <summary>
-    /// 手动清空轨迹
-    /// </summary>
     public void ClearTrail()
     {
         trailPoints.Clear();

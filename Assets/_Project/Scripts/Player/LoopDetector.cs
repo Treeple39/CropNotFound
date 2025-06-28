@@ -1,11 +1,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class LoopDetector : MonoBehaviour
 {
+    private class DetectedLoop
+    {
+        public List<Vector3> Points;
+        public float displayTimer;
+        private GameObject containerObject; // 保留对容器对象的引用，以便销毁
+
+        public DetectedLoop(GameObject containerObject, List<Vector3> points, float displayTime)
+        {
+            this.containerObject = containerObject;
+            Points = new List<Vector3>(points);
+            displayTimer = displayTime;
+        }
+
+        public bool Tick(float deltaTime)
+        {
+            displayTimer -= deltaTime;
+            return displayTimer <= 0f;
+        }
+
+        public void Destroy()
+        {
+            if (containerObject != null)
+            {
+                GameObject.Destroy(containerObject);
+            }
+        }
+    }
+
+    // 敌人状态类保持不变
+    private class EnemyState
+    {
+        public Transform transform;
+        public Renderer renderer;
+        public Color originalColor;
+    }
+
     [Header("References")]
-    public Transform enemy;            // 要高亮的目标
+
+    public MagicCircleController magicCircleController; // 【新增】对魔法阵控制器的引用
+    public List<Transform> enemiesToTrack = new List<Transform>();
     public Color enemyHighlightColor = Color.yellow;
 
     [Header("Loop Detection")]
@@ -13,112 +50,117 @@ public class LoopDetector : MonoBehaviour
     public float minLoopArea = 1.0f;
 
     [Header("Visualization")]
-    public Color loopColor = Color.red;
-    public float loopWidth = 0.1f;
-    public float loopDisplayTime = 5.0f;
+    public float loopDisplayTime = 20f;
 
-    private LineRenderer loopRenderer;
-    private bool loopDetected;
-    private float loopTimer;
-    private List<Vector3> loopPoints = new List<Vector3>();
-    private Color enemyOriginalColor;
-    private Renderer enemyRenderer;
+    private List<DetectedLoop> activeLoops = new List<DetectedLoop>();
+    private List<Vector3> tempLoopPoints = new List<Vector3>();
+    private List<EnemyState> trackedEnemies = new List<EnemyState>();
 
     void Start()
     {
-        // 准备 LineRenderer
-        loopRenderer = GetComponent<LineRenderer>();
-        loopRenderer.positionCount = 0;
-        loopRenderer.loop = true;
-        loopRenderer.useWorldSpace = true;
-        loopRenderer.startWidth = loopRenderer.endWidth = loopWidth;
-        loopRenderer.startColor = loopRenderer.endColor = loopColor;
-        loopRenderer.enabled = false;
+        // 【修改】不再需要检查预制体
+        // if (loopRendererPrefab == null || loopRendererPrefab.GetComponent<LineRenderer>() == null) ...
 
-        // 缓存 enemy 原始颜色
-        if (enemy != null)
+        // 缓存敌人状态
+        foreach (Transform enemyTransform in enemiesToTrack)
         {
-            enemyRenderer = enemy.GetComponent<Renderer>();
+            if (enemyTransform == null) continue;
+            Renderer enemyRenderer = enemyTransform.GetComponent<Renderer>();
             if (enemyRenderer != null)
-                enemyOriginalColor = enemyRenderer.material.color;
+            {
+                trackedEnemies.Add(new EnemyState
+                {
+                    transform = enemyTransform,
+                    renderer = enemyRenderer,
+                    originalColor = enemyRenderer.material.color
+                });
+            }
         }
     }
 
-    /// <summary>
-    /// 外部调用：传入当前轨迹点队列
-    /// </summary>
-    public void DetectLoop(Queue<Vector3> trailPoints)
+    public bool DetectAndCreateLoops(List<Vector3> trailPoints, out int newTrailStartIndex)
     {
-        if (loopDetected)
-            return;
-
+        newTrailStartIndex = 0;
         if (trailPoints.Count < minPointsForLoop)
-            return;
+            return false;
 
         var pts = trailPoints.ToArray();
         int n = pts.Length;
         Vector2 a1 = pts[n - 2], a2 = pts[n - 1];
 
-        // 检查自交
-        for (int i = 0; i < n - 3; i++)
+        for (int i = n - 4; i >= 0; i--)
         {
             Vector2 b1 = pts[i], b2 = pts[i + 1];
             if (SegmentsIntersect(a1, a2, b1, b2))
             {
-                // 提取闭环多边形 (i+1 到 n-1)
-                loopPoints.Clear();
-                for (int j = i + 1; j < n - 1; j++)
-                    loopPoints.Add(pts[j]);
+                tempLoopPoints.Clear();
+                for (int j = i + 1; j < n; j++)
+                    tempLoopPoints.Add(pts[j]);
 
-                // 计算面积
-                if (CalculateArea(loopPoints) >= minLoopArea)
+                if (CalculateArea(tempLoopPoints) >= minLoopArea)
                 {
-                    ShowLoop();
-                    HighlightEnemy();
-                    return;
+                    // 【修改】创建一个临时的、不可见的GameObject，而不是从预制体实例化
+                    GameObject fakeLoopObject = new GameObject("DetectedLoop_Invisible");
+                    fakeLoopObject.transform.SetParent(this.transform);
+
+                    // 创建一个新的DetectedLoop对象并添加到活动列表中
+                    activeLoops.Add(new DetectedLoop(fakeLoopObject, tempLoopPoints, loopDisplayTime));
+
+                    HighlightEnemies();
+
+                    if (magicCircleController != null)
+                    {
+                        Debug.Log("magicCircleController!");
+                        magicCircleController.SpawnMagicCircle(tempLoopPoints, loopDisplayTime);
+                    }
+                    newTrailStartIndex = i + 1;
+                    return true;
                 }
-                break;
             }
         }
+
+        return false;
     }
 
     void Update()
     {
-        if (!loopDetected)
-            return;
-
-        loopTimer -= Time.deltaTime;
-        if (loopTimer <= 0f)
-            ClearLoop();
+        if (activeLoops.Count == 0) return;
+        bool loopsWereRemoved = false;
+        for (int i = activeLoops.Count - 1; i >= 0; i--)
+        {
+            if (activeLoops[i].Tick(Time.deltaTime))
+            {
+                activeLoops[i].Destroy();
+                activeLoops.RemoveAt(i);
+                loopsWereRemoved = true;
+            }
+        }
+        if (loopsWereRemoved)
+        {
+            HighlightEnemies();
+        }
     }
 
-    private void ShowLoop()
+    private void HighlightEnemies()
     {
-        loopDetected = true;
-        loopTimer = loopDisplayTime;
-        loopRenderer.positionCount = loopPoints.Count;
-        loopRenderer.SetPositions(loopPoints.ToArray());
-        loopRenderer.enabled = true;
-    }
+        foreach (var enemyState in trackedEnemies)
+        {
+            if (enemyState.renderer != null)
+                enemyState.renderer.material.color = enemyState.originalColor;
+        }
 
-    private void ClearLoop()
-    {
-        loopDetected = false;
-        loopRenderer.enabled = false;
-        loopPoints.Clear();
-        // 恢复 enemy 颜色
-        if (enemyRenderer != null)
-            enemyRenderer.material.color = enemyOriginalColor;
-    }
-
-    private void HighlightEnemy()
-    {
-        if (enemyRenderer == null)
-            return;
-
-        Vector2 e = enemy.position;
-        bool inside = IsPointInPolygon(e, loopPoints);
-        enemyRenderer.material.color = inside ? enemyHighlightColor : enemyOriginalColor;
+        foreach (var loop in activeLoops)
+        {
+            foreach (var enemyState in trackedEnemies)
+            {
+                if (enemyState.renderer.material.color == enemyHighlightColor) continue;
+                Vector2 enemyPosition = enemyState.transform.position;
+                if (IsPointInPolygon(enemyPosition, loop.Points))
+                {
+                    enemyState.renderer.material.color = enemyHighlightColor;
+                }
+            }
+        }
     }
 
     // 射线法点-多边形检测
