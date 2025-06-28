@@ -5,6 +5,9 @@ using System.Linq;
 
 public class ItemGenerator : MonoBehaviour
 {
+    // 单例实例
+    public static ItemGenerator Instance { get; private set; }
+
     // 预制体数组
     public GameObject[] prefabs;
 
@@ -61,6 +64,21 @@ public class ItemGenerator : MonoBehaviour
 
     // 用于追踪可移动物体的数量
     private int movableItemCount = 0;
+
+    private void Awake()
+    {
+        // 单例模式实现
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);  // 可选：如果需要在场景切换时保留
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {
@@ -387,5 +405,23 @@ public class ItemGenerator : MonoBehaviour
             spawnTimer = 0f;
             SpawnContinuousItem();
         }
+    }
+
+    // 提供公共方法让其他脚本获取物品位置
+    public List<Vector3> GetSpawnedPositions()
+    {
+        return spawnedPositions;
+    }
+
+    // 提供公共方法让其他脚本请求生成特定物品
+    public bool RequestItemSpawn(string itemTypeName)
+    {
+        if (System.Enum.TryParse<ItemType>(itemTypeName, out ItemType itemType))
+        {
+            return TryGenerateContinuousItem(itemType);
+        }
+        
+        Debug.LogError($"无效的物品类型名称: {itemTypeName}");
+        return false;
     }
 }
