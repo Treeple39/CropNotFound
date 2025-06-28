@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Rigidbody2D rb {  get; private set; }
+    [SerializeField]public Rigidbody2D rb {  get; private set; }
     public Animator anim { get; private set; }
 
     public BaseMovement movement { get; private set; }
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public EnemyFleeState fleeState { get; private set; }
 
     public EnemyDieState dieState { get; private set; }
+    public EnemyShineState shineState { get; private set; }
     #endregion
 
     public virtual void Awake()
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
         dashState = new EnemyDashState(stateMachine, this, "dash");
         fleeState = new EnemyFleeState(stateMachine, this, "Flee");
         dieState = new EnemyDieState(stateMachine, this, "Die");
+        shineState = new EnemyShineState(stateMachine, this, "Shine");
         stateMachine.Initialize(idleState);
     }
 

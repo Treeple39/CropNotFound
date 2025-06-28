@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DollMovement : BaseMovement
 {
@@ -23,6 +25,8 @@ public class DollMovement : BaseMovement
     private bool isStunned = false; // 是否处于眩晕状态
     private float stunTimer = 0f; // 眩晕计时器
 
+    private float facingDir = 1;
+    private bool facingRight = true;
     #region 状态机
     public Enemy enemy;
     private bool isInitialized = false;

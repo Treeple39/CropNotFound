@@ -122,11 +122,7 @@ public class LoopDetector : MonoBehaviour
         Vector2 e = enemy.position;
         bool inside = IsPointInPolygon(e, loopPoints);
         enemyRenderer.material.color = inside ? enemyHighlightColor : enemyOriginalColor;
-        
-        if (inside)
-        {
-            _enemy.Die();
-        }
+
     }
 
     // 射线法点-多边形检测

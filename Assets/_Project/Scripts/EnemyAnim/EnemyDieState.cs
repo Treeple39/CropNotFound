@@ -15,9 +15,9 @@ namespace Assets._Project.Scripts.EnemyAnim
         public override void Enter()
         {
             base.Enter();
-            DieAnim dieAnim = new DieAnim();
-            dieAnim.StarExplode(enemy.transform.position);
-            Delete();
+            //DieAnim dieAnim = new DieAnim();
+            //dieAnim.StarExplode(enemy.transform.position);
+            //Delete();
 
         }
         private IEnumerator Delete()
