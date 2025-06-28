@@ -12,9 +12,9 @@ public class UIMainMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    public void NewGame() { 
+    public void NewGame() {
         //SceneManager.instance.DeleteSaveData();
-        SceneManager.LoadScene(sceneName);
+        GameManager.Instance.StartStory();
     }
 
     public void ExitGame() { 
