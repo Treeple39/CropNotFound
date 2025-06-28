@@ -24,6 +24,9 @@ public class LoopDetector : MonoBehaviour
     private Color enemyOriginalColor;
     private Renderer enemyRenderer;
 
+    public Enemy _enemy;
+
+
     void Start()
     {
         // 准备 LineRenderer
@@ -34,7 +37,7 @@ public class LoopDetector : MonoBehaviour
         loopRenderer.startWidth = loopRenderer.endWidth = loopWidth;
         loopRenderer.startColor = loopRenderer.endColor = loopColor;
         loopRenderer.enabled = false;
-
+        _enemy = GetComponent<Enemy>();
         // 缓存 enemy 原始颜色
         if (enemy != null)
         {
@@ -119,6 +122,11 @@ public class LoopDetector : MonoBehaviour
         Vector2 e = enemy.position;
         bool inside = IsPointInPolygon(e, loopPoints);
         enemyRenderer.material.color = inside ? enemyHighlightColor : enemyOriginalColor;
+        
+        if (inside)
+        {
+            _enemy.Die();
+        }
     }
 
     // 射线法点-多边形检测
