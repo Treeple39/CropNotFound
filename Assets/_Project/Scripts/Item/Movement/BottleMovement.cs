@@ -63,6 +63,8 @@ public class BottleMovement : BaseMovement
     protected override void Update()
     {
         base.Update();
+
+        StopMove();
         
         // 如果正在传送过程中，不进行计时
         if (isTransporting)
