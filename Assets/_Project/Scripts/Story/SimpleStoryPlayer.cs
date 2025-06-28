@@ -20,9 +20,13 @@ public class StoryManager : MonoBehaviour
     public Image InsertImage2;
     public Button[] choiceButtons;
 
+    [Tooltip("用于场景切换的黑屏遮罩")]
+    public Image blackScreenImage;
+
     [Header("效果参数")]
     public float typeSpeed = 0.05f;
     public float fadeDuration = 0.3f;
+
 
     private Dictionary<int, StoryLine> storyData;
     private StoryLine currentLine;
@@ -51,6 +55,11 @@ public class StoryManager : MonoBehaviour
             Debug.LogError("剧情数据加载失败，请检查JSON文件！");
             this.enabled = false;
             return;
+        }
+        if (blackScreenImage != null)
+        {
+            blackScreenImage.color = new Color(0, 0, 0, 0);
+            blackScreenImage.gameObject.SetActive(false);
         }
 
         // 保存初始位置
@@ -374,16 +383,54 @@ public class StoryManager : MonoBehaviour
         StartCoroutine(EndStoryCoroutine());
     }
 
+    /// <summary>
+    /// ★★★★★【核心修改】★★★★★
+    /// 结束剧情的协程，现在加入了黑屏淡入逻辑
+    /// </summary>
     IEnumerator EndStoryCoroutine()
     {
-        dialoguePanel.SetActive(false);
-        choicePanel.SetActive(false);
-        StartCoroutine(FadeImage(character1Image, 0f));
-        StartCoroutine(FadeImage(character2Image, 0f));
+        // 1. 淡出所有当前UI元素 (对话框、角色等)
+        dialoguePanel.GetComponent<CanvasGroup>()?.DOFade(0, fadeDuration); // 使用安全调用
+        if (character1Image != null && character1Image.gameObject.activeSelf) StartCoroutine(FadeImage(character1Image, 0f));
+        if (character2Image != null && character2Image.gameObject.activeSelf) StartCoroutine(FadeImage(character2Image, 0f));
 
-        yield return new WaitForSeconds(fadeDuration); // 等待淡出动画完成
+        // 等待UI元素淡出完成
+        yield return new WaitForSeconds(fadeDuration);
 
-        gameObject.SetActive(false); // 禁用整个剧情管理器
+        // 2. 黑屏淡入
+        if (blackScreenImage != null)
+        {
+            blackScreenImage.gameObject.SetActive(true);
+            float timer = 0f;
+            // 我们可以用一个新的淡入时长，或者复用 fadeDuration
+            float blackScreenFadeInTime = 0.5f;
+            while (timer < blackScreenFadeInTime)
+            {
+                timer += Time.deltaTime;
+                float alpha = Mathf.Clamp01(timer / blackScreenFadeInTime);
+                blackScreenImage.color = new Color(0, 0, 0, alpha);
+                yield return null;
+            }
+            // 确保完全不透明
+            blackScreenImage.color = Color.black;
+        }
+        else
+        {
+            Debug.LogWarning("未指定黑屏图片，将直接切换场景。");
+        }
+
+        // 3. 调用GameManager加载下一个场景
+        // 因为屏幕已经是黑色的，所以加载过程是看不见的
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartLevel();
+        }
+        else
+        {
+            Debug.LogError("找不到GameManager实例！无法加载关卡。");
+        }
+
+        // 此时脚本所在的GameObject可以不用禁用了，因为场景马上要被卸载
     }
 
     #region 动画协程

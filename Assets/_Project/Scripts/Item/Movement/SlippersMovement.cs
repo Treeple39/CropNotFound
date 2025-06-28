@@ -2,29 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WanderEnemy : BaseMovement
+public class SlippersMovement : BaseMovement
 {
-    [Header("巡逻设置")]
-    public float wanderRadius = 5f;    // 巡逻半径
-    public float wanderInterval = 1.5f;  // 巡逻间隔
+    [Header("????")]
+    public float wanderRadius = 5f;    // ????
+    public float wanderInterval = 1.5f;  // ????
     private float wanderTimer;
-    private Vector3 wanderCenter;     // 巡逻中心点
+    private Vector3 wanderCenter;     // ?????
 
-    [Header("冲锋设置")]
-    public float chargeSpeed = 12f;    // 冲锋速度
-    public float chargeDistance = 7f;  // 冲锋距离
-    public float chargeCooldown = 5f;  // 技能冷却时间
+    [Header("????")]
+    public float chargeSpeed = 12f;    // ????
+    public float chargeDistance = 7f;  // ????
+    public float chargeCooldown = 5f;  // ??????
     private bool isInCooldown = false;
-    private Vector3 chargeTarget;      // 冲锋目标点
+    private Vector3 chargeTarget;      // ?????
     private bool isCharging = false;
 
-    [Header("玩家检测")]
-    public float detectRange = 8f;     // 发现玩家的距离
-    public LayerMask playerLayer;      // 玩家层级
-    private Transform player;          // 玩家引用
+    [Header("????")]
+    public float detectRange = 6f;     // ???????
+    public LayerMask playerLayer;      // ????
+    private Transform player;          // ??Transform
     private Vector3 detectedPlayerPos;
 
-    #region 状态机
+    #region ???
     public Enemy enemy;
     private bool isInitialized = false;
     #endregion
@@ -36,13 +36,39 @@ public class WanderEnemy : BaseMovement
         enemy = GetComponent<Enemy>();
         if (enemy == null)
         {
-            Debug.LogError("缺少Enemy组件!", gameObject);
+            Debug.LogError("????Enemy??!", gameObject);
             enabled = false;
             return;
         }
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
+        // ??????????
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player == null)
+        {
+            player = GameObject.Find("Player")?.transform;
+            if (player == null)
+            {
+                Debug.LogError("????????! ??????Player??", gameObject);
+            }
+            else
+            {
+                Debug.Log("????????");
+            }
+        }
+        else
+        {
+            Debug.Log("????????");
+        }
+        
+        // ????????
+        if (playerLayer == 0)
+        {
+            playerLayer = LayerMask.GetMask("Player");
+            Debug.Log("????????: " + playerLayer);
+        }
+        
         wanderTimer = wanderInterval;
-        wanderCenter = transform.position; // 初始化巡逻中心
+        wanderCenter = transform.position; // ????????
         StartCoroutine(DelayedInit());
     }
 
@@ -52,7 +78,7 @@ public class WanderEnemy : BaseMovement
 
         if (enemy.idleState == null || enemy.dashState == null)
         {
-            Debug.LogError("Enemy状态未初始化!");
+            Debug.LogError("Enemy??????!");
             yield break;
         }
         isInitialized = true;
@@ -63,10 +89,18 @@ public class WanderEnemy : BaseMovement
     {
         base.Update();
 
-        if (!canMove || isInCooldown) return;
+        if (!canMove || !isInitialized) return;
+        
+        // ????????
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+            return;
+        }
 
         if (!isInCooldown && !isCharging && DetectPlayer())
         {
+            Debug.Log("?????????????");
             StartCharge();
         }
         else if (!isCharging)
@@ -77,11 +111,25 @@ public class WanderEnemy : BaseMovement
 
     private bool DetectPlayer()
     {
-        if (player == null) return false;
-        return Vector3.Distance(transform.position, player.position) <= detectRange;
+        if (player == null) 
+        {
+            Debug.LogWarning("???????????");
+            return false;
+        }
+        
+        float distance = Vector3.Distance(transform.position, player.position);
+        bool detected = distance <= detectRange;
+        
+        // ???????????
+        if (Time.frameCount % 60 == 0)
+        {
+            Debug.Log($"????: ??={distance}, ??={detectRange}, ????={detected}");
+        }
+        
+        return detected;
     }
 
-    // 开始冲锋
+    // ????
     private void StartCharge()
     {
         isCharging = true;
@@ -95,35 +143,53 @@ public class WanderEnemy : BaseMovement
 
         float chargeTime = chargeDistance / chargeSpeed;
         Move(chargeDir, chargeTime);
-        enemy.stateMachine.ChangeState(enemy.dashState);
+        
+        // ?????????
+        if (enemy != null && enemy.dashState != null && enemy.stateMachine != null)
+        {
+            enemy.stateMachine.ChangeState(enemy.dashState);
+            Debug.Log("?????????");
+        }
+        else
+        {
+            Debug.LogError("??????????????????");
+        }
 
         Invoke(nameof(CheckChargeResult), chargeTime);
     }
 
-    // 冲锋结束后判定
+    // ?????????
     private void CheckChargeResult()
     {
         isCharging = false;
         moveSpeed = _moveSpeed;
-        enemy.stateMachine.ChangeState(enemy.idleState);
+        
+        // ?????????
+        if (enemy != null && enemy.idleState != null && enemy.stateMachine != null)
+        {
+            enemy.stateMachine.ChangeState(enemy.idleState);
+            Debug.Log("?????????????");
+        }
 
         StartCooldown();
     }
 
-    // 进入冷却状态
+    // ??????
     private void StartCooldown()
     {
         isInCooldown = true;
+        Debug.Log($"?????????{chargeCooldown}???????");
         Invoke(nameof(ResetCooldown), chargeCooldown);
     }
 
-    // 重置冷却
+    // ??????
     private void ResetCooldown()
     {
         isInCooldown = false;
+        Debug.Log("?????????????");
     }
 
-    // 随机巡逻
+    // ????
     private void Wander()
     {
         wanderTimer += Time.deltaTime;
@@ -138,17 +204,28 @@ public class WanderEnemy : BaseMovement
         }
     }
 
-    // 碰撞检测
+    // ????
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
 
         if (isCharging && collision.gameObject.CompareTag("Player"))
         {
-            // 命中玩家后立即停止冲锋
+            Debug.Log("????????");
+            // ???????????
             CancelInvoke(nameof(CheckChargeResult));
             enemy.stateMachine.ChangeState(enemy.idleState);
             StartCooldown();
         }
+    }
+    
+    // ???????????
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, wanderRadius);
     }
 }

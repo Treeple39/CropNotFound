@@ -20,6 +20,10 @@ public class ItemGenerator : MonoBehaviour
     public int SlippersCount;      // 拖鞋总数
     public float ItemMinDistance = 0.5f; // 物体最小间距
     public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
+    
+    // TileMap相关
+    public LayerMask floorLayer;   // 地板层，用于射线检测
+    public float raycastDistance = 10f; // 射线检测距离
 
     // 难度等级和持续生成相关参数
     public int difficultyLevel = 1; // 难度等级，初始值为1
@@ -57,7 +61,7 @@ public class ItemGenerator : MonoBehaviour
 
     // 记录已生成物品的位置
     public List<Transform> spawnedTransforms = new List<Transform>();
-
+    
     // 地图边界
     public Vector3 mapMin = new Vector3(-20f, -20f, 0f);
     public Vector3 mapMax = new Vector3(20f, 20f, 0f);
@@ -84,14 +88,21 @@ public class ItemGenerator : MonoBehaviour
     {
         // 加载预制体
         LoadPrefabs();
-
+        
+        // 设置地板层（默认为"Default"层，可在Inspector中修改）
+        if (floorLayer == 0)
+        {
+            floorLayer = LayerMask.GetMask("GenerateArea");
+            Debug.Log("使用默认层作为地板层: " + floorLayer);
+        }
+        
         // 获取分数组件
         scoreComponent = FindObjectOfType<Score>();
         if (scoreComponent == null)
         {
             Debug.LogWarning("未找到Score组件，难度调整可能无法正常工作");
         }
-
+        
         // 生成初始物品
         StartCoroutine(GenerateItems());
     }
@@ -101,7 +112,7 @@ public class ItemGenerator : MonoBehaviour
         // 从Resources文件夹加载预制体
         // 注意：预制体应该放在Resources文件夹下
         prefabs = Resources.LoadAll<GameObject>("Prefabs");
-
+        
         if (prefabs == null || prefabs.Length == 0)
         {
             Debug.LogError("未找到预制体，请确保预制体路径正确!");
@@ -172,6 +183,13 @@ public class ItemGenerator : MonoBehaviour
             float z = Random.Range(mapMin.z, mapMax.z);
             Vector3 position = new Vector3(x, 0, z);
 
+            // 检查是否在TileMap上
+            if (!IsPositionOnFloor(position))
+            {
+                attempts++;
+                continue;
+            }
+            
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
             foreach (Transform transform in spawnedTransforms)
@@ -195,13 +213,13 @@ public class ItemGenerator : MonoBehaviour
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
                 spawnedTransforms.Add(item.transform);
-
+                
                 // 计算当前可移动物体的理想数量
                 int idealMovableCount = Mathf.RoundToInt((currentCount + 1) * MovableItemRatio);
-
+                
                 // 决定这个物体是否可移动
                 bool shouldBeMovable;
-
+                
                 if (movableItemCount < targetMovableItems && currentCount + 1 == targetMovableItems)
                 {
                     // 如果是最后一个物体，且可移动物体不足，则一定要设为可移动
@@ -217,7 +235,7 @@ public class ItemGenerator : MonoBehaviour
                     // 根据当前比例决定是否可移动
                     shouldBeMovable = movableItemCount < idealMovableCount;
                 }
-
+                
                 // 获取并设置BaseMovement组件
                 BaseMovement movement = item.GetComponent<BaseMovement>();
                 if (movement != null)
@@ -232,7 +250,7 @@ public class ItemGenerator : MonoBehaviour
                 {
                     Debug.LogWarning($"物体 {item.name} 没有BaseMovement组件");
                 }
-
+                
                 return true;
             }
             else
@@ -243,6 +261,24 @@ public class ItemGenerator : MonoBehaviour
         }
 
         Debug.LogWarning($"无法为 {itemType} 找到合适的生成位置，已尝试 {maxAttempts} 次");
+        return false;
+    }
+
+    // 检查位置是否在地板TileMap上
+    private bool IsPositionOnFloor(Vector3 position)
+    {
+        // 从上方向下发射射线
+        Vector3 rayStart = position + Vector3.up * raycastDistance;
+        RaycastHit2D hit = Physics2D.Raycast(rayStart, Vector2.down, raycastDistance * 2, floorLayer);
+        
+        // 如果击中了地板瓦片，并且距离合适
+        if (hit.collider != null && hit.collider.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>() != null)
+        {
+            // 将实际生成位置设置为射线击中点
+            position.y = hit.point.y;
+            return true;
+        }
+        
         return false;
     }
 
@@ -301,7 +337,7 @@ public class ItemGenerator : MonoBehaviour
 
         return ItemType.Slippers;
     }
-
+    
     // 生成单个持续物体
     private void SpawnContinuousItem()
     {
@@ -311,7 +347,7 @@ public class ItemGenerator : MonoBehaviour
         // 尝试生成物体
         TryGenerateContinuousItem(selectedType);
     }
-
+    
     // 尝试生成持续物体
     private bool TryGenerateContinuousItem(ItemType itemType)
     {
@@ -326,6 +362,13 @@ public class ItemGenerator : MonoBehaviour
             float z = Random.Range(mapMin.z, mapMax.z);
             Vector3 position = new Vector3(x, 0, z);
 
+            // 检查是否在TileMap上
+            if (!IsPositionOnFloor(position))
+            {
+                attempts++;
+                continue;
+            }
+            
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
             foreach (Transform transform in spawnedTransforms)
@@ -349,7 +392,7 @@ public class ItemGenerator : MonoBehaviour
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
                 spawnedTransforms.Add(item.transform);
-
+                
                 // 获取并设置BaseMovement组件 - 所有持续生成的物体都是可移动的
                 BaseMovement movement = item.GetComponent<BaseMovement>();
                 if (movement != null)
@@ -361,7 +404,7 @@ public class ItemGenerator : MonoBehaviour
                 {
                     Debug.LogWarning($"物体 {item.name} 没有BaseMovement组件");
                 }
-
+                
                 return true;
             }
             else
@@ -374,7 +417,7 @@ public class ItemGenerator : MonoBehaviour
         Debug.LogWarning($"无法为持续生成的 {itemType} 找到合适的生成位置，已尝试 {maxAttempts} 次");
         return false;
     }
-
+    
     // 更新难度等级
     private void UpdateDifficultyLevel()
     {
@@ -417,5 +460,19 @@ public class ItemGenerator : MonoBehaviour
 
         Debug.LogError($"无效的物品类型名称: {itemTypeName}");
         return false;
+    }
+    
+    // 在编辑器中绘制射线可视化
+    private void OnDrawGizmosSelected()
+    {
+        // 显示地图边界
+        Gizmos.color = Color.blue;
+        Vector3 size = new Vector3(
+            mapMax.x - mapMin.x,
+            0,
+            mapMax.z - mapMin.z);
+            
+        Vector3 center = (mapMax + mapMin) * 0.5f;
+        Gizmos.DrawWireCube(center, size);
     }
 }

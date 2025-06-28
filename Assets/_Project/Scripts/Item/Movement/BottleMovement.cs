@@ -13,6 +13,7 @@ public class BottleMovement : BaseMovement
     private float stayTimer;                              // 停留计时器
     private float currentStayTime;                        // 当前停留时间
     private Collider bottleCollider;                      // 瓶子的碰撞器
+    private bool isTransporting = false; // 添加标志变量，表示是否正在传送过程中
 
     #region 状态机
     public Enemy enemy;
@@ -63,15 +64,19 @@ public class BottleMovement : BaseMovement
     {
         base.Update();
         
+        // 如果正在传送过程中，不进行计时
+        if (isTransporting)
+            return;
+            
         // 更新停留计时器
         stayTimer += Time.deltaTime;
          
         // 如果停留时间结束，进行传送
         if (stayTimer >= currentStayTime)
         {
+            isTransporting = true; // 设置标志，防止重复触发
             enemy.stateMachine.ChangeState(enemy.shineState);
             StartCoroutine(ChangeStateWithDelay());
-            
         }
     }
     private IEnumerator ChangeStateWithDelay()
@@ -83,6 +88,7 @@ public class BottleMovement : BaseMovement
         enemy.stateMachine.ChangeState(enemy.idleState);
         TeleportToRandomPosition();
         SetNewStayTime();
+        isTransporting = false; // 传送完成，重置标志
     }
     // 设置新的停留时间
     private void SetNewStayTime()
@@ -97,7 +103,7 @@ public class BottleMovement : BaseMovement
     {
         // 持续尝试找到一个没有重叠的位置
         int attempts = 0;
-        while (true)
+        while (attempts < maxTeleportAttempts)
         {
             attempts++;
             
@@ -114,6 +120,9 @@ public class BottleMovement : BaseMovement
                 return;
             }
         }
+        
+        // 如果达到最大尝试次数仍未找到合适位置，保持在原位
+        Debug.LogWarning($"瓶子尝试传送{maxTeleportAttempts}次后未找到合适位置，保持原位");
     }
     
     // 检查指定位置是否与其他物体重叠

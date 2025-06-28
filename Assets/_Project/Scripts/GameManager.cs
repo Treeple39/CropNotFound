@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement; // 必须引用这个命名空间来管理场
 
 public class GameManager : MonoBehaviour
 {
-    // --- 单例模式实现 ---
     public static GameManager Instance { get; private set; }
 
     [Header("场景名称配置")]
@@ -14,19 +13,30 @@ public class GameManager : MonoBehaviour
     [Tooltip("主菜单场景的文件名")]
     public string mainMenuSceneName = "MainMenuScene";
 
+    [Header("关卡音乐配置")]
+    // 将你的序列BGM在这里公开，方便在Inspector中拖拽音频文件
+    public SequencedBgm level1Bgm;
+
+    private void Start()
+    {
+        if (AudioManager.S != null)
+        {
+            AudioManager.S.PlaySequencedBGM(level1Bgm);
+        }
+        else
+        {
+            Debug.Log("AudioManager.S = null");
+        }
+    }
     private void Awake()
     {
-        // 这是实现单例模式和跨场景保留的核心代码
         if (Instance == null)
         {
-            // 如果Instance不存在，则将此实例设为单例
             Instance = this;
-            // 并告诉Unity在加载新场景时不要销毁这个GameObject
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // 如果场景中已存在一个GameManager，则销毁这个新的（重复的）实例
             Destroy(gameObject);
         }
     }
@@ -47,6 +57,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager: 剧情结束，开始加载关卡场景...");
         SceneManager.LoadScene(levelSceneName);
+        if (AudioManager.S != null)
+        {
+            AudioManager.S.PlaySequencedBGM(level1Bgm);
+        }
     }
 
     /// <summary>

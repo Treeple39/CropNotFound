@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Objects
   - Player
-  - 
+  - GenerateArea
   - 
   - 
   - 
@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Back
+    uniqueID: 3516845623
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Front
+    uniqueID: 242214791
     locked: 0
