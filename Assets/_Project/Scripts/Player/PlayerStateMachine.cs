@@ -1,93 +1,160 @@
+using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-/// <summary>
-/// 玩家状态枚举
-/// </summary>
-public enum PlayerState
-{
-    Idle,
-    WalkUp,
-    WalkDown,
-    WalkLeft,
-    WalkRight,
-    Dizzy
-}
-
-/// <summary>
-/// 通用玩家状态机：根据输入、移动速度及眩晕开关来切换 Spine 动画
-/// 挂在玩家根节点，须同时存在：
-///   - PlayerInputController
-///   - PlayerMovementController
-///   - SpineAnimationController
-/// </summary>
-[RequireComponent(typeof(PlayerInputController))]
-[RequireComponent(typeof(PlayerMovementController))]
 public class PlayerStateMachine : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("速度低于此阈值视为静止")] public float moveThreshold = 0.1f;
-    [Tooltip("是否强制进入眩晕状态")] public bool isDizzy;
+    public enum PlayerState
+    {
+        Idle,
+        WalkUp,
+        WalkDown,
+        WalkLR,
+        Dizzy
+    }
 
-    // 当前状态（Inspector 可看）
-    [Header("Runtime State")] public PlayerState currentState;
+    [Header("按顺序填：Idle, WalkLR, WalkUp, WalkDown, Dizzy")]
+    public SpineAnimationController[] stateControllers;
 
-    // 对应 Spine 动画名数组（下标顺序必须对应 PlayerState 枚举）
-    private static readonly string[] animNames = {
-        "wink",      // Idle
-        "walk",   // WalkUp
-        "walk", // WalkDown
-        "run", // WalkLeft
-        "run",// WalkRight
-        "wink"      // Dizzy
-    };
+    [Header("本地阈值")]
+    public float walkThreshold = 0.1f;
+    public float runThreshold = 2.0f;
+    public bool isDizzy = false;
 
-    // 依赖组件引用
-    private PlayerInputController inputController;
-    private PlayerMovementController movementController;
-    private SpineAnimationController spineController;
+    [Header("动画名配置")]
+    public string idleAnim = "idle";
+    public string walkAnim = "walk";
+    public string runAnim = "run";
+    public string walkUpAnim = "walk";
+    public string runUpAnim = "run";
+    public string walkDownAnim = "walk";
+    public string runDownAnim = "run";
+    public string dizzyAnim = "dizzy";
+    public string winkAnim = "wink";
+
+    PlayerState currentState;
+
+    FootstepPlayer foot;
+    PlayerMovementController mov;
 
     void Awake()
     {
-        inputController = GetComponent<PlayerInputController>();
-        movementController = GetComponent<PlayerMovementController>();
-        spineController = GetComponentInChildren<SpineAnimationController>();
-
+        foot = GetComponentInChildren<FootstepPlayer>();
+        mov = GetComponent<PlayerMovementController>();
     }
-    private void Start()
+    void Start()
     {
-        // 初始状态设为 Idle 并循环播放
-        currentState = PlayerState.Idle;
-        spineController.PlayAnimation(animNames[(int)currentState], true);
+        SetState(PlayerState.Idle);
+        // 启动 Wink 协程（可选）
+        StartCoroutine(WinkRoutine());
     }
 
     void Update()
     {
-        // 计算下一帧应处于的状态
-        PlayerState newState = DetermineState();
-        if (newState != currentState)
+        // 1) 优先 Dizzy
+        if (isDizzy)
         {
-            currentState = newState;
-            bool loop = currentState != PlayerState.Dizzy;
-            spineController.PlayAnimation(animNames[(int)currentState], loop);
+            if (currentState != PlayerState.Dizzy)
+                SetState(PlayerState.Dizzy);
+            return;
         }
+
+        // 2) 根据速度判断
+        Vector2 vel = mov.GetVelocity();
+        float speed = vel.magnitude;
+        if (vel.magnitude > walkThreshold)
+        {
+            foot.TryStep();
+        }
+        // 区分上下 vs 左右
+        PlayerState next;
+        if (speed >= walkThreshold)
+        {
+            if (Mathf.Abs(vel.x) > Mathf.Abs(vel.y))
+                next = PlayerState.WalkLR;
+            else
+                next = vel.y > 0 ? PlayerState.WalkUp : PlayerState.WalkDown;
+        }
+        else
+        {
+            next = PlayerState.Idle;
+        }
+
+        if (next != currentState)
+            SetState(next);
     }
 
-    /// <summary>
-    /// 根据眩晕标志与移动速度判断玩家状态
-    /// </summary>
-    private PlayerState DetermineState()
+    void SetState(PlayerState next)
     {
-        if (isDizzy)
-            return PlayerState.Dizzy;
+        // 先关所有骨骼
+        foreach (var ctrl in stateControllers)
+            if (ctrl) ctrl.gameObject.SetActive(false);
 
-        Vector2 vel = movementController.GetVelocity();
-        if (vel.sqrMagnitude < moveThreshold * moveThreshold)
-            return PlayerState.Idle;
+        // 选控制器和动画名
+        SpineAnimationController c = null;
+        string anim = idleAnim;
+        bool flip = false;
+        bool loop = true;
 
-        // 区分水平/垂直移动方向
-        if (Mathf.Abs(vel.x) > Mathf.Abs(vel.y))
-            return vel.x > 0 ? PlayerState.WalkRight : PlayerState.WalkLeft;
-        else
-            return vel.y > 0 ? PlayerState.WalkUp : PlayerState.WalkDown;
+        Vector2 vel = mov.GetVelocity();
+        float speed = vel.magnitude;
+
+        switch (next)
+        {
+            case PlayerState.Idle:
+                c = stateControllers[0];
+                anim = idleAnim;
+                break;
+
+            case PlayerState.WalkLR:
+                c = stateControllers[1];
+                flip = vel.x < 0; // x<0 向左
+                anim = (speed >= runThreshold) ? runAnim : walkAnim;
+                break;
+
+            case PlayerState.WalkUp:
+                c = stateControllers[2];
+                anim = (speed >= runThreshold) ? runUpAnim : walkUpAnim;
+                break;
+
+            case PlayerState.WalkDown:
+                c = stateControllers[3];
+                anim = (speed >= runThreshold) ? runDownAnim : walkDownAnim;
+                break;
+
+            case PlayerState.Dizzy:
+                c = stateControllers[4];
+                anim = dizzyAnim;
+                loop = false;
+                break;
+        }
+
+        if (c == null)
+        {
+            Debug.LogError($"[{name}] 没给状态 {next} 绑定控制器");
+            return;
+        }
+
+        c.gameObject.SetActive(true);
+        c.SetFlipX(flip);
+        c.Play(anim, loop);
+
+        currentState = next;
+    }
+
+    // Wink 叠加示例
+    System.Collections.IEnumerator WinkRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 8f));
+            if (currentState != PlayerState.Dizzy && currentState != PlayerState.WalkUp)
+            {
+                // 用第二轨道让 wink 渲染在最上层
+                stateControllers[(int)PlayerState.Idle]
+                  .Queue(winkAnim, false, null, trackIndex: 1);
+            }
+        }
     }
 }
