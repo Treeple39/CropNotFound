@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
 
     public EnemyDieState dieState { get; private set; }
     public EnemyShineState shineState { get; private set; }
+    public EnemyDizzState dizzState { get; private set; }
     #endregion
 
     public bool dead;
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
         fleeState = new EnemyFleeState(stateMachine, this, "Flee");
         dieState = new EnemyDieState(stateMachine, this, "Die");
         shineState = new EnemyShineState(stateMachine, this, "Shine");
+        dizzState = new EnemyDizzState(stateMachine, this, "Dizz");
         stateMachine.Initialize(idleState);
     }
 
