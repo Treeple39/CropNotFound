@@ -17,6 +17,4 @@ public class EnemyIdleState : EnemyState
     {
         base.Exit();
     }
-
-
 }
