@@ -1,0 +1,74 @@
+{
+  "storyData": [
+    {
+      "Key": 1, "ContentTitle": "1", "ContentSpeaker": "天神", "Content": "天使0628，咳咳......", "NextContent": "2", "ContinueTag": "+",
+      "Cha1Action": "AppearAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 2, "ContentTitle": "2", "ContentSpeaker": "天使", "Content": "在，天神大人。", "NextContent": "3", "ContinueTag": "+",
+      "Cha1Action": "MoveTo", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "ShakeAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 3, "ContentTitle": "3", "ContentSpeaker": "天神", "Content": "我需要你帮我去人间收集一些灵魂碎片。", "NextContent": "4", "ContinueTag": "+",
+      "Cha1Action": "ShakeAt", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样（教程）", "NextContent": "5", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 5, "ContentTitle": "5", "ContentSpeaker": "天神", "Content": "然后，交还给我。", "NextContent": "6", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 6, "ContentTitle": "6", "ContentSpeaker": "天使", "Content": "要收集多少呢？", "NextContent": "7", "ContinueTag": "+",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "ShakeAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 7, "ContentTitle": "7", "ContentSpeaker": "天神", "Content": "（看了看“造人工作台”）", "NextContent": "8", "ContinueTag": "+",
+      "Cha1Action": "MoveTo", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 8, "ContentTitle": "8", "ContentSpeaker": "天神", "Content": "越多越好，我只给你2分钟时间。", "NextContent": "9", "ContinueTag": "&",
+      "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 9, "ContentTitle": "9", "ContentSpeaker": "CHOICE_NODE", "Content": "这是个选项节点", "NextContent": "10,11", "ContinueTag": "^",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 10, "ContentTitle": "10", "ContentSpeaker": "天使", "Content": "收到.....我知道该怎么做了。", "NextContent": "12", "ContinueTag": "+",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 11, "ContentTitle": "11", "ContentSpeaker": "天使", "Content": "切，明明是您的粗心，还要我背锅......", "NextContent": "13", "ContinueTag": "+",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 12, "ContentTitle": "12", "ContentSpeaker": "天神", "Content": "很好！做的好可以加绩效。", "NextContent": "0", "ContinueTag": "#",
+      "Cha1Action": "AppearAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 13, "ContentTitle": "13", "ContentSpeaker": "天神", "Content": "你说什么？", "NextContent": "14", "ContinueTag": "+",
+      "Cha1Action": "ShakeAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 14, "ContentTitle": "14", "ContentSpeaker": "天使", "Content": "没有没有！我现在就去！", "NextContent": "0", "ContinueTag": "#",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "ShakeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_idle"
+    }
+  ]
+}

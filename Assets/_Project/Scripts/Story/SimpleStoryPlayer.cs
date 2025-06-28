@@ -1,306 +1,277 @@
-// 文件名: SimpleStoryPlayer.cs (终极方案)
-// 作用: 支持双人对话和独立动画的极简剧情播放器。
-
+// 文件名: StoryManager.cs (优化版)
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using SimpleStory;
+using CustomStorySystem; // 引用我们自己的命名空间
 
-[RequireComponent(typeof(AudioSource))]
-public class SimpleStoryPlayer : MonoBehaviour
+public class StoryManager : MonoBehaviour
 {
     [Header("UI 引用")]
-    public Image backgroundImage;
-    public Image character1Image; // 角色1
-    public Image character2Image; // 角色2
+    public TextAsset storyJsonFile;
+    public Image character1Image;
+    public Image character2Image;
     public Text speakerNameText;
     public Text contentText;
-    public Image dialogueBoxImage;
+    public GameObject dialoguePanel;
     public GameObject choicePanel;
-    public Image blackImage;
     public Button[] choiceButtons;
-
-    [Header("配置")]
-    public TextAsset storyJsonFile;
-    public GameObject playerControllerObject;
 
     [Header("效果参数")]
     public float typeSpeed = 0.05f;
-    public float fadeDuration = 0.5f;
-    public AudioClip typeSound;
-    public AudioClip nextLineSound;
+    public float fadeDuration = 0.3f;
 
-    private AudioSource audioSource, bgmSource;
-    private List<StoryLine> storyLines;
-    private int currentLineIndex = 0;
+    private Dictionary<int, StoryLine> storyData;
+    private StoryLine currentLine;
+    private int currentLineKey = 1; // 从Key为1的行开始
     private bool isTyping = false;
     private Coroutine typingCoroutine;
+
+    // 存储角色初始位置 (这个可以保留，以备将来需要复位功能)
     private Dictionary<Image, Vector2> originalPositions = new Dictionary<Image, Vector2>();
-    private Dictionary<Image, Coroutine> actionCoroutines = new Dictionary<Image, Coroutine>();
-
-    void Awake()
-    {
-        AudioSource[] sources = GetComponents<AudioSource>();
-        audioSource = sources.Length > 0 ? sources[0] : gameObject.AddComponent<AudioSource>();
-        bgmSource = sources.Length > 1 ? sources[1] : gameObject.AddComponent<AudioSource>();
-        bgmSource.loop = true;
-
-        if (playerControllerObject != null) playerControllerObject.SetActive(false);
-
-        if (character1Image != null) originalPositions[character1Image] = character1Image.rectTransform.anchoredPosition;
-        if (character2Image != null) originalPositions[character2Image] = character2Image.rectTransform.anchoredPosition;
-
-        if (dialogueBoxImage != null)
-        {
-            dialogueBoxImage.gameObject.SetActive(true); 
-        }
-        
-
-        ClearUI();
-    }
 
     void Start()
     {
-        storyLines = JsonHelper.LoadStory(storyJsonFile);
-        ShowLine(currentLineIndex);
+        storyData = JsonHelper.LoadStory(storyJsonFile);
+        if (storyData == null)
+        {
+            Debug.LogError("剧情数据加载失败，请检查JSON文件！");
+            this.enabled = false;
+            return;
+        }
+
+        // 保存初始位置
+        if (character1Image != null) originalPositions[character1Image] = character1Image.rectTransform.anchoredPosition;
+        if (character2Image != null) originalPositions[character2Image] = character2Image.rectTransform.anchoredPosition;
+
+        // 【优化1】: 剧情开始时，立即隐藏所有元素，而不是等待淡出
+        HideAllImmediately();
+
+        ShowLine(currentLineKey);
     }
 
     void Update()
     {
         if (choicePanel.activeSelf) return;
+
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            if (isTyping) CompleteLine();
-            else GoToNextLine();
+            if (isTyping)
+            {
+                CompleteLine();
+            }
+            else
+            {
+                // 确保没有正在执行的协程时才进入下一句
+                if (typingCoroutine == null)
+                {
+                    GoToNextLine();
+                }
+            }
         }
     }
 
-    void ShowLine(int index)
+    void ShowLine(int key)
     {
-        if (index >= storyLines.Count) { EndStory(); return; }
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        if (!storyData.ContainsKey(key) || key == 0)
+        {
+            EndStory();
+            return;
+        }
 
-        currentLineIndex = index;
-        StoryLine line = storyLines[index];
+        currentLineKey = key;
+        currentLine = storyData[key];
 
-        UpdateBackgroundImage(line.BackgroundImage);
-        UpdateBackgroundMusic(line.BackgroundMusic);
-        UpdateDialogueSound(line.DialogueSound);
+        // 如果是选项节点，则特殊处理
+        if (currentLine.ContentSpeaker == "CHOICE_NODE")
+        {
+            ShowChoices();
+            return;
+        }
 
-        ProcessCharacterAndActions(line);
-
-        speakerNameText.text = line.Speaker;
-        typingCoroutine = StartCoroutine(TypeLineCoroutine(line.Content));
+        // 确保对话框显示，选项框隐藏
+        dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
+
+        ProcessCharacterAction(character1Image, currentLine.Cha1Action, currentLine.CoordinateX1, currentLine.Cha1ImageSource);
+        ProcessCharacterAction(character2Image, currentLine.Cha2Action, currentLine.CoordinateX2, currentLine.Cha2ImageSource);
+
+        speakerNameText.text = currentLine.ContentSpeaker;
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        typingCoroutine = StartCoroutine(TypeLineCoroutine(currentLine.Content));
     }
 
-    private void ProcessCharacterAndActions(StoryLine line)
+    void ProcessCharacterAction(Image characterImage, string action, float xPos, string imageSource)
     {
-        if (!string.IsNullOrEmpty(line.Character))
+        if (characterImage == null) return;
+
+        // 只有在提供了新的图片资源时才更新Sprite
+        if (!string.IsNullOrEmpty(imageSource))
         {
-            string[] parts = line.Character.Split(':');
-            if (parts.Length == 2)
-            {
-                UpdateImage(GetCharacterImage(parts[0]), parts[1], true);
-            }
+            characterImage.sprite = Resources.Load<Sprite>(imageSource);
         }
 
-        if (!string.IsNullOrEmpty(line.Action))
+        switch (action)
         {
-            string[] commands = line.Action.Split(',');
-            foreach (var command in commands)
-            {
-                string[] parts = command.Trim().Split(':');
-                if (parts.Length == 2)
+            case "AppearAt":
+                characterImage.rectTransform.anchoredPosition = new Vector2(xPos, characterImage.rectTransform.anchoredPosition.y);
+                StartCoroutine(FadeImage(characterImage, 1f));
+                break;
+            case "Disappear":
+                StartCoroutine(FadeImage(characterImage, 0f));
+                break;
+            case "MoveTo":
+                StartCoroutine(MoveCharacter(characterImage, xPos));
+                break;
+            case "ShakeAt":
+                characterImage.rectTransform.anchoredPosition = new Vector2(xPos, characterImage.rectTransform.anchoredPosition.y);
+                // 确保角色是可见的才执行震动
+                if (characterImage.color.a < 0.1f)
                 {
-                    ExecuteActionOnCharacter(GetCharacterImage(parts[0]), parts[1]);
+                    StartCoroutine(FadeImage(characterImage, 1f));
+                }
+                StartCoroutine(ShakeCharacter(characterImage));
+                break;
+            case "Shake":
+                StartCoroutine(ShakeCharacter(characterImage));
+                break;
+            case "Continue":
+            default: // 如果action为空或未定义，则什么都不做，保持现状
+                break;
+        }
+    }
+
+    void GoToNextLine()
+    {
+        // 修正：NextContent可能为0，表示结束
+        if (string.IsNullOrEmpty(currentLine.NextContent))
+        {
+            EndStory();
+            return;
+        }
+        int nextKey = int.Parse(currentLine.NextContent);
+        ShowLine(nextKey);
+    }
+
+    void ShowChoices()
+    {
+        // 【优化2】: 进入选项时，隐藏对话框和所有角色
+        dialoguePanel.SetActive(false);
+        StartCoroutine(FadeImage(character1Image, 0f));
+        StartCoroutine(FadeImage(character2Image, 0f));
+        
+
+        choicePanel.SetActive(true);
+
+        string[] nextKeysStr = currentLine.NextContent.Split(',');
+
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            if (i < nextKeysStr.Length)
+            {
+                int choiceKey = int.Parse(nextKeysStr[i].Trim());
+                if (storyData.ContainsKey(choiceKey))
+                {
+                    choiceButtons[i].gameObject.SetActive(true);
+                    choiceButtons[i].GetComponentInChildren<Text>().text = storyData[choiceKey].Content;
+
+                    choiceButtons[i].onClick.RemoveAllListeners();
+                    choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(choiceKey));
                 }
             }
+            else
+            {
+                choiceButtons[i].gameObject.SetActive(false);
+            }
         }
     }
 
-    private Image GetCharacterImage(string target)
+    void OnChoiceSelected(int selectedKey)
     {
-        if (target.ToLower() == "char1") return character1Image;
-        if (target.ToLower() == "char2") return character2Image;
-        Debug.LogWarning("未知的角色目标: " + target);
-        return null;
+        // 做出选择后，隐藏选项面板，准备显示下一句对话
+        choicePanel.SetActive(false);
+        ShowLine(selectedKey);
     }
 
-    private void ExecuteActionOnCharacter(Image targetImage, string actionCommand)
-    {
-        if (targetImage == null) return;
-
-        if (actionCoroutines.ContainsKey(targetImage) && actionCoroutines[targetImage] != null)
-        {
-            StopCoroutine(actionCoroutines[targetImage]);
-        }
-
-        string[] parts = actionCommand.Split('=');
-        string command = parts[0].ToLower();
-
-        switch (command)
-        {
-            case "appear":
-                StartCoroutine(FadeImageCoroutine(targetImage, 1f));
-                break;
-            case "hide":
-                StartCoroutine(FadeImageCoroutine(targetImage, 0f));
-                break;
-            case "shake":
-                actionCoroutines[targetImage] = StartCoroutine(ShakeCharacter(targetImage));
-                break;
-            case "move":
-                if (parts.Length > 1 && float.TryParse(parts[1], out float xPos))
-                {
-                    actionCoroutines[targetImage] = StartCoroutine(MoveCharacter(targetImage, xPos));
-                }
-                break;
-        }
-    }
-
-    private IEnumerator ShakeCharacter(Image image)
-    {
-        if (image.color.a < 0.1f) yield break;
-        float duration = 0.5f;
-        float magnitude = 10f;
-        Vector2 startPos = originalPositions[image];
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            image.rectTransform.anchoredPosition = startPos + Random.insideUnitCircle * magnitude;
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        image.rectTransform.anchoredPosition = startPos;
-    }
-
-    private IEnumerator MoveCharacter(Image image, float targetX)
-    {
-        if (image.color.a < 0.1f) yield break;
-        Vector2 startPos = image.rectTransform.anchoredPosition;
-        Vector2 endPos = new Vector2(targetX, startPos.y);
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            image.rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, elapsed / fadeDuration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        image.rectTransform.anchoredPosition = endPos;
-        originalPositions[image] = endPos;
-    }
-
-    private IEnumerator TypeLineCoroutine(string text)
+    IEnumerator TypeLineCoroutine(string text)
     {
         isTyping = true;
         contentText.text = "";
         foreach (char c in text)
         {
             contentText.text += c;
-            if (typeSound != null) audioSource.PlayOneShot(typeSound, 0.5f);
             yield return new WaitForSeconds(typeSpeed);
         }
         isTyping = false;
-        ShowChoicesIfNeeded();
+        typingCoroutine = null;
     }
 
-    private void CompleteLine()
+    void CompleteLine()
     {
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
-        isTyping = false;
-        contentText.text = storyLines[currentLineIndex].Content;
-        ShowChoicesIfNeeded();
-    }
-
-    private void ShowChoicesIfNeeded()
-    {
-        StoryLine line = storyLines[currentLineIndex];
-        if (line.Choices != null && line.Choices.Length > 0)
+        if (typingCoroutine != null)
         {
-            choicePanel.SetActive(true);
-            for (int i = 0; i < choiceButtons.Length; i++)
-            {
-                if (i < line.Choices.Length)
-                {
-                    choiceButtons[i].gameObject.SetActive(true);
-                    choiceButtons[i].GetComponentInChildren<Text>().text = line.Choices[i];
-                    int id = line.ChoiceNextIDs[i];
-                    choiceButtons[i].onClick.RemoveAllListeners();
-                    choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(id));
-                }
-                else
-                {
-                    choiceButtons[i].gameObject.SetActive(false);
-                }
-            }
+            StopCoroutine(typingCoroutine);
+            typingCoroutine = null;
+        }
+        isTyping = false;
+        contentText.text = currentLine.Content;
+    }
+
+    /// <summary>
+    /// 【新增方法】立即隐藏所有UI元素，用于剧情初始化。
+    /// </summary>
+    void HideAllImmediately()
+    {
+        dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+
+        if (character1Image != null)
+        {
+            Color c = character1Image.color; c.a = 0; character1Image.color = c;
+            character1Image.gameObject.SetActive(false);
+        }
+        if (character2Image != null)
+        {
+            Color c = character2Image.color; c.a = 0; character2Image.color = c;
+            character2Image.gameObject.SetActive(false);
         }
     }
 
-    void GoToNextLine()
-    {
-        if (nextLineSound != null) audioSource.PlayOneShot(nextLineSound);
-        int next = storyLines[currentLineIndex].NextID;
-        ShowLine(next != -1 ? next : currentLineIndex + 1);
-    }
-
-    void OnChoiceSelected(int nextID)
-    {
-        choicePanel.SetActive(false);
-        ShowLine(nextID);
-    }
-
+    /// <summary>
+    /// 使用淡出效果结束剧情
+    /// </summary>
     void EndStory()
     {
-        if (playerControllerObject != null) playerControllerObject.SetActive(true);
-        gameObject.SetActive(false);
+        Debug.Log("剧情结束");
+        StartCoroutine(EndStoryCoroutine());
     }
 
-    void UpdateBackgroundImage(string path)
+    IEnumerator EndStoryCoroutine()
     {
-        if (string.IsNullOrEmpty(path)) return;
-        Sprite sprite = Resources.Load<Sprite>(path);
-        if (backgroundImage != null && backgroundImage.sprite != sprite)
+        dialoguePanel.SetActive(false);
+        choicePanel.SetActive(false);
+        StartCoroutine(FadeImage(character1Image, 0f));
+        StartCoroutine(FadeImage(character2Image, 0f));
+
+        yield return new WaitForSeconds(fadeDuration); // 等待淡出动画完成
+
+        gameObject.SetActive(false); // 禁用整个剧情管理器
+    }
+
+    #region 动画协程
+    IEnumerator FadeImage(Image image, float targetAlpha)
+    {
+        if (image == null) yield break;
+
+        // 如果要显示图片但它被禁用了，先激活它
+        if (targetAlpha > 0f && !image.gameObject.activeSelf)
         {
-            StartCoroutine(FadeImageCoroutine(backgroundImage, 1f, () => backgroundImage.sprite = sprite));
+            image.gameObject.SetActive(true);
         }
-    }
 
-    void UpdateImage(Image image, string path, bool useFade)
-    {
-        if (image == null) return;
-        Sprite sprite = string.IsNullOrEmpty(path) ? null : Resources.Load<Sprite>(path);
-        if (sprite != image.sprite)
-        {
-            StartCoroutine(FadeImageCoroutine(image, sprite == null ? 0f : 1f, () => image.sprite = sprite));
-        }
-    }
-
-    void UpdateBackgroundMusic(string path)
-    {
-        if (string.IsNullOrEmpty(path)) return;
-        AudioClip clip = Resources.Load<AudioClip>(path);
-        if (clip != null && bgmSource.clip != clip)
-        {
-            bgmSource.clip = clip;
-            bgmSource.Play();
-        }
-    }
-
-    void UpdateDialogueSound(string path)
-    {
-        if (string.IsNullOrEmpty(path)) return;
-        AudioClip clip = Resources.Load<AudioClip>(path);
-        if (clip != null) audioSource.PlayOneShot(clip);
-    }
-
-    IEnumerator FadeImageCoroutine(Image image, float targetAlpha, System.Action onHalfway = null)
-    {
         float startAlpha = image.color.a;
-        if (Mathf.Approximately(startAlpha, targetAlpha)) yield break;
-        if (targetAlpha > startAlpha && onHalfway != null) onHalfway();
         float time = 0;
+
         while (time < fadeDuration)
         {
             Color color = image.color;
@@ -309,53 +280,54 @@ public class SimpleStoryPlayer : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+
+        // 确保最终alpha正确
         Color finalColor = image.color;
         finalColor.a = targetAlpha;
         image.color = finalColor;
-        if (targetAlpha < startAlpha && onHalfway != null) onHalfway();
+
+        // 如果完全透明了，就禁用GameObject以节省性能
+        if (targetAlpha <= 0f)
+        {
+            image.gameObject.SetActive(false);
+        }
     }
 
-    // ... 其他方法 (FadeImageCoroutine 等) ...
-
-    void ClearUI()
+    IEnumerator MoveCharacter(Image image, float targetX)
     {
-        // 隐藏文本
-        speakerNameText.text = "";
-        contentText.text = "";
+        if (image == null || image.color.a < 0.1f) yield break;
 
-        // 使用FadeImageCoroutine平滑地隐藏所有图片
-        // 注意：我们不希望在Awake时有渐变，所以直接设置颜色
-        // 但如果之后在其他地方调用，渐变会更柔和
+        Vector2 startPos = image.rectTransform.anchoredPosition;
+        Vector2 endPos = new Vector2(targetX, startPos.y);
+        float time = 0;
 
-        // 隐藏背景图 (设为完全透明)
-        if (backgroundImage != null)
+        while (time < fadeDuration)
         {
-            Color bgColor = backgroundImage.color;
-            bgColor.a = 0;
-            backgroundImage.color = bgColor;
-            backgroundImage.sprite = null; // 清除sprite以防万一
+            image.rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, time / fadeDuration);
+            time += Time.deltaTime;
+            yield return null;
         }
-
-        // 隐藏角色1
-        if (character1Image != null)
-        {
-            Color c1Color = character1Image.color;
-            c1Color.a = 0;
-            character1Image.color = c1Color;
-        }
-
-        // 隐藏角色2
-        if (character2Image != null)
-        {
-            Color c2Color = character2Image.color;
-            c2Color.a = 0;
-            character2Image.color = c2Color;
-        }
-
-        // 隐藏选项面板
-        if (choicePanel != null)
-        {
-            choicePanel.SetActive(false);
-        }
+        image.rectTransform.anchoredPosition = endPos;
     }
+
+    IEnumerator ShakeCharacter(Image image)
+    {
+        if (image == null || image.color.a < 0.1f) yield break;
+
+        float duration = 0.5f;
+        float magnitude = 10f;
+        Vector2 startPos = image.rectTransform.anchoredPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+            image.rectTransform.anchoredPosition = startPos + new Vector2(x, y);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        image.rectTransform.anchoredPosition = startPos;
+    }
+    #endregion
 }

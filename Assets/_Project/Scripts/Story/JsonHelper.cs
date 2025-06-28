@@ -1,21 +1,28 @@
 // 文件名: JsonHelper.cs
-// 作用: 一个简单的静态类，用于从TextAsset加载剧情数据。
-
 using UnityEngine;
+using CustomStorySystem;
+using System.Collections.Generic;
 
-namespace SimpleStory
+// 这是一个静态工具类，也不需要挂载
+public static class JsonHelper
 {
-    public static class JsonHelper
+    public static Dictionary<int, StoryLine> LoadStory(TextAsset jsonFile)
     {
-        public static System.Collections.Generic.List<StoryLine> LoadStory(TextAsset jsonFile)
+        // 从TextAsset读取JSON字符串
+        Story storyWrapper = JsonUtility.FromJson<Story>(jsonFile.text);
+
+        if (storyWrapper == null || storyWrapper.storyData == null)
         {
-            Story storyWrapper = JsonUtility.FromJson<Story>(jsonFile.text);
-            if (storyWrapper == null || storyWrapper.storyLines == null)
-            {
-                Debug.LogError("无法解析JSON文件: " + jsonFile.name + "。请检查格式是否正确，特别是外层的 'storyLines' 对象。");
-                return new System.Collections.Generic.List<StoryLine>();
-            }
-            return storyWrapper.storyLines;
+            Debug.LogError("JSON解析失败! 请检查 " + jsonFile.name + " 的格式。");
+            return null;
         }
+
+        // 将List转换为Dictionary，用Key作为键，方便快速查找
+        Dictionary<int, StoryLine> storyDict = new Dictionary<int, StoryLine>();
+        foreach (var line in storyWrapper.storyData)
+        {
+            storyDict[line.Key] = line;
+        }
+        return storyDict;
     }
 }

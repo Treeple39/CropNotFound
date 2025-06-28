@@ -1,34 +1,34 @@
 // 文件名: StoryData.cs
-// 作用: 定义剧情文件的数据结构。
+using System;
+using System.Collections.Generic;
 
-namespace SimpleStory
+// 这个文件不需要挂载到任何GameObject上，它只是定义数据结构。
+namespace CustomStorySystem
 {
-    // 这个是JSON文件中每一行对话对应的类
-    // [System.Serializable] 用于让Unity的JsonUtility能够处理它
-    [System.Serializable]
+    // 对应JSON文件中的每一行
+    [Serializable]
     public class StoryLine
     {
-        // 基础内容
-        public string Speaker;
+        public int Key;
+        public string ContentSpeaker;
         public string Content;
-        public string Avatar;     // 头像资源路径
-
-        // 增强功能
-        public string Character;       // 角色立绘指令 (例如: "char1:Characters/Alice_Appear")
-        public string Action;          // 动作指令 (例如: "char1:shake,char2:hide")
-        public string BackgroundImage; // 背景图资源路径
-        public string BackgroundMusic; // 背景音乐资源路径
-        public string DialogueSound;   // 对话音效资源路径
-        
-        // 流程控制
-        public int NextID = -1;
-        public string[] Choices;
-        public int[] ChoiceNextIDs;
+        public string NextContent;
+        // 以下字段可以根据你的Excel表格增删
+        public string Cha1Action;
+        public float CoordinateX1;
+        public string Cha1ImageSource;
+        public string Cha2Action;
+        public float CoordinateX2;
+        public string Cha2ImageSource;
+        // 更多字段...
+        public string BackgroundImagePath;
+        public string BackgroundAudioPath;
     }
 
-    [System.Serializable]
+    // 对应整个JSON文件的根对象
+    [Serializable]
     public class Story
     {
-        public System.Collections.Generic.List<StoryLine> storyLines;
+        public List<StoryLine> storyData;
     }
 }
