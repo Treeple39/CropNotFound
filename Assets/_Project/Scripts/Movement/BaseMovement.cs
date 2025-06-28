@@ -6,16 +6,17 @@ public class BaseMovement : MonoBehaviour
 {
     protected float _moveSpeed = 5f;  // 默认移动速度，子类可以修改
     public bool canMove = true;
+
     
     // 移动状态变量
     protected Vector3 targetPosition;
-    protected Vector3 moveDirection;
+    public Vector3 moveDirection;
     protected float moveDuration;
     protected float moveTimer;
     protected bool isMoving = false;
     protected Vector3 startPosition;
     protected bool isContinuousMoving = false;
-    
+
     // 移动速度属性，允许子类重写
     public virtual float moveSpeed
     {
@@ -32,7 +33,7 @@ public class BaseMovement : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        
+
     }
 
     // Update is called once per frame

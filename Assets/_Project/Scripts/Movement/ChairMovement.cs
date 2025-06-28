@@ -11,24 +11,50 @@ public class ChairMovement : BaseMovement
     
     private bool isRunningAway = false;                       // 是否正在逃跑
     private float runAwayTimer = 0f;                          // 逃跑计时器
-    
+   
+    #region 状态机
+    public Enemy enemy;
+    private bool isInitialized = false;
+    #endregion
     // Start方法覆盖
     protected override void Start()
     {
         base.Start();
-        
+        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("缺少Enemy组件!", gameObject);
+            enabled = false;
+            return;
+        }
+
         // 如果未指定玩家，尝试在场景中查找玩家对象
         if (player == null)
         {
+            
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
             if (player == null)
             {
                 Debug.LogWarning("未找到玩家对象，椅子将无法检测玩家");
             }
+           
         }
-        
         // 设置椅子的基础属性
         moveSpeed = runAwaySpeed;
+
+        StartCoroutine(DelayedInit());
+    }
+
+    private IEnumerator DelayedInit()
+    {
+        yield return null;
+
+        if (enemy.idleState == null || enemy.fleeState == null)
+        {
+            Debug.LogError("Enemy状态未初始化!");
+            yield break;
+        }
+        isInitialized = true;
     }
 
     // Update方法覆盖
@@ -67,6 +93,8 @@ public class ChairMovement : BaseMovement
     {
         if (!canMove) return;
         
+        enemy.stateMachine.ChangeState(enemy.fleeState);
+
         isRunningAway = true;
         runAwayTimer = 0f;
         
@@ -84,7 +112,8 @@ public class ChairMovement : BaseMovement
     {
         isRunningAway = false;
         runAwayTimer = 0f;
-        
+        enemy.stateMachine.ChangeState(enemy.idleState);
+
         Debug.Log("椅子停止逃跑");
     }
     
