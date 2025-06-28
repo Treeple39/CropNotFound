@@ -14,7 +14,7 @@ public class UIMainMenu : MonoBehaviour
 
     public void NewGame() {
         //SceneManager.instance.DeleteSaveData();
-        GameManager.Instance.StartStory();
+        //GameManager.Instance.StartStory();
     }
 
     public void ExitGame() { 
