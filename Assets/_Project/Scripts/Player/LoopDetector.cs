@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class LoopDetector : MonoBehaviour
 {
-    public GameObject FlashX;
     // 内部类：记录每个闭环
     private class DetectedLoop
     {
@@ -107,7 +105,7 @@ public class LoopDetector : MonoBehaviour
                     if (magicCircleController != null)
                         magicCircleController.SpawnMagicCircle(tempLoopPoints, loopDisplayTime);
 
-                    // 高亮并"杀死"被圈住的敌人
+                    // 高亮并“杀死”被圈住的敌人
                     NotifyAndKillEnemiesInside(tempLoopPoints);
 
                     newTrailStartIndex = i + 1;
@@ -163,20 +161,6 @@ public class LoopDetector : MonoBehaviour
             }
         }
     }
-    
-    private System.Collections.IEnumerator DelayedDestroy(Transform objTransform, float delay)
-    {
-        if (objTransform != null)
-        {
-            yield return new WaitForSeconds(delay);
-            
-            // 检查对象是否仍然存在
-            if (objTransform != null)
-            {
-                Destroy(objTransform.gameObject);
-            }
-        }
-    }
 
     // ------ 工具方法 ------
 
@@ -212,10 +196,5 @@ public class LoopDetector : MonoBehaviour
         for (int i = 0, j = cnt - 1; i < cnt; j = i++)
             area += pts[j].x * pts[i].y - pts[i].x * pts[j].y;
         return Mathf.Abs(area) * 0.5f;
-    }
-
-    public void StarExplode(Vector3 position)
-    {
-        GameObject fx = Instantiate(FlashX, position, Quaternion.identity);
     }
 }
