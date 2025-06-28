@@ -56,8 +56,8 @@ public class ItemGenerator : MonoBehaviour
     }
 
     // 记录已生成物品的位置
-    private List<Vector3> spawnedPositions = new List<Vector3>();
-    
+    public List<Transform> spawnedTransforms = new List<Transform>();
+
     // 地图边界
     public Vector3 mapMin = new Vector3(-20f, -20f, 0f);
     public Vector3 mapMax = new Vector3(20f, 20f, 0f);
@@ -194,8 +194,8 @@ public class ItemGenerator : MonoBehaviour
             if (prefab != null)
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
-                spawnedPositions.Add(position);
-                
+                spawnedTransforms.Add(item.transform);
+
                 // 计算当前可移动物体的理想数量
                 int idealMovableCount = Mathf.RoundToInt((currentCount + 1) * MovableItemRatio);
 
@@ -348,8 +348,8 @@ public class ItemGenerator : MonoBehaviour
             if (prefab != null)
             {
                 GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
-                spawnedPositions.Add(position);
-                
+                spawnedTransforms.Add(item.transform);
+
                 // 获取并设置BaseMovement组件 - 所有持续生成的物体都是可移动的
                 BaseMovement movement = item.GetComponent<BaseMovement>();
                 if (movement != null)
@@ -384,27 +384,26 @@ public class ItemGenerator : MonoBehaviour
             float score = scoreComponent.getScore();
             int newDifficultyLevel = Mathf.Min(Mathf.CeilToInt(score / 2000f), maxDifficultyLevel);
 
-            //     if (newDifficultyLevel != difficultyLevel)
-            //     {
-            //         difficultyLevel = newDifficultyLevel;
-            //         Debug.Log($"难度等级更新为：{difficultyLevel}");
-            //     }
-            // }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            // 更新难度等级
-            UpdateDifficultyLevel();
-
-            // 处理持续生成物体的计时
-            spawnTimer += Time.deltaTime;
-            if (spawnTimer >= continuousSpawnInterval)
+            if (newDifficultyLevel != difficultyLevel)
             {
-                spawnTimer = 0f;
-                SpawnContinuousItem();
+                difficultyLevel = newDifficultyLevel;
+                Debug.Log($"难度等级更新为：{difficultyLevel}");
             }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // 更新难度等级
+        UpdateDifficultyLevel();
+
+        // 处理持续生成物体的计时
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= continuousSpawnInterval)
+        {
+            spawnTimer = 0f;
+            SpawnContinuousItem();
         }
     }
 
