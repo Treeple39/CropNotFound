@@ -24,20 +24,41 @@ public class PillowMovement : BaseMovement
     // 恐慌状态的计时器
     private float panicTimer = 0f;
 
+    #region 状态机
+    public Enemy enemy;
+    private bool isInitialized = false;
+    #endregion
     protected override void Start()
     {
         base.Start();
-        
+        enemy = GetComponent<Enemy>();
+        if (enemy == null)
+        {
+            Debug.LogError("缺少Enemy组件!", gameObject);
+            enabled = false;
+            return;
+        }
         // 设置初始缓慢速度
         moveSpeed = slowSpeed;
         
         // 选择一个随机方向开始移动
         ChooseRandomDirection();
-        
+        StartCoroutine(DelayedInit());
         // 尝试找到玩家对象
         playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
+    private IEnumerator DelayedInit()
+    {
+        yield return null;
 
+        if (enemy.idleState == null || enemy.fleeState == null)
+        {
+            Debug.LogError("Enemy状态未初始化!");
+            yield break;
+        }
+        isInitialized = true;
+        enemy.stateMachine.ChangeState(enemy.idleState);
+    }
     protected override void Update()
     {
         if (isStunned)
