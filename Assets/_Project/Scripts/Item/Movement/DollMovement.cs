@@ -10,6 +10,7 @@ public class DollMovement : BaseMovement
     [SerializeField] private float movementDistance = 3f; // 移动距离
     [SerializeField] private float dollSpeed = 3f; // 娃娃移动速度
     [SerializeField] private float waitTimeBetweenMoves = 1f; // 两次移动间的等待时间
+    [SerializeField] private float stunDuration = 2f; // 眩晕持续时间
 
     public Vector3 targetPoint1; // 第一个目标点
     public Vector3 targetPoint2; // 第二个目标点
@@ -19,6 +20,10 @@ public class DollMovement : BaseMovement
     private float waitTimer = 0f; // 等待计时器
     private bool isWaiting = false; // 是否在等待中
     private bool hasReachedTarget = false; // 是否已经到达目标点
+    
+    // 眩晕相关变量
+    private bool isStunned = false; // 是否处于眩晕状态
+    private float stunTimer = 0f; // 眩晕计时器
 
     private float facingDir = 1;
     private bool facingRight = true;
@@ -41,6 +46,17 @@ public class DollMovement : BaseMovement
         // 设置娃娃的移动速度
         moveSpeed = dollSpeed;
         
+        // 设置初始目标点
+        ResetTargetPoints();
+        
+        StartCoroutine(DelayedInit());
+        // 开始第一次移动
+        MoveToCurrentTarget();
+    }
+    
+    // 重置目标点
+    private void ResetTargetPoints()
+    {
         // 随机一个方向（在XY平面上）
         Vector3 randomDirection = new Vector3(
             Random.Range(-1f, 1f),
@@ -54,10 +70,9 @@ public class DollMovement : BaseMovement
         
         // 设置初始目标点
         currentTarget = targetPoint1;
-        StartCoroutine(DelayedInit());
-        // 开始第一次移动
-        MoveToCurrentTarget();
+        movingToTarget1 = true;
     }
+    
     private IEnumerator DelayedInit()
     {
         yield return null;
@@ -74,8 +89,31 @@ public class DollMovement : BaseMovement
     protected override void Update()
     {
         base.Update();
-       // FlipController();
-
+        
+        // 如果处于眩晕状态
+        if (isStunned)
+        {
+            stunTimer -= Time.deltaTime;
+            if (stunTimer <= 0)
+            {
+                // 眩晕结束
+                isStunned = false;
+                
+                // 重置目标点
+                ResetTargetPoints();
+                
+                // 开始等待
+                isWaiting = true;
+                waitTimer = 0f;
+                
+                if (isInitialized)
+                {
+                    enemy.stateMachine.ChangeState(enemy.idleState);
+                }
+            }
+            return; // 眩晕状态下不执行其他逻辑
+        }
+        
         // 如果正在等待
         if (isWaiting)
         {
@@ -83,7 +121,10 @@ public class DollMovement : BaseMovement
             if (waitTimer >= waitTimeBetweenMoves)
             {
                 isWaiting = false;
-                enemy.stateMachine.ChangeState(enemy.fleeState);
+                if (isInitialized)
+                {
+                    enemy.stateMachine.ChangeState(enemy.fleeState);
+                }
                 MoveToCurrentTarget();
             }
             return;
@@ -95,11 +136,11 @@ public class DollMovement : BaseMovement
             // 已到达目标点
             hasReachedTarget = true;
             StopMove();
-            
-            // 强制设置位置到精确的目标点，避免误差累积
-            transform.position = currentTarget;
 
-            enemy.stateMachine.ChangeState(enemy.idleState);
+            if (isInitialized)
+            {
+                enemy.stateMachine.ChangeState(enemy.idleState);
+            }
 
             SwitchTarget();
             isWaiting = true;
@@ -117,8 +158,7 @@ public class DollMovement : BaseMovement
     // 向当前目标点移动
     private void MoveToCurrentTarget()
     {
-        
-        if (!gameObject.activeSelf) return;
+        if (!gameObject.activeSelf || isStunned) return;
 
         hasReachedTarget = false;
         
@@ -128,24 +168,33 @@ public class DollMovement : BaseMovement
         // 使用新的单参数Move方法实现连续移动
         Move(direction);
     }
-
-    public void Flip()
+    
+    // 碰撞处理
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        facingDir = facingDir * -1;
-        facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
+        base.OnCollisionEnter2D(collision);
+        
+        // 碰撞后进入眩晕状态
+        EnterStunnedState();
     }
-    public void FlipController()
+    
+    // 进入眩晕状态
+    private void EnterStunnedState()
     {
-        if (enemy.rb.velocity.x > 0 &&!facingRight)
+        // 停止当前移动
+        StopMove();
+        
+        // 设置眩晕状态
+        isStunned = true;
+        stunTimer = stunDuration;
+        
+        // 重置其他状态
+        isWaiting = false;
+        hasReachedTarget = false;
+        
+        if (isInitialized)
         {
-            Flip();
-        }
-        else if (enemy.rb.velocity.x < 0&&facingRight)
-        {
-            Flip();
-   
+            enemy.stateMachine.ChangeState(enemy.idleState);
         }
     }
-
 }

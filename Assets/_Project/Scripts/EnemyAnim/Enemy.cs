@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     public EnemyShineState shineState { get; private set; }
     #endregion
 
+    public bool dead;
+
     public virtual void Awake()
     {
         stateMachine = new EnemyStateMachine();

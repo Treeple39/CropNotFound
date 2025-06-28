@@ -15,6 +15,9 @@ public class PlayerMovementController : MonoBehaviour
     public float dashCooldown = 1.0f;   // 冲刺冷却时间
     // public KeyCode dashKey; // 【修改】从 InputController 直接获取，不再需要此字段
 
+    [Header("Effects")]
+    public GameObject dashEffectPrefab;
+
     private Rigidbody2D rb;
     private PlayerInputController inputController;
     private Vector2 currentVelocity;
@@ -73,37 +76,54 @@ public class PlayerMovementController : MonoBehaviour
 
     private void HandleDash()
     {
-        // 发起冲刺：当接收到冲刺请求、不在冲刺中且冷却结束
         if (dashRequested && !isDashing && dashCooldownTimer <= 0f)
         {
             isDashing = true;
             dashTimer = dashDuration;
             dashCooldownTimer = dashCooldown;
 
-            // 直接在冲刺开始时设置一次速度
-            currentVelocity = (Vector2)transform.up * dashSpeed;
+            Vector2 dashDirection = transform.up;
+            currentVelocity = dashDirection * dashSpeed;
             rb.velocity = currentVelocity;
+
+            if (dashEffectPrefab != null)
+            {
+                // 1. 计算特效的位置 (只改变XY, Z使用预制体的值)
+                Vector3 effectPosition = new Vector3(
+                    transform.position.x,
+                    transform.position.y,
+                    dashEffectPrefab.transform.position.z
+                );
+                // 1. 获取期望的方向向量
+                Vector2 effectDirection = -dashDirection;
+
+                // 2. 使用 Atan2 将方向向量转换为世界角度（弧度），再转换为度
+                float worldAngle = Mathf.Atan2(effectDirection.y, effectDirection.x) * Mathf.Rad2Deg;
+
+                // 3. 根据你的预制体特性，应用映射公式来计算最终的X轴旋转值
+                float rotationX = -worldAngle;
+
+
+
+                // 5. 使用计算出的正确角度来创建最终的旋转
+                Quaternion finalRotation = Quaternion.Euler(rotationX, 0, 0);
+
+                // 3. 使用 Instantiate 创建特效
+                Instantiate(dashEffectPrefab, effectPosition, finalRotation);
+            }
         }
 
-        // 【修改】在 FixedUpdate 的开头就消耗掉冲刺请求，无论成功与否
-        // 这样可以确保请求只被处理一次
         dashRequested = false;
 
+        // 【修改】冲刺结束时不再需要手动停止特效，因为它会自己销毁
         if (isDashing)
         {
             dashTimer -= Time.fixedDeltaTime;
             if (dashTimer <= 0f)
             {
                 isDashing = false;
-
-                // 【修改】冲刺结束后，重置 currentVelocity
-                // 这样 HandleMovement 会从当前实际速度（可能为0）开始计算，而不是从冲刺速度开始减速
-                // 如果希望保留冲刺后的惯性，可以设置为 rb.velocity
-                // 如果希望冲刺后立即停下并可控，可以设置为 Vector2.zero
                 currentVelocity = Vector2.zero;
             }
-            // 【修改】冲刺期间，速度已经在开始时设置好了，物理引擎会维持它。
-            // 除非你想抵抗外力，否则不需要每一帧都设置。这里我们保持简单，只在开始时设置。
         }
     }
 

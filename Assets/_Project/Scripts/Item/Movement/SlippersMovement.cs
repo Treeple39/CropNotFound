@@ -139,9 +139,9 @@ public class WanderEnemy : BaseMovement
     }
 
     // Åö×²¼ì²â
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter(collision);
+        base.OnCollisionEnter2D(collision);
 
         if (isCharging && collision.gameObject.CompareTag("Player"))
         {
