@@ -1,6 +1,7 @@
+using Autodesk.Fbx;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class LoopDetector : MonoBehaviour
 {
@@ -156,7 +157,9 @@ public class LoopDetector : MonoBehaviour
                 st.renderer.material.color = enemyHighlightColor;
                 // 标记死掉
                 st.enemyComponent.dead = true;
-                //StarExplode(st.transform.position);
+
+                StarExplode(st.transform.position);
+                Destroy(st.enemyComponent.gameObject);
                 //StartCoroutine(DelayedDestroy(st.transform, 0.3f));
                 // 如果你有 Kill() 方法，也可以改成：
                 // st.enemyComponent.Kill();

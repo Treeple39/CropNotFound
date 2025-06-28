@@ -12,7 +12,6 @@ public class BottleMovement : BaseMovement
     
     private float stayTimer;                              // 停留计时器
     private float currentStayTime;                        // 当前停留时间
-    private Vector3 startPosition;                        // 初始位置
     private Collider bottleCollider;                      // 瓶子的碰撞器
 
     #region 状态机
