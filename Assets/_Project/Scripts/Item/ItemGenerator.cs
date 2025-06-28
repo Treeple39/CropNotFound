@@ -18,6 +18,29 @@ public class ItemGenerator : MonoBehaviour
     public float ItemMinDistance = 0.5f; // 物体最小间距
     public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
 
+    // 难度等级和持续生成相关参数
+    public int difficultyLevel = 1; // 难度等级，初始值为1
+    public float continuousSpawnInterval = 2.0f; // 持续生成间隔(秒)
+    public int maxDifficultyLevel = 4; // 最大难度等级
+
+    // 物品生成概率表（按难度等级）
+    [System.Serializable]
+    public class SpawnProbability
+    {
+        public float[] chairProb = { 0.02f, 0.06f, 0.10f, 0.15f };
+        public float[] dollProb = { 0.90f, 0.70f, 0.50f, 0.25f };
+        public float[] bottleProb = { 0.02f, 0.06f, 0.10f, 0.15f };
+        public float[] pillowProb = { 0.02f, 0.06f, 0.10f, 0.15f };
+        public float[] bookProb = { 0.02f, 0.06f, 0.10f, 0.15f };
+        public float[] slippersProb = { 0.02f, 0.06f, 0.10f, 0.15f };
+    }
+
+    public SpawnProbability spawnProbability = new SpawnProbability();
+
+    // 用于获取当前分数
+    private ScoreManager scoreManager;
+    private float spawnTimer = 0f;
+
     // 物品类型枚举
     private enum ItemType
     {
@@ -44,7 +67,14 @@ public class ItemGenerator : MonoBehaviour
         // 加载预制体
         LoadPrefabs();
         
-        // 生成物品
+        // 获取得分管理器
+        scoreManager = FindObjectOfType<ScoreManager>();
+        if (scoreManager == null)
+        {
+            Debug.LogWarning("未找到ScoreManager，难度调整可能无法正常工作");
+        }
+        
+        // 生成初始物品
         StartCoroutine(GenerateItems());
     }
 
@@ -217,9 +247,145 @@ public class ItemGenerator : MonoBehaviour
         return null;
     }
 
+    // 根据当前难度选择要生成的物品类型
+    private ItemType SelectItemTypeByProbability()
+    {
+        // 获取当前难度等级的概率数组索引（数组索引从0开始，难度从1开始）
+        int index = Mathf.Clamp(difficultyLevel - 1, 0, maxDifficultyLevel - 1);
+        
+        // 计算总概率
+        float totalProb = spawnProbability.chairProb[index] +
+                          spawnProbability.dollProb[index] +
+                          spawnProbability.bottleProb[index] +
+                          spawnProbability.pillowProb[index] +
+                          spawnProbability.bookProb[index] +
+                          spawnProbability.slippersProb[index];
+        
+        // 随机值
+        float randomValue = Random.Range(0f, totalProb);
+        float cumulativeProb = 0f;
+        
+        // 根据概率选择物品类型
+        cumulativeProb += spawnProbability.chairProb[index];
+        if (randomValue <= cumulativeProb) return ItemType.Chair;
+        
+        cumulativeProb += spawnProbability.dollProb[index];
+        if (randomValue <= cumulativeProb) return ItemType.Doll;
+        
+        cumulativeProb += spawnProbability.bottleProb[index];
+        if (randomValue <= cumulativeProb) return ItemType.Bottle;
+        
+        cumulativeProb += spawnProbability.pillowProb[index];
+        if (randomValue <= cumulativeProb) return ItemType.Pillow;
+        
+        cumulativeProb += spawnProbability.bookProb[index];
+        if (randomValue <= cumulativeProb) return ItemType.Book;
+        
+        return ItemType.Slippers;
+    }
+    
+    // 生成单个持续物体
+    private void SpawnContinuousItem()
+    {
+        // 选择物体类型
+        ItemType selectedType = SelectItemTypeByProbability();
+        
+        // 尝试生成物体
+        TryGenerateContinuousItem(selectedType);
+    }
+    
+    // 尝试生成持续物体
+    private bool TryGenerateContinuousItem(ItemType itemType)
+    {
+        // 最大尝试次数，防止无限循环
+        int maxAttempts = 100;
+        int attempts = 0;
+
+        while (attempts < maxAttempts)
+        {
+            // 随机生成位置
+            float x = Random.Range(mapMin.x, mapMax.x);
+            float z = Random.Range(mapMin.z, mapMax.z);
+            Vector3 position = new Vector3(x, 0, z);
+
+            // 检查是否与其他物品有最小间距
+            bool tooClose = false;
+            foreach (Vector3 pos in spawnedPositions)
+            {
+                if (Vector3.Distance(position, pos) < ItemMinDistance)
+                {
+                    tooClose = true;
+                    break;
+                }
+            }
+
+            if (tooClose)
+            {
+                attempts++;
+                continue;
+            }
+
+            // 生成物品
+            GameObject prefab = GetPrefabByType(itemType);
+            if (prefab != null)
+            {
+                GameObject item = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
+                spawnedPositions.Add(position);
+                
+                // 获取并设置BaseMovement组件 - 所有持续生成的物体都是可移动的
+                BaseMovement movement = item.GetComponent<BaseMovement>();
+                if (movement != null)
+                {
+                    movement.canMove = true;
+                    movableItemCount++;
+                }
+                else
+                {
+                    Debug.LogWarning($"物体 {item.name} 没有BaseMovement组件");
+                }
+                
+                return true;
+            }
+            else
+            {
+                Debug.LogError($"未找到类型为 {itemType} 的预制体");
+                return false;
+            }
+        }
+
+        Debug.LogWarning($"无法为持续生成的 {itemType} 找到合适的生成位置，已尝试 {maxAttempts} 次");
+        return false;
+    }
+    
+    // 更新难度等级
+    private void UpdateDifficultyLevel()
+    {
+        if (scoreManager != null)
+        {
+            // 根据当前分数计算难度等级
+            int score = scoreManager.GetScore();
+            int newDifficultyLevel = Mathf.Min(Mathf.CeilToInt(score / 2000f), maxDifficultyLevel);
+            
+            if (newDifficultyLevel != difficultyLevel)
+            {
+                difficultyLevel = newDifficultyLevel;
+                Debug.Log($"难度等级更新为：{difficultyLevel}");
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // 更新难度等级
+        UpdateDifficultyLevel();
         
+        // 处理持续生成物体的计时
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= continuousSpawnInterval)
+        {
+            spawnTimer = 0f;
+            SpawnContinuousItem();
+        }
     }
 }
