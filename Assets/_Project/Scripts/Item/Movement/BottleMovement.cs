@@ -15,6 +15,8 @@ public class BottleMovement : BaseMovement
     private Collider bottleCollider;                      // 瓶子的碰撞器
     private bool isTransporting = false; // 添加标志变量，表示是否正在传送过程中
 
+    public int BigCoinCount = 5;
+
     #region 状态机
     public Enemy enemy;
     private bool isInitialized = false;

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5627129319731670693}
   - component: {fileID: 5799856327460708659}
   - component: {fileID: 2368808540180221929}
+  - component: {fileID: 1079254499491338661}
   m_Layer: 8
   m_Name: item_Chair
   m_TagString: Untagged
@@ -108,6 +109,7 @@ MonoBehaviour:
   runAwaySpeed: 3
   player: {fileID: 0}
   isRunningAway: 0
+  BigCoinCount: 3
   enemy: {fileID: 0}
 --- !u!61 &3351295312165813891
 BoxCollider2D:
@@ -215,3 +217,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1079254499491338661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768226160963426691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BigCoinCount: 3

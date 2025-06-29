@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9207089546236848635}
   - component: {fileID: 4538781110773885417}
   - component: {fileID: 2581171682010963286}
+  - component: {fileID: -3190895437787294005}
   m_Layer: 8
   m_Name: item_Doll_Bear
   m_TagString: Untagged
@@ -121,6 +122,7 @@ MonoBehaviour:
   waitTimeBetweenMoves: 0.5
   stunDuration: 2
   enemy: {fileID: 6256669589556292288}
+  BigCoinCount: 2
 --- !u!95 &9207089546236848635
 Animator:
   serializedVersion: 5
@@ -214,3 +216,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-3190895437787294005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6420355748046384940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BigCoinCount: 2

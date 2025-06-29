@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 699305198786092524}
   - component: {fileID: 4158379331577513603}
   - component: {fileID: 8533020151921414182}
+  - component: {fileID: 3600734057470473768}
   m_Layer: 8
   m_Name: item_Slippers
   m_TagString: Untagged
@@ -147,6 +148,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   enemy: {fileID: 0}
+  BigCoinCount: 5
 --- !u!50 &4158379331577513603
 Rigidbody2D:
   serializedVersion: 4
@@ -219,3 +221,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.89, y: 1.97}
   m_EdgeRadius: 0
+--- !u!114 &3600734057470473768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471327722949754440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BigCoinCount: 5

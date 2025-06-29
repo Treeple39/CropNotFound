@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7617343873979773874}
   - component: {fileID: -646566239346289561}
   - component: {fileID: 7104255078159744123}
+  - component: {fileID: 5658647419539641612}
   m_Layer: 8
   m_Name: item_babyBottle
   m_TagString: Untagged
@@ -123,6 +124,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
+  BigCoinCount: 5
   enemy: {fileID: 0}
 --- !u!95 &7617343873979773874
 Animator:
@@ -217,3 +219,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5658647419539641612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561884968640550176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BigCoinCount: 5

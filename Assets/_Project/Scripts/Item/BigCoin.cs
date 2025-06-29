@@ -4,9 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Coin : MonoBehaviour
+public class BigCoin : MonoBehaviour
 {
-    [Header("Coin info")]
     [SerializeField] float detectRange = 3;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float minDistance = 0.5f;
@@ -45,13 +44,10 @@ public class Coin : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        // ��������ҵľ���
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        // ������������Сֹͣ���룬������ƶ�
         if (distance > minDistance)
         {
-            // �����ƶ�����
             Vector2 direction = (player.transform.position - transform.position).normalized;
             transform.position = Vector2.MoveTowards(
                 transform.position,
@@ -64,14 +60,11 @@ public class Coin : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ɾ��Ӳ������
-    /// </summary>
     public void DestroySelf()
     {
         if (!destoryBool)
         {
-            Score.score+=10;
+            Score.score+=50;
             //_instance.CoinDestroyed();
             destoryBool = true;
             CoinManager._instance.CoinDestroyed();
