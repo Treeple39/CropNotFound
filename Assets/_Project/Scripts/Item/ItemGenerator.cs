@@ -12,12 +12,12 @@ public class ItemGenerator : MonoBehaviour
     public GameObject[] prefabs;
 
     // 全局参数
-    public int ChairCount =5;         // 椅子总数
-    public int DollCount = 20;          // 玩偶总数
+    public int ChairCount =10;         // 椅子总数
+    public int DollCount = 10;          // 玩偶总数
     public int BottleCount = 10;        // 奶瓶总数
-    public int PillowCount =5;        // 枕头总数
-    public int BookCount =10;          // 书籍总数
-    public int SlippersCount=2;      // 拖鞋总数
+    public int PillowCount =8;        // 枕头总数
+    public int BookCount =8;          // 书籍总数
+    public int SlippersCount=8;      // 拖鞋总数
     public float ItemMinDistance = 0.5f; // 物体最小间距
     public float MovableItemRatio = 0.9f; // 可移动物体占物体总数的比例
 
