@@ -26,8 +26,8 @@ public class UIMainMenu : MonoBehaviour
 
     }
 
-    public void ExitGame() { 
-        
-        
+    public void DrawCard() {
+
+        GameManager.Instance.GoToCardScene();
     }
 }
