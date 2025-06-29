@@ -6,4 +6,6 @@ public static class Score
 {
     public static float score = 0;
 
+    public static int itemCount = 0;
+
 }

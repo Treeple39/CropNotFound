@@ -17,7 +17,7 @@ public class Coin : MonoBehaviour
     public AudioClip coinGet;
 
 
-    //Éú³ÉÓ²±Ò
+    //ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½
     /*public void CreateCoin()
     {
         Vector3 randomPosition = new Vector3(
@@ -29,7 +29,7 @@ public class Coin : MonoBehaviour
         CoinController newCoinScript = newCoin.GetComponent<CoinController>();
     }*/
 
-    //Ñ°ÕÒÍæ¼Ò
+    //Ñ°ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool IsPlayerNearby()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -45,13 +45,13 @@ public class Coin : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        // ¼ÆËãÓëÍæ¼ÒµÄ¾àÀë
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ¾ï¿½ï¿½ï¿½
         float distance = Vector3.Distance(transform.position, player.transform.position);
 
-        // Èç¹û¾àÀë´óÓÚ×îÐ¡Í£Ö¹¾àÀë£¬Ôò¼ÌÐøÒÆ¶¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Í£Ö¹ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
         if (distance > minDistance)
         {
-            // ¼ÆËãÒÆ¶¯·½Ïò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 direction = (player.transform.position - transform.position).normalized;
             transform.position = Vector2.MoveTowards(
                 transform.position,
@@ -65,12 +65,13 @@ public class Coin : MonoBehaviour
     }
 
     /// <summary>
-    /// É¾³ýÓ²±Ò×ÔÉí
+    /// É¾ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void DestroySelf()
     {
         if (!destoryBool)
         {
+            Score.score+=10;
             //_instance.CoinDestroyed();
             destoryBool = true;
             
