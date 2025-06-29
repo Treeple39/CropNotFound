@@ -1,0 +1,218 @@
+{
+  "storyData": [
+    {
+      "Key": 1, "ContentTitle": "1", "ContentSpeaker": "天神", "Content": "灵魂碎片收集到了吗？", "NextContent": "2", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "AppearAt", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "AppearAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_idle"
+    },
+    {
+      "Key": 2, "ContentTitle": "2", "ContentSpeaker": "天使", "Content": "收集到了，天神大人。", "NextContent": "3", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "ShakeAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_confident"
+    },
+    {
+      "Key": 3, "ContentTitle": "3", "ContentSpeaker": "天神", "Content": "交给我吧。", "NextContent": "4", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "ShakeAt", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_think",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "……", "NextContent": "5", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
+      "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 5, "ContentTitle": "5", "ContentSpeaker": "？？？", "Content": "希望灵魂的主人会是一只完美的人类……", "NextContent": "6", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 6, "ContentTitle": "6", "ContentSpeaker": "天神", "Content": "让我看看灵魂聚集之后，会造出怎样的人呢？", "NextContent": "7|10|13|16|19|22|25|28|31|34", "ContinueTag": "?",
+      "InsertImage1Path": "", "InsertImage2Path": "", "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "", "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 7, "ContentTitle": "7", "ContentSpeaker": "天神", "Content": "嗯……你是第一个造出的天使的天使。", "NextContent": "8", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 8, "ContentTitle": "8", "ContentSpeaker": "天使", "Content": "你好呀，天使0629？", "NextContent": "9", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 9, "ContentTitle": "9", "ContentSpeaker": "？？？", "Content": "于是两位天使快乐地生活在了一起。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 10, "ContentTitle": "10", "ContentSpeaker": "天神", "Content": "嗯……收集的灵魂似乎不太够。", "NextContent": "11", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 11, "ContentTitle": "11", "ContentSpeaker": "天神", "Content": "但是为什么会有龙的成分！！", "NextContent": "12", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 12, "ContentTitle": "12", "ContentSpeaker": "？？？", "Content": "于是龙快乐地生活在了大海里。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 13, "ContentTitle": "13", "ContentSpeaker": "天神", "Content": "嗯……你是地狱派来的卧底吗？", "NextContent": "14", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 14, "ContentTitle": "14", "ContentSpeaker": "天使", "Content": "我不造啊！为什么是一只恶魔啊？", "NextContent": "15", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 15, "ContentTitle": "15", "ContentSpeaker": "？？？", "Content": "于是恶魔决定掀翻了天神的桌子……", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 16, "ContentTitle": "16", "ContentSpeaker": "天神", "Content": "嗯……你是来客串的吗？", "NextContent": "17", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 17, "ContentTitle": "17", "ContentSpeaker": "天使", "Content": "我似乎在隔壁晾衣服游戏见到过……", "NextContent": "18", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 18, "ContentTitle": "18", "ContentSpeaker": "？？？", "Content": "于是小精灵承包了天神的晾衣服工作……", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 19, "ContentTitle": "19", "ContentSpeaker": "天神", "Content": "嗯……你做的很好，你造出了健康的人类", "NextContent": "20", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 20, "ContentTitle": "20", "ContentSpeaker": "天使", "Content": "为什么戴着眼镜出生啊！！", "NextContent": "21", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 21, "ContentTitle": "21", "ContentSpeaker": "？？？", "Content": "于是孩子开始了正常的人的一生。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 22, "ContentTitle": "22", "ContentSpeaker": "天神", "Content": "嗯……这是……狼还是狗？", "NextContent": "23", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 23, "ContentTitle": "23", "ContentSpeaker": "天使", "Content": "反正不是人类。", "NextContent": "24", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 24, "ContentTitle": "24", "ContentSpeaker": "？？？", "Content": "于是小狼人快乐地生活在了森林里。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 25, "ContentTitle": "25", "ContentSpeaker": "天神", "Content": "嗯……这是东方的那个三只眼睛的那个谁？", "NextContent": "26", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 26, "ContentTitle": "26", "ContentSpeaker": "天使", "Content": "二郎显圣真君？", "NextContent": "27", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 27, "ContentTitle": "27", "ContentSpeaker": "？？？", "Content": "于是天神把天选之子送回了东方。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 28, "ContentTitle": "28", "ContentSpeaker": "天神", "Content": "嗯……你收集的灵魂多得都快溢出来了！", "NextContent": "29", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 29, "ContentTitle": "29", "ContentSpeaker": "天使", "Content": "嘻嘻，您是指他腿上那些透明的灵魂吗？", "NextContent": "30", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 30, "ContentTitle": "30", "ContentSpeaker": "？？？", "Content": "于是被神眷顾的孩子开始了呼风唤雨的生活……", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 31, "ContentTitle": "31", "ContentSpeaker": "天神", "Content": "嗯……你收集的灵魂疑似有点太多了，但……", "NextContent": "32", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 32, "ContentTitle": "32", "ContentSpeaker": "天使", "Content": "我也不知道为什么会是吸血鬼……", "NextContent": "33", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 33, "ContentTitle": "33", "ContentSpeaker": "？？？", "Content": "于是吸血鬼在西欧开始了茹毛饮血的生活。", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 34, "ContentTitle": "34", "ContentSpeaker": "天使", "Content": "嗯……天神……大人？", "NextContent": "35", "ContinueTag": "+",
+      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 35, "ContentTitle": "35", "ContentSpeaker": "天使", "Content": "哦不，亲爱的天神宝贝……", "NextContent": "36", "ContinueTag": "+",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_01",
+      "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
+    },
+    {
+      "Key": 36, "ContentTitle": "36", "ContentSpeaker": "？？？", "Content": "于是天使0628成为了新一届天神！（鼓掌）", "NextContent": "0", "ContinueTag": "#",
+      "InsertImage1Path": "", "InsertImage2Path": "",
+      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_02",
+      "Cha2Action": "FadeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_godlize"
+    }
+  ]
+}
