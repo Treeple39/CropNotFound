@@ -2,15 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Score : MonoBehaviour
+public static class Score
 {
-    private float score;
-    public float getScore()
-    {
-        return score;
-    }
-    public void setScore(float score)
-    {
-        this.score = score;
-    }
+    public static float score = 0;
+
 }
