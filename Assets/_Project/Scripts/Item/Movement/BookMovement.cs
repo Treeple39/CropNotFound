@@ -16,6 +16,8 @@ public class BookMovement : BaseMovement
     private Vector3 randomDirection;                          // 随机移动方向
     private bool isFleeingFromPlayer = false;                 // 是否正在从玩家处逃离
 
+    public int BigCoinCount = 4;
+
     protected override void Start()
     {
         base.Start();

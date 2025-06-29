@@ -11,6 +11,9 @@ public class ChairMovement : BaseMovement
     
     public bool isRunningAway = false;                       // 是否正在逃跑
     private float runAwayTimer = 0f;                          // 逃跑计时器
+
+    public int BigCoinCount = 3;
+
    
     #region 状态机
     public Enemy enemy;

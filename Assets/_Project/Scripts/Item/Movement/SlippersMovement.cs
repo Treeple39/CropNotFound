@@ -24,6 +24,9 @@ public class SlippersMovement : BaseMovement
 
     public Enemy enemy;
 
+    public int BigCoinCount = 5;
+
+
     protected override void Start()
     {
         base.Start();

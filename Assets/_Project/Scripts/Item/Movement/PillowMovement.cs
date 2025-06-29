@@ -16,6 +16,9 @@ public class PillowMovement : BaseMovement
     private bool isStunned = false;
     private Transform playerTransform;
 
+    public int BigCoinCount = 8;
+
+
     // 将lastMoveDirection改为Vector2，更符合Rigidbody2D操作
     private Vector2 lastMoveDirection;
 
