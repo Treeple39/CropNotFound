@@ -80,7 +80,7 @@ public class Coin : MonoBehaviour
        
         
         
-        AudioManager.S.PlayFX(coinGet, .5f, .5f);
+        AudioManager.S.PlayFX(coinGet, .2f, .5f);
         Destroy(this.gameObject);
     }
 

@@ -243,6 +243,18 @@ PrefabInstance:
       propertyPath: coinGet
       value: 
       objectReference: {fileID: 8300000, guid: 250a02699bfc0844ca39bda9c0ec1977, type: 3}
+    - target: {fileID: 8226182246767055699, guid: 801528e8fea6783469322168f83368f0, type: 3}
+      propertyPath: ghostDie1
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c6741f13bc0dbb43bfd3e5a2ee6cb53, type: 3}
+    - target: {fileID: 8226182246767055699, guid: 801528e8fea6783469322168f83368f0, type: 3}
+      propertyPath: ghostDie2
+      value: 
+      objectReference: {fileID: 8300000, guid: e8c2f861be6a5e94fad3d2935273027e, type: 3}
+    - target: {fileID: 8226182246767055699, guid: 801528e8fea6783469322168f83368f0, type: 3}
+      propertyPath: ghostDie3
+      value: 
+      objectReference: {fileID: 8300000, guid: f13ba746bc61ad54fbd42aa0c0b7c4e3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

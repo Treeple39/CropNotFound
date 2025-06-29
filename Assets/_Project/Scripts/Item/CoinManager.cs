@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
+    [SerializeField]
+    public AudioClip ghostDie1;
+    public AudioClip ghostDie2;
+    public AudioClip ghostDie3;
+
     [SerializeField] public GameObject coinPrefab; // ���Ԥ����
     public int coinCount = 0; // ��ǰ��Ҽ���
     private const int maxCoinCount = 100; // ���������
@@ -67,6 +72,13 @@ public class CoinManager : MonoBehaviour
 
     public void CreateDeadCoin(Vector3 position)
     {
+        int randomNumber = Random.Range(1, 4);
+        if(randomNumber ==1)
+            AudioManager.S.PlayFX(ghostDie1, 1.5f, 1f);
+        else if(randomNumber ==2)
+            AudioManager.S.PlayFX(ghostDie2, 1.5f, 1f);
+        else if(randomNumber ==3)
+            AudioManager.S.PlayFX(ghostDie3, 1.5f, 1f);
         for (int i = 0; i < 10; i++)
         {
             GameObject newCoin = Instantiate(coinPrefab, position, Quaternion.identity);
