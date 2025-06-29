@@ -6,14 +6,14 @@ using UnityEngine.UIElements;
 
 public class CoinManager : MonoBehaviour
 {
-    [SerializeField] public GameObject coinPrefab; // ½ð±ÒÔ¤ÖÆÌå
-    public int coinCount = 0; // µ±Ç°½ð±Ò¼ÆÊý
-    private const int maxCoinCount = 100; // ×î´ó½ð±ÒÊýÁ¿
+    [SerializeField] public GameObject coinPrefab; // ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½
+    public int coinCount = 0; // ï¿½ï¿½Ç°ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½
+    private const int maxCoinCount = 100; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    [SerializeField] private int spawnAreaMinX = -40; // ×îÐ¡Éú³É·¶Î§
-    [SerializeField] private int spawnAreaMaxX = 30;  // ×î´óÉú³É·¶Î§
-    [SerializeField] private int spawnAreaMinY = -40; // ×îÐ¡Éú³É·¶Î§
-    [SerializeField] private int spawnAreaMaxY = 10;  // ×î´óÉú³É·¶Î§
+    [SerializeField] private int spawnAreaMinX = -40; // ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½É·ï¿½Î§
+    [SerializeField] private int spawnAreaMaxX = 30;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É·ï¿½Î§
+    [SerializeField] private int spawnAreaMinY = -40; // ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½É·ï¿½Î§
+    [SerializeField] private int spawnAreaMaxY = 10;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É·ï¿½Î§
 
     public static CoinManager _instance;
     private void Start()
@@ -33,7 +33,7 @@ public class CoinManager : MonoBehaviour
     {
         if (coinCount >= maxCoinCount)
         {
-            Debug.Log("ÒÑ´ïµ½×î´ó½ð±ÒÊýÁ¿ÏÞÖÆ: " + maxCoinCount);
+            Debug.Log("ï¿½Ñ´ïµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " + maxCoinCount);
             return;
         }
         else {
@@ -67,11 +67,20 @@ public class CoinManager : MonoBehaviour
             GameObject newCoin = Instantiate(coinPrefab, randomPosition, Quaternion.identity);
             CoinController newCoinScript = newCoin.GetComponent<CoinController>();
             coinCount++;
-            Debug.Log("Éú³É½ð±Ò£¬µ±Ç°ÊýÁ¿: " + coinCount);
+            Debug.Log("ï¿½ï¿½ï¿½É½ï¿½Ò£ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½: " + coinCount);
         }
         else
         {
-            Debug.LogError("CoinPrefabÎ´¸³Öµ!");
+            Debug.LogError("CoinPrefabÎ´ï¿½ï¿½Öµ!");
+        }
+    }
+
+    public void CreateDeadCoin(Vector3 position)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject newCoin = Instantiate(coinPrefab, position, Quaternion.identity);
+            CoinController newCoinScript = newCoin.GetComponent<CoinController>();
         }
     }
 }
