@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 78617809498222623}
   - component: {fileID: 6237856068094814833}
   - component: {fileID: 7030562968026873376}
-  - component: {fileID: 4937331860128696873}
+  - component: {fileID: 5112878407587122403}
+  - component: {fileID: 4275645103138241215}
+  - component: {fileID: 8216125726968767912}
   m_Layer: 0
   m_Name: soul_coin
   m_TagString: Untagged
@@ -74,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 649948678, guid: dda85efb38282944b8e064ef2b646288, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,7 +109,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4937331860128696873
+--- !u!50 &5112878407587122403
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724591403730285258}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4275645103138241215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,6 +145,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8724591403730285258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a05c910214e46b4696ca50f003311f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2cddb27eba6e01247bdfb97d24ae9a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectRange: 3
+  moveSpeed: 7
+  minDistance: 0.5
+  coinGet: {fileID: 0}
+--- !u!114 &8216125726968767912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724591403730285258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7bc0907db4cbb4bba57f04dfd6028a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

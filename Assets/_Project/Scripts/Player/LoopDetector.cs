@@ -191,8 +191,7 @@ public class LoopDetector : MonoBehaviour
                 obj.renderer.material.color = enemyHighlightColor;
 
                 Score.itemCount++;
-                string objectName = gameObject.name;
-                CoinManager._instance.CreateDeadCoin(obj.transform.position, gameObject.name);
+                CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<ItemData>().BigCoinCount);
                 Destroy(obj.gameObject);
                 //StarExplode(obj.transform.position);
 
