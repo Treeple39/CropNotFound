@@ -24,5 +24,9 @@ public class UI_Timer : MonoBehaviour
         timer += Time.deltaTime;
         int seconds = Mathf.FloorToInt(timer);
         timerText.text = seconds.ToString();
+        if(seconds >= 66)
+        {
+            GameManager.Instance.GoToEndScene();
+        }
     }
 }
