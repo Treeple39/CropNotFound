@@ -4542,6 +4542,23 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &552580762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 807498633231546826, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+  m_PrefabInstance: {fileID: 2468759183882940149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &552580767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552580762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff222d8407bc5b468d598075a66265e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &745634072
 GameObject:
   m_ObjectHideFlags: 0
@@ -5131,16 +5148,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs: []
-  ChairCount: 1
-  DollCount: 2
-  BottleCount: 1
-  PillowCount: 1
-  BookCount: 1
+  ChairCount: 2
+  DollCount: 10
+  BottleCount: 5
+  PillowCount: 2
+  BookCount: 5
   SlippersCount: 1
   ItemMinDistance: 0.5
   MovableItemRatio: 0.5
   difficultyLevel: 1
-  continuousSpawnInterval: 5
+  continuousSpawnInterval: 1.5
   maxDifficultyLevel: 4
   spawnProbability:
     chairProb:
@@ -19633,6 +19650,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 552580767}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 515864811945966531, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 532628057175095352, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
       propertyPath: m_SizeDelta.x
       value: 229.56
@@ -19821,6 +19866,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 807498633231546826, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 552580767}
     - targetCorrespondingSourceObject: {fileID: 4824368842053557891, guid: f08484e63c611c843b8fb6be5ad31856, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1890630895}

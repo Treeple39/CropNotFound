@@ -9,9 +9,9 @@ public class PillowMovement : BaseMovement
     [SerializeField] private float fastSpeed = 10f; // 高速状态下的速度
 
     [Header("玩家检测设置")]
-    [SerializeField] private float playerDetectionRadius = 5f;
-    [SerializeField] private float panicDuration = 2f;
-    [SerializeField] private float stunDuration = 3f;
+    [SerializeField] private float playerDetectionRadius = 3f;
+    [SerializeField] private float panicDuration = 1f;
+    [SerializeField] private float stunDuration = 5f;
     private bool isPanicking = false;
     private bool isStunned = false;
     private Transform playerTransform;

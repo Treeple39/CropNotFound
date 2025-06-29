@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DollMovement : BaseMovement
 {
-    [SerializeField] private float moveDuration = 2f;     // 初始移动持续时间
+    [SerializeField] private float moveDuration = 5f;     // 初始移动持续时间
     [SerializeField] private float dollSpeed = 3f;        // 娃娃移动速度
     [SerializeField] private float waitTimeBetweenMoves = 1f; // 两次移动间的等待时间
     [SerializeField] private float stunDuration = 0.5f;     // 眩晕持续时间

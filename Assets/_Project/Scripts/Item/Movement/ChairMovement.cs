@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ChairMovement : BaseMovement
 {
-    [SerializeField] private float detectionRadius = 4f;      // 检测玩家的半径
-    [SerializeField] private float runAwayDuration = 2f;      // 逃跑持续时间（秒）
+    [SerializeField] private float detectionRadius = 2f;      // 检测玩家的半径
+    [SerializeField] private float runAwayDuration = 1f;      // 逃跑持续时间（秒）
     [SerializeField] private float runAwaySpeed = 3f;         // 逃跑速度
     [SerializeField] private Transform player;                // 玩家对象引用
     
@@ -16,6 +16,7 @@ public class ChairMovement : BaseMovement
     public Enemy enemy;
     private bool isInitialized = false;
     #endregion
+
     // Start方法覆盖
     protected override void Start()
     {

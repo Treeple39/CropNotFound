@@ -12,18 +12,18 @@ public class ItemGenerator : MonoBehaviour
     public GameObject[] prefabs;
 
     // 全局参数
-    public int ChairCount;         // 椅子总数
-    public int DollCount;          // 玩偶总数
-    public int BottleCount;        // 奶瓶总数
-    public int PillowCount;        // 枕头总数
-    public int BookCount;          // 书籍总数
-    public int SlippersCount;      // 拖鞋总数
-    public float ItemMinDistance = 0.5f; // 物体最小间距
-    public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
+    [SerializeField]public int ChairCount =5;         // 椅子总数
+    [SerializeField] public int DollCount = 20;          // 玩偶总数
+    [SerializeField] public int BottleCount = 10;        // 奶瓶总数
+    [SerializeField] public int PillowCount =5;        // 枕头总数
+    [SerializeField] public int BookCount =10;          // 书籍总数
+    [SerializeField] public int SlippersCount=2;      // 拖鞋总数
+    [SerializeField] public float ItemMinDistance = 0.5f; // 物体最小间距
+    [SerializeField] public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
 
     // 难度等级和持续生成相关参数
     public int difficultyLevel = 1; // 难度等级，初始值为1
-    public float continuousSpawnInterval = 5.0f; // 持续生成间隔(秒)
+    public float continuousSpawnInterval = 1.0f; // 持续生成间隔(秒)
     public int maxDifficultyLevel = 4; // 最大难度等级
 
     // 物品生成概率表（按难度等级）

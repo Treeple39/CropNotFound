@@ -6,14 +6,14 @@ public class SlippersMovement : BaseMovement
 {
     [Header("随机移动设置")]
     [SerializeField] private float wanderRadius = 4f;      // 随机移动半径
-    [SerializeField] private float wanderInterval = 1.5f;  // 随机移动间隔
+    [SerializeField] private float wanderInterval = 0.2f;  // 随机移动间隔
     private float wanderTimer;                            // 随机移动计时器
     private Vector3 startPosition;                        // 初始位置
 
     [Header("冲刺设置")]
     [SerializeField] private float chargeSpeed = 10f;     // 冲刺速度
     [SerializeField] private float normalSpeed = 3f;      // 普通移动速度
-    [SerializeField] private float chargeCooldown = 3f;   // 冲刺冷却时间
+    [SerializeField] private float chargeCooldown = 2f;   // 冲刺冷却时间
     private bool isInCooldown = false;                   // 是否在冷却中
     private bool isCharging = false;                     // 是否正在冲刺
 
