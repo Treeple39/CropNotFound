@@ -40,8 +40,6 @@ public class ItemGenerator : MonoBehaviour
 
     public SpawnProbability spawnProbability = new SpawnProbability();
 
-    // 用于获取当前分数
-    private Score scoreComponent;
     private float spawnTimer = 0f;
 
     // 物品类型枚举
@@ -83,14 +81,7 @@ public class ItemGenerator : MonoBehaviour
     private void Start()
     {
         // 加载预制体
-        LoadPrefabs();
-        
-        // 获取分数组件
-        scoreComponent = FindObjectOfType<Score>();
-        if (scoreComponent == null)
-        {
-            Debug.LogWarning("未找到Score组件，难度调整可能无法正常工作");
-        }
+        LoadPrefabs();        
         
         // 生成初始物品
         StartCoroutine(GenerateItems());
@@ -325,7 +316,7 @@ public class ItemGenerator : MonoBehaviour
             float x = Random.Range(mapMin.x, mapMax.x);
             float y = Random.Range(mapMin.y, mapMax.y);
             Vector3 position = new Vector3(x, y, 0);
-            
+
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
             foreach (Transform transform in spawnedTransforms)
@@ -378,17 +369,14 @@ public class ItemGenerator : MonoBehaviour
     // 更新难度等级
     private void UpdateDifficultyLevel()
     {
-        if (scoreComponent != null)
-        {
-            // 根据当前分数计算难度等级
-            float score = scoreComponent.getScore();
-            int newDifficultyLevel = Mathf.Min(Mathf.CeilToInt(score / 2000f), maxDifficultyLevel);
+        // 根据当前分数计算难度等级
+        float score = Score.score;
+        int newDifficultyLevel = Mathf.Min(Mathf.CeilToInt(score / 2000f), maxDifficultyLevel);
 
-            if (newDifficultyLevel != difficultyLevel)
-            {
-                difficultyLevel = newDifficultyLevel;
-                Debug.Log($"难度等级更新为：{difficultyLevel}");
-            }
+        if (newDifficultyLevel != difficultyLevel)
+        {
+            difficultyLevel = newDifficultyLevel;
+            Debug.Log($"难度等级更新为：{difficultyLevel}");
         }
     }
 
