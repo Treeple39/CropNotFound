@@ -21,14 +21,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (AudioManager.S != null)
-        {
-            AudioManager.S.PlaySequencedBGM(level1Bgm);
-        }
-        else
-        {
-            Debug.Log("AudioManager.S = null");
-        }
     }
     private void Awake()
     {
@@ -50,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
         SceneManager.LoadScene(openSceneName);
+
     }
 
     /// <summary>
