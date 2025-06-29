@@ -47,6 +47,7 @@ public class StoryManager : MonoBehaviour
     private enum Rarity { B, A, S, SSS }
 
     public bool End = false;
+    public GameObject creditsPanel;
     // 定义结局Key与卡池等级的对应关系 (硬编码)
     // Key = 剧情Key, Value = 稀有度
     private readonly Dictionary<int, Rarity> endingRarityMap = new Dictionary<int, Rarity>
@@ -84,6 +85,10 @@ public class StoryManager : MonoBehaviour
             Debug.LogError("剧情数据加载失败，请检查JSON文件！");
             this.enabled = false;
             return;
+        }
+        if (creditsPanel != null)
+        {
+            creditsPanel.SetActive(false);
         }
 
         InitializeImage(character1Image);
@@ -438,6 +443,26 @@ public class StoryManager : MonoBehaviour
         {
             if (End)
             {
+                // 这是真结局的流程
+                Debug.Log("检测到真结局，显示制作名单...");
+
+                // a. 显示制作名单
+                if (creditsPanel != null)
+                {
+                    creditsPanel.SetActive(true);
+                    // 如果你的creditsPanel有动画，可以在这里播放
+                }
+
+                // b. 保持5秒
+                yield return new WaitForSeconds(5f);
+
+                // c. 隐藏制作名单（可选，因为马上要切换场景了）
+                if (creditsPanel != null)
+                {
+                    creditsPanel.SetActive(false);
+                }
+
+                // d. 返回主菜单
                 GameManager.Instance.GoToMainMenu();
             }
             else
