@@ -794,12 +794,14 @@ MonoBehaviour:
   typeTime: 0.2
   fadeDuration: 0.1
   scrollUnrollDuration: 1
+  currentScore: 0
   typingClips:
   - {fileID: 8300000, guid: dcef06624b35d40f3818a479a1879777, type: 3}
   - {fileID: 8300000, guid: 6321fbb0a27204fd7a6013fc3e612f76, type: 3}
   - {fileID: 8300000, guid: 61328b2a995e94e6d935bbc0c59ad1a2, type: 3}
   typingVolumeRange: {x: 0.5, y: 0.7}
   typingPitchRange: {x: 0.9, y: 1.1}
+  End: 1
 --- !u!114 &605596606
 MonoBehaviour:
   m_ObjectHideFlags: 0

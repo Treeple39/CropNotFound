@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomStorySystem; // 确保你的数据结构命名空间被正确引用
 using DG.Tweening;      // 确保你已导入DOTween插件
-
+using System.Linq; // 引入Linq以使用 .Where() 和 .ToList()
 public class StoryManager : MonoBehaviour
 {
     [Header("UI 引用")]
@@ -26,6 +26,7 @@ public class StoryManager : MonoBehaviour
     public float typeTime = 0.1f; // 打字音效的平均间隔
     public float fadeDuration = 0.3f;
     public float scrollUnrollDuration = 1.0f;
+    public float currentScore;
 
     [Header("打字机音效")]
     public List<AudioClip> typingClips;
@@ -42,6 +43,32 @@ public class StoryManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private Dictionary<Image, Vector2> originalPositions = new Dictionary<Image, Vector2>();
     private Dictionary<Image, Vector2> originalImageSizes = new Dictionary<Image, Vector2>();
+    // 定义卡池等级
+    private enum Rarity { B, A, S, SSS }
+
+    public bool End = false;
+    // 定义结局Key与卡池等级的对应关系 (硬编码)
+    // Key = 剧情Key, Value = 稀有度
+    private readonly Dictionary<int, Rarity> endingRarityMap = new Dictionary<int, Rarity>
+    {
+        // B级结局
+        { 7, Rarity.B },  // 天使
+        { 10, Rarity.B }, // 龙
+        { 13, Rarity.B }, // 恶魔
+
+        // A级结局
+        { 16, Rarity.A }, // 精灵
+        { 19, Rarity.A }, // 人类
+        { 22, Rarity.A }, // 狼人
+
+        // S级结局
+        { 25, Rarity.S }, // 二郎神
+        { 28, Rarity.S }, // 神眷者
+        { 31, Rarity.S }, // 吸血鬼
+
+        // SSS级结局
+        { 34, Rarity.SSS } // 新神
+    };
 
     void Start()
     {
@@ -213,29 +240,101 @@ public class StoryManager : MonoBehaviour
         string nextContentString = currentLine.NextContent;
         int nextKey;
 
-        if (nextContentString.Contains("|"))
+        // ★★★★★【核心修改 #2：执行抽卡逻辑】★★★★★
+        // 我们约定，当NextContent是"?"时，执行抽卡逻辑
+        if (nextContentString == "?")
         {
-            string[] possibleNextKeys = nextContentString.Split('|');
-            string randomKeyString = possibleNextKeys[Random.Range(0, possibleNextKeys.Length)];
-            if (!int.TryParse(randomKeyString.Trim(), out nextKey))
+            Debug.Log("检测到抽卡节点 '?'，开始根据分数选择结局...");
+            nextKey = DetermineEndingByScore();
+            if (nextKey == 0) // 如果抽卡失败，则结束剧情
             {
-                Debug.LogError($"随机分支解析失败！'{randomKeyString}' 不是一个有效的数字。");
                 EndStory();
                 return;
             }
         }
-        else
+        else // 否则，走原来的普通跳转或随机分支逻辑
         {
-            if (!int.TryParse(nextContentString.Trim(), out nextKey))
+            if (nextContentString.Contains("|"))
             {
-                Debug.LogError($"NextContent 解析失败！'{nextContentString}' 不是一个有效的数字。");
-                EndStory();
-                return;
+                // (保留旧的随机分支逻辑，以备不时之需)
+                string[] possibleNextKeys = nextContentString.Split('|');
+                string randomKeyString = possibleNextKeys[Random.Range(0, possibleNextKeys.Length)];
+                if (!int.TryParse(randomKeyString.Trim(), out nextKey))
+                {
+                    Debug.LogError($"随机分支解析失败！'{randomKeyString}' 不是一个有效的数字。");
+                    EndStory();
+                    return;
+                }
+            }
+            else
+            {
+                if (!int.TryParse(nextContentString.Trim(), out nextKey))
+                {
+                    Debug.LogError($"NextContent 解析失败！'{nextContentString}' 不是一个有效的数字。");
+                    EndStory();
+                    return;
+                }
             }
         }
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
         ShowLine(nextKey);
     }
 
+    /// <summary>
+    /// 【新增方法】根据当前分数决定结局
+    /// </summary>
+    private int DetermineEndingByScore()
+    {
+        // 1. 获取当前分数
+        currentScore = Score.score;
+
+        Debug.Log($"当前分数为: {currentScore}，开始匹配卡池...");
+
+        // 2. 根据分数确定可抽的卡池等级
+        List<Rarity> availablePool = new List<Rarity>();
+        if (currentScore <= 500)
+        {
+            availablePool.Add(Rarity.B);
+        }
+        else if (currentScore <= 1200)
+        {
+            availablePool.Add(Rarity.A);
+            availablePool.Add(Rarity.B);
+        }
+        else if (currentScore <= 2000)
+        {
+            availablePool.Add(Rarity.S);
+            availablePool.Add(Rarity.A);
+        }
+        else // 2000+
+        {
+            availablePool.Add(Rarity.SSS);
+            availablePool.Add(Rarity.S);
+        }
+
+        Debug.Log("可抽卡池: " + string.Join(", ", availablePool));
+
+        // 3. 从对应关系表中，筛选出所有在可抽卡池内的结局
+        List<int> possibleEndings = endingRarityMap
+            .Where(pair => availablePool.Contains(pair.Value)) // 筛选出所有稀有度在卡池中的键值对
+            .Select(pair => pair.Key) // 只取出它们的Key（也就是剧情ID）
+            .ToList(); // 转换成一个列表
+
+        // 4. 从可能的结局中随机抽取一个
+        if (possibleEndings.Count > 0)
+        {
+            int randomIndex = Random.Range(0, possibleEndings.Count);
+            int chosenEndingKey = possibleEndings[randomIndex];
+            Debug.Log($"从 {possibleEndings.Count} 个可能结局中，抽中了 Key: {chosenEndingKey}");
+            return chosenEndingKey;
+        }
+        else
+        {
+            Debug.LogError("根据当前分数和卡池规则，找不到任何可选的结局！");
+            return 0; // 返回0表示失败
+        }
+    }
     void ShowChoices()
     {
         dialoguePanel.SetActive(false);
@@ -335,7 +434,17 @@ public class StoryManager : MonoBehaviour
             yield return blackScreenImage.DOFade(1, 0.5f).WaitForCompletion();
         }
 
-        if (GameManager.Instance != null) GameManager.Instance.StartLevel();
+        if (GameManager.Instance != null)
+        {
+            if (End)
+            {
+                GameManager.Instance.GoToMainMenu();
+            }
+            else
+            {
+                GameManager.Instance.StartLevel();
+            }
+        }
         else Debug.LogError("找不到GameManager实例！无法加载关卡。");
     }
 
@@ -375,11 +484,11 @@ public class StoryManager : MonoBehaviour
         image.sprite = newSprite;
         image.gameObject.SetActive(true);
         var rt = image.rectTransform;
-        
+
         if (!originalImageSizes.ContainsKey(image))
         {
-             Debug.LogError($"没有在Start中为 {image.name} 记录原始尺寸！");
-             yield break;
+            Debug.LogError($"没有在Start中为 {image.name} 记录原始尺寸！");
+            yield break;
         }
 
         // ★★★★★【核心修改：动态计算尺寸以保持比例】★★★★★
@@ -389,22 +498,22 @@ public class StoryManager : MonoBehaviour
 
         // 2. 以预设的框体高度为基准
         float referenceHeight = originalImageSizes[image].y;
-        
+
         // 3. 根据新加载图片的原始宽高比，计算出在保持高度不变的情况下，应有的宽度
         float aspectRatio = newSprite.rect.width / newSprite.rect.height;
         Vector2 targetSize = new Vector2(referenceHeight * aspectRatio, referenceHeight);
-        
+
         // 4. 从“宽度=0”开始展开
         rt.sizeDelta = new Vector2(0, targetSize.y);
 
         image.color = new Color(image.color.r, image.color.g, image.color.b, 0f);
-        
+
         // 5. 同时开始淡入和尺寸动画，动画的目标是新计算出的 targetSize
         image.DOFade(1f, scrollUnrollDuration);
         rt.DOSizeDelta(targetSize, scrollUnrollDuration).SetEase(Ease.OutQuad);
 
         // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        if(InsertImage2!=null)
+        if (InsertImage2 != null)
             InsertImage2.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(scrollUnrollDuration);
