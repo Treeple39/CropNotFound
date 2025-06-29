@@ -18,9 +18,12 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/_Project/Scenes/DrawCards.unity
     guid: ddf3abd9423b546839bd1c3802b3458e
   - enabled: 1
+=======
+>>>>>>> 3f3895710a1cd1da77bc15019b0e6cd4238d690a
     path: Assets/_Project/Scenes/EndScene.unity
     guid: cced7bf3699fe6f42b1a1f62cee97f29
   m_configObjects: {}
