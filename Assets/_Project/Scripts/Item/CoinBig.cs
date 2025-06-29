@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Coin : MonoBehaviour
+public class CoinBig : MonoBehaviour
 {
     [Header("Coin info")]
     [SerializeField] float detectRange = 3;
@@ -16,20 +16,6 @@ public class Coin : MonoBehaviour
 
     public AudioClip coinGet;
 
-
-    //����Ӳ��
-    /*public void CreateCoin()
-    {
-        Vector3 randomPosition = new Vector3(
-            Random.Range(spawnAreaMinX, spawnAreaMaxX),
-            Random.Range(spawnAreaMinY, spawnAreaMaxY),
-            0f
-        );
-        GameObject newCoin = Instantiate(coinPrefab, randomPosition, Quaternion.identity);
-        CoinController newCoinScript = newCoin.GetComponent<CoinController>();
-    }*/
-
-    //Ѱ�����
     public bool IsPlayerNearby()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -71,13 +57,12 @@ public class Coin : MonoBehaviour
     {
         if (!destoryBool)
         {
-            Score.score+=10;
+            Score.score+=50;
             //_instance.CoinDestroyed();
             destoryBool = true;
             CoinManager._instance.CoinDestroyed();
-            
         }
-        AudioManager.S.PlayFX(coinGet, .5f, .5f);
+        AudioManager.S.PlayFX(coinGet, .3f, .5f);
         Destroy(this.gameObject);
     }
 

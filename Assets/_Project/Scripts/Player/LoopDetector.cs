@@ -41,6 +41,7 @@ public class LoopDetector : MonoBehaviour
         public Transform transform;
         public Renderer renderer;
         public Color originalColor;
+        
         // 如果需要，也可以保留对特定组件的引用
         // public Enemy enemyComponent; 
     }
@@ -190,7 +191,8 @@ public class LoopDetector : MonoBehaviour
                 obj.renderer.material.color = enemyHighlightColor;
 
                 Score.itemCount++;
-                CoinManager._instance.CreateDeadCoin(obj.transform.position);
+                string objectName = gameObject.name;
+                CoinManager._instance.CreateDeadCoin(obj.transform.position, gameObject.name);
                 Destroy(obj.gameObject);
                 //StarExplode(obj.transform.position);
 
