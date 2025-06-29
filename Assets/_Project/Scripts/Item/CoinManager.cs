@@ -46,15 +46,6 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    public void CreateDeadCoin(Vector3 position)
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject newCoin = Instantiate(coinPrefab, position, Quaternion.identity);
-            CoinController newCoinScript = newCoin.GetComponent<CoinController>();
-        }
-    }
-
     public void CoinDestroyed()
     {
         coinCount--;
