@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CoinManager : MonoBehaviour
 {
@@ -42,6 +43,15 @@ public class CoinManager : MonoBehaviour
         }
         else {
             CreateNewCoin();
+        }
+    }
+
+    public void CreateDeadCoin(Vector3 position)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject newCoin = Instantiate(coinPrefab, position, Quaternion.identity);
+            CoinController newCoinScript = newCoin.GetComponent<CoinController>();
         }
     }
 
