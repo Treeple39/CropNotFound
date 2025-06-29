@@ -14,9 +14,9 @@ TagManager:
   - UI
   - Objects
   - Player
+  - Enemy
   - GenerateArea
-  - 
-  - 
+  - Border
   - 
   - 
   - 

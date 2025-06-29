@@ -141,5 +141,4 @@ MonoBehaviour:
   detectRange: 3
   moveSpeed: 7
   minDistance: 0.5
-  audioManager: {fileID: 0}
-  coinGet: {fileID: 8300000, guid: bff1ff6cf0a8f4a96a541aec833230b5, type: 3}
+  coinGet: {fileID: 8300000, guid: 250a02699bfc0844ca39bda9c0ec1977, type: 3}

@@ -10,7 +10,6 @@ public class Coin : MonoBehaviour
     [SerializeField] float detectRange = 3;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float minDistance = 0.5f;
-    [SerializeField] AudioManager audioManager;
 
 
     private bool destoryBool = false;
@@ -77,7 +76,10 @@ public class Coin : MonoBehaviour
             
         }
 
-       // audioManager.PlayFX(coinGet, .5f, .5f);
+       
+        
+        
+        AudioManager.S.PlayFX(coinGet, .5f, .5f);
         Destroy(this.gameObject);
     }
 

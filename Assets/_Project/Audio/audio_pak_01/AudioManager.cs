@@ -28,10 +28,9 @@ public class AudioManager : MonoBehaviour
     public SequencedBgm sequencedBgmToPlay;
 
     [Header("音频源 (自动获取)")]
-    public AudioSource bgmSource;
-    public AudioSource fxSource;
-    public AudioSource vocalSource;
-
+    [HideInInspector] public AudioSource bgmSource;
+    [HideInInspector] public AudioSource fxSource;
+    [HideInInspector] public AudioSource vocalSource;
     private AudioMixer mixer;
     private Coroutine bgmCoroutine;
 
@@ -85,6 +84,7 @@ public class AudioManager : MonoBehaviour
         bgmSource.clip = clip;
         bgmSource.loop = true;
         bgmSource.Play();
+        Debug.Log(clip);
     }
 
     public void PlaySequencedBGM(SequencedBgm bgmSequence)
@@ -92,6 +92,7 @@ public class AudioManager : MonoBehaviour
         if (bgmSequence == null || bgmSequence.themeClip == null) return;
         StopBGM();
         bgmCoroutine = StartCoroutine(BgmSequenceCoroutine(bgmSequence));
+        Debug.Log(bgmSequence);
     }
 
     public void StopBGM()
