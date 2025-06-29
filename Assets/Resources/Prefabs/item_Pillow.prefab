@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4943495996917134494}
   - component: {fileID: 6355413546368832453}
   - component: {fileID: 2456299269890292916}
+  - component: {fileID: -1596295654463362344}
   m_Layer: 8
   m_Name: item_Pillow
   m_TagString: Untagged
@@ -121,6 +122,7 @@ MonoBehaviour:
   playerDetectionRadius: 5
   panicDuration: 2
   stunDuration: 3
+  BigCoinCount: 8
   enemy: {fileID: 0}
 --- !u!50 &4943495996917134494
 Rigidbody2D:
@@ -282,3 +284,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1596295654463362344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130000837438770480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BigCoinCount: 8

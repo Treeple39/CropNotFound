@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,7 +12,7 @@ public class CoinManager : MonoBehaviour
     public AudioClip ghostDie3;
 
     [SerializeField] public GameObject coinPrefab; // ���Ԥ����
-    [SerializeField] public GameObject BigcoinPrefab;
+    [SerializeField] public GameObject bigCoinPrefab;
     public int coinCount = 0; // ��ǰ��Ҽ���
     private const int maxCoinCount = 100; // ���������
 
@@ -73,9 +72,8 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    public void CreateDeadCoin(Vector3 position,int n)
+    public void CreateDeadCoin(Vector3 position, int bigCoinCount)
     {
-        
         int randomNumber = Random.Range(1, 4);
         if(randomNumber ==1)
             AudioManager.S.PlayFX(ghostDie1, 1.5f, 1f);
@@ -83,9 +81,9 @@ public class CoinManager : MonoBehaviour
             AudioManager.S.PlayFX(ghostDie2, 1.5f, 1f);
         else if(randomNumber ==3)
             AudioManager.S.PlayFX(ghostDie3, 1.5f, 1f);
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < bigCoinCount; i++)
         {
-            GameObject newCoin = Instantiate(BigcoinPrefab, position, Quaternion.identity);
+            GameObject newCoin = Instantiate(bigCoinPrefab, position, Quaternion.identity);
             CoinController newCoinScript = newCoin.GetComponent<CoinController>();
         }
     }

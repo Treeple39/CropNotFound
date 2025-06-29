@@ -21,6 +21,9 @@ public class DollMovement : BaseMovement
 
     public Enemy enemy;
 
+    public int BigCoinCount = 2;
+
+
     protected override void Start()
     {
         base.Start();
