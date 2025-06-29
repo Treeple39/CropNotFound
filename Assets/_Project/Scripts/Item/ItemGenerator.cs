@@ -20,10 +20,6 @@ public class ItemGenerator : MonoBehaviour
     public int SlippersCount;      // 拖鞋总数
     public float ItemMinDistance = 0.5f; // 物体最小间距
     public float MovableItemRatio = 0.5f; // 可移动物体占物体总数的比例
-    
-    // TileMap相关
-    public LayerMask floorLayer;   // 地板层，用于射线检测
-    public float raycastDistance = 10f; // 射线检测距离
 
     // 难度等级和持续生成相关参数
     public int difficultyLevel = 1; // 难度等级，初始值为1
@@ -64,7 +60,7 @@ public class ItemGenerator : MonoBehaviour
     
     // 地图边界
     public Vector3 mapMin = new Vector3(-40f, -40f, 0f);
-    public Vector3 mapMax = new Vector3(30f, 15f, 0f);
+    public Vector3 mapMax = new Vector3(30f, 10f, 0f);
 
     // 用于追踪可移动物体的数量
     private int movableItemCount = 0;
@@ -88,13 +84,6 @@ public class ItemGenerator : MonoBehaviour
     {
         // 加载预制体
         LoadPrefabs();
-        
-        // 设置地板层（默认为"Default"层，可在Inspector中修改）
-        if (floorLayer == 0)
-        {
-            floorLayer = LayerMask.GetMask("GenerateArea");
-            Debug.Log("使用默认层作为地板层: " + floorLayer);
-        }
         
         // 获取分数组件
         scoreComponent = FindObjectOfType<Score>();
@@ -182,14 +171,6 @@ public class ItemGenerator : MonoBehaviour
             float x = Random.Range(mapMin.x, mapMax.x);
             float y = Random.Range(mapMin.y, mapMax.y);
             Vector3 position = new Vector3(x, y, 0);
-
-            // 检查是否在TileMap上
-            if (!IsPositionOnFloor(position))
-            {
-                Debug.Log("位置不在TileMap上");
-                attempts++;
-                continue;
-            }
             
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
@@ -262,24 +243,6 @@ public class ItemGenerator : MonoBehaviour
         }
 
         Debug.LogWarning($"无法为 {itemType} 找到合适的生成位置，已尝试 {maxAttempts} 次");
-        return false;
-    }
-
-    // 检查位置是否在地板TileMap上
-    private bool IsPositionOnFloor(Vector3 position)
-    {
-        // 从上方向下发射射线
-        Vector3 rayStart = position + Vector3.up * raycastDistance;
-        RaycastHit2D hit = Physics2D.Raycast(rayStart, Vector2.down, raycastDistance * 2, floorLayer);
-        
-        // 如果击中了地板瓦片，并且距离合适
-        if (hit.collider != null && hit.collider.GetComponent<UnityEngine.Tilemaps.TilemapCollider2D>() != null)
-        {
-            // 将实际生成位置设置为射线击中点
-            position.y = hit.point.y;
-            return true;
-        }
-        
         return false;
     }
 
@@ -362,13 +325,6 @@ public class ItemGenerator : MonoBehaviour
             float x = Random.Range(mapMin.x, mapMax.x);
             float y = Random.Range(mapMin.y, mapMax.y);
             Vector3 position = new Vector3(x, y, 0);
-
-            // 检查是否在TileMap上
-            if (!IsPositionOnFloor(position))
-            {
-                attempts++;
-                continue;
-            }
             
             // 检查是否与其他物品有最小间距
             bool tooClose = false;
