@@ -189,8 +189,11 @@ public class LoopDetector : MonoBehaviour
                 // 高亮
                 obj.renderer.material.color = enemyHighlightColor;
 
-                // 执行特效
-                StarExplode(obj.transform.position);
+                Score.itemCount++;
+                CoinManager._instance.CreateDeadCoin(obj.transform.position);
+                Destroy(obj.gameObject);
+                //StarExplode(obj.transform.position);
+
 
                 // 将待销毁的GameObject加入列表
                 objectsToDestroy.Add(obj.gameObject);

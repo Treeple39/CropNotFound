@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BottleMovement : BaseMovement
 {
-    [SerializeField] private float minStayTime = 3f;      // 最小停留时间（秒）
-    [SerializeField] private float maxStayTime = 7f;      // 最大停留时间（秒）
+    [SerializeField] private float minStayTime = 2f;      // 最小停留时间（秒）
+    [SerializeField] private float maxStayTime = 8f;      // 最大停留时间（秒）
     [SerializeField] private float teleportRadius = 10f;  // 传送半径范围
     [SerializeField] private int maxTeleportAttempts = 10; // 最大传送尝试次数
     [SerializeField] private LayerMask obstacleLayer = 1; // 障碍物层，设为Default层（值为1，对应第0层）
