@@ -27,7 +27,7 @@ public class ItemGenerator : MonoBehaviour
 
     // 难度等级和持续生成相关参数
     public int difficultyLevel = 1; // 难度等级，初始值为1
-    public float continuousSpawnInterval = 2.0f; // 持续生成间隔(秒)
+    public float continuousSpawnInterval = 5.0f; // 持续生成间隔(秒)
     public int maxDifficultyLevel = 4; // 最大难度等级
 
     // 物品生成概率表（按难度等级）

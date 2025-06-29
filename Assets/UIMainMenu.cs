@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIMainMenu : MonoBehaviour
 {
     [SerializeField] private string sceneName = "Animation";
+    private bool skipAnim = false;
 
     public void ContinueGame()
     {
@@ -14,7 +15,15 @@ public class UIMainMenu : MonoBehaviour
 
     public void NewGame() {
         //SceneManager.instance.DeleteSaveData();
-        //GameManager.Instance.StartStory();
+        if (!skipAnim) {
+            GameManager.Instance.StartStory(); 
+            skipAnim= true;
+        }
+        else
+        {
+            GameManager.Instance.StartLevel();
+        }
+
     }
 
     public void ExitGame() { 

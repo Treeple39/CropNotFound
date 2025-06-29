@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("场景名称配置")]
+    [Tooltip("开场动画场景的文件名")]
+    public string openSceneName = "OpeningAnimation";
     [Tooltip("剧情场景的文件名")]
     public string storySceneName = "StoryScene";
     [Tooltip("主关卡场景的文件名")]
@@ -46,16 +48,25 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartStory()
     {
-        Debug.Log("GameManager: 开始加载剧情场景...");
+        Debug.Log("GameManager: 开始加载开场动画场景...");
+        SceneManager.LoadScene(openSceneName);
+    }
+
+    /// <summary>
+    /// 从开场剧情结束进入对话剧情
+    /// </summary>
+    public void StartLog()
+    {
+        Debug.Log("GameManager: 开场剧情结束，开始加载对话场景...");
         SceneManager.LoadScene(storySceneName);
     }
 
     /// <summary>
-    /// 从剧情结束进入关卡
+    /// 从对话剧情进入关卡
     /// </summary>
     public void StartLevel()
     {
-        Debug.Log("GameManager: 剧情结束，开始加载关卡场景...");
+        Debug.Log("GameManager: 开场剧情结束，开始加载对话场景...");
         SceneManager.LoadScene(levelSceneName);
         if (AudioManager.S != null)
         {
