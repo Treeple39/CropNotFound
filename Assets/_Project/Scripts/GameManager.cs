@@ -8,12 +8,30 @@ public class GameManager : MonoBehaviour
     [Header("场景名称配置")]
     [Tooltip("开场动画场景的文件名")]
     public string openSceneName = "OpeningAnimation";
-    [Tooltip("剧情场景的文件名")]
-    public string storySceneName = "StoryScene";
-    [Tooltip("主关卡场景的文件名")]
-    public string levelSceneName = "LevelScene";
+
+
     [Tooltip("主菜单场景的文件名")]
     public string mainMenuSceneName = "MainMenuScene";
+
+
+    [Tooltip("剧情场景的文件名")]
+    public string storySceneName = "StoryScene";
+
+
+
+    [Tooltip("主关卡场景的文件名")]
+    public string levelSceneName = "LevelScene";
+
+
+    [Tooltip("结算场景")]
+    public string EndSceneName = "EndScene";
+
+
+    [Tooltip("抽卡场景")]
+    public string DrawCardsName = "DrawCards";
+
+
+
 
     [Header("关卡音乐配置")]
     // 将你的序列BGM在这里公开，方便在Inspector中拖拽音频文件
@@ -42,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
         SceneManager.LoadScene(openSceneName);
-
     }
 
     /// <summary>
@@ -74,5 +91,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager: 返回主菜单...");
         SceneManager.LoadScene(mainMenuSceneName);
+    }
+
+    public void GoToEndScene()
+    {
+        Debug.Log("GameManager: 前往结算..");
+        SceneManager.LoadScene(EndSceneName);
+    }
+
+    public void GoToCardScene()
+    {
+        Debug.Log("GameManager: 前往抽卡..");
+        SceneManager.LoadScene(DrawCardsName);
     }
 }
