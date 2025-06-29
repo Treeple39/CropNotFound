@@ -22,6 +22,7 @@ public class StoryManager : MonoBehaviour
 
     [Header("效果参数")]
     public float typeSpeed = 0.05f;
+    public float typeTime = 3;
     public float fadeDuration = 0.3f;
     public float scrollUnrollDuration = 1.0f;
 
@@ -33,6 +34,14 @@ public class StoryManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private Dictionary<Image, Vector2> originalPositions = new Dictionary<Image, Vector2>();
     private Dictionary<Image, Vector2> originalImageSizes = new Dictionary<Image, Vector2>();
+
+    [Header("打字机音效")]
+    public List<AudioClip> typingClips;
+    [Range(0.1f, 1f)]
+    public Vector2 typingVolumeRange = new Vector2(0.5f, 0.7f);
+    [Tooltip("打字音高抖动范围")]
+    public Vector2 typingPitchRange = new Vector2(0.9f, 1.1f);
+
 
     void Start()
     {
@@ -179,7 +188,7 @@ public class StoryManager : MonoBehaviour
         {
             characterImage.sprite = Resources.Load<Sprite>("Characters/" + imageSource);
         }
-        xPos *= 1.5f; // 应用位置乘数
+        xPos *= 0.8f; // 应用位置乘数
         switch (action)
         {
             case "AppearAt":
@@ -247,16 +256,47 @@ public class StoryManager : MonoBehaviour
         choicePanel.SetActive(false);
         ShowLine(selectedKey);
     }
-
-    IEnumerator TypeLineCoroutine(string text)
+    private IEnumerator TypeLineCoroutine(string line)
     {
         isTyping = true;
         contentText.text = "";
-        foreach (char c in text)
+
+        // 1) 初始化随机音效间隔
+        float nextSfxTime = Random.Range(0f, typeTime);
+        float sfxTimer = 0f;
+
+        foreach (char c in line)
         {
+            // 2) 输出下一个字符
             contentText.text += c;
-            yield return new WaitForSeconds(typeSpeed);
+
+            // 3) 每次暂停一帧，累积时间
+            float wait = typeSpeed;
+            float elapsed = 0f;
+            while (elapsed < wait)
+            {
+                float dt = Time.deltaTime;
+                elapsed += dt;
+                sfxTimer += dt;
+
+                // 4) 如果累积时间达到了下一个 SFX 时机，则播放并重置
+                if (sfxTimer >= nextSfxTime)
+                {
+                    // 随机选一个打字音
+                    var clip = typingClips[Random.Range(0, typingClips.Count)];
+                    float vol = Random.Range(typingVolumeRange.x, typingVolumeRange.y);
+                    float pit = Random.Range(typingPitchRange.x, typingPitchRange.y);
+                    AudioManager.S.PlayFX(clip, vol, pit);
+
+                    // 重置下次触发
+                    sfxTimer = 0f;
+                    nextSfxTime = Random.Range(0f, typeTime);
+                }
+
+                yield return null;
+            }
         }
+
         isTyping = false;
         typingCoroutine = null;
     }
