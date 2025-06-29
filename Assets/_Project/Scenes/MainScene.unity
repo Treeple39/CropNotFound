@@ -255,6 +255,14 @@ PrefabInstance:
       propertyPath: ghostDie3
       value: 
       objectReference: {fileID: 8300000, guid: f13ba746bc61ad54fbd42aa0c0b7c4e3, type: 3}
+    - target: {fileID: 8226182246767055699, guid: 801528e8fea6783469322168f83368f0, type: 3}
+      propertyPath: coinPrefab
+      value: 
+      objectReference: {fileID: 8724591403730285258, guid: 3f7d60b39cd2d774e8a26d44e24ec512, type: 3}
+    - target: {fileID: 8226182246767055699, guid: 801528e8fea6783469322168f83368f0, type: 3}
+      propertyPath: bigCoinPrefab
+      value: 
+      objectReference: {fileID: 8724591403730285258, guid: 2ab02550e55a63f4ea9aa81a6f3b56fa, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -300,6 +308,7 @@ MonoBehaviour:
   runAwaySpeed: 3
   player: {fileID: 0}
   isRunningAway: 0
+  BigCoinCount: 3
   enemy: {fileID: 0}
 --- !u!212 &75956120
 SpriteRenderer:
@@ -4861,6 +4870,7 @@ MonoBehaviour:
   playerDetectionRadius: 5
   panicDuration: 2
   stunDuration: 3
+  BigCoinCount: 8
   enemy: {fileID: 0}
 --- !u!114 &816467587
 MonoBehaviour:

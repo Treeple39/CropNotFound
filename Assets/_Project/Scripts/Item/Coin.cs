@@ -73,9 +73,7 @@ public class Coin : MonoBehaviour
         {
             Score.score+=10;
             //_instance.CoinDestroyed();
-            destoryBool = true;
-            CoinManager._instance.CoinDestroyed();
-            
+            destoryBool = true;            
         }
         AudioManager.S.PlayFX(coinGet, .5f, .5f);
         Destroy(this.gameObject);

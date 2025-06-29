@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7030562968026873376}
   - component: {fileID: 5112878407587122403}
   - component: {fileID: 4275645103138241215}
-  - component: {fileID: 8216125726968767912}
+  - component: {fileID: 5277567496044144005}
   m_Layer: 0
   m_Name: soul_coin
   m_TagString: Untagged
@@ -151,8 +151,8 @@ MonoBehaviour:
   detectRange: 3
   moveSpeed: 7
   minDistance: 0.5
-  coinGet: {fileID: 0}
---- !u!114 &8216125726968767912
+  coinGet: {fileID: 8300000, guid: 250a02699bfc0844ca39bda9c0ec1977, type: 3}
+--- !u!114 &5277567496044144005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,6 +161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8724591403730285258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7bc0907db4cbb4bba57f04dfd6028a, type: 3}
+  m_Script: {fileID: 11500000, guid: ce844117c49256b42a354e653406f39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
