@@ -378,7 +378,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 2d22e019f29a3a84f9ca34d92db9b4c3, type: 3}
+    m_Font: {fileID: 12800000, guid: 5197a0dd65aaaed48bb49199de0c24cd, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
@@ -950,7 +950,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 2d22e019f29a3a84f9ca34d92db9b4c3, type: 3}
+    m_Font: {fileID: 12800000, guid: 5197a0dd65aaaed48bb49199de0c24cd, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -1380,6 +1380,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 2138795315}
   choicePanel: {fileID: 183706352}
   InsertImage1: {fileID: 546587784}
+  InsertImage2: {fileID: 0}
   choiceButtons:
   - {fileID: 993101513}
   - {fileID: 1850187446}
@@ -1389,12 +1390,15 @@ MonoBehaviour:
   typeTime: 0.2
   fadeDuration: 0.1
   scrollUnrollDuration: 1
+  currentScore: 0
   typingClips:
   - {fileID: 8300000, guid: dcef06624b35d40f3818a479a1879777, type: 3}
   - {fileID: 8300000, guid: 6321fbb0a27204fd7a6013fc3e612f76, type: 3}
   - {fileID: 8300000, guid: 61328b2a995e94e6d935bbc0c59ad1a2, type: 3}
   typingVolumeRange: {x: 0.5, y: 0.7}
   typingPitchRange: {x: 0.9, y: 1.1}
+  End: 0
+  creditsPanel: {fileID: 0}
 --- !u!114 &1797815448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1760,7 +1764,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 12a7de389cbf2ac45a9ea95d6677c397, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 67d8cb424c15ebf48a97435dab73395e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
