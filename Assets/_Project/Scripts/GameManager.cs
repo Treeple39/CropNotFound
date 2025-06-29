@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("抽卡场景")]
     public string DrawCardsName = "DrawCards";
 
+    [Tooltip("Thanks")]
 
+    public string Thanks = "Thank";
 
 
     [Header("关卡音乐配置")]
@@ -103,5 +105,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager: 前往抽卡..");
         SceneManager.LoadScene(DrawCardsName);
+    }
+        public void GoTOThanks()
+    {
+        Debug.Log("GameManager: 前往抽卡..");
+        SceneManager.LoadScene(Thanks);
     }
 }

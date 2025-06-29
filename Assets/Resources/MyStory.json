@@ -16,7 +16,7 @@
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
     {
-      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样（教程）", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
+      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
       "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
@@ -36,7 +36,7 @@
       "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
-      "Key": 8, "ContentTitle": "8", "ContentSpeaker": "天神", "Content": "越多越好，我只给你2分钟时间。", "NextContent": "9", "ContinueTag": "&",
+      "Key": 8, "ContentTitle": "8", "ContentSpeaker": "天神", "Content": "越多越好，我只给你1分钟时间。", "NextContent": "9", "ContinueTag": "&",
       "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },

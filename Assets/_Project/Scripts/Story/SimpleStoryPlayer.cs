@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomStorySystem; // 确保你的数据结构命名空间被正确引用
 using DG.Tweening;      // 确保你已导入DOTween插件
-using System.Linq; // 引入Linq以使用 .Where() 和 .ToList()
+using System.Linq;
+using UnityEngine.SceneManagement; // 引入Linq以使用 .Where() 和 .ToList()
 public class StoryManager : MonoBehaviour
 {
     [Header("UI 引用")]
@@ -443,27 +444,7 @@ public class StoryManager : MonoBehaviour
         {
             if (End)
             {
-                // 这是真结局的流程
-                Debug.Log("检测到真结局，显示制作名单...");
-
-                // a. 显示制作名单
-                if (creditsPanel != null)
-                {
-                    creditsPanel.SetActive(true);
-                    // 如果你的creditsPanel有动画，可以在这里播放
-                }
-
-                // b. 保持5秒
-                yield return new WaitForSeconds(5f);
-
-                // c. 隐藏制作名单（可选，因为马上要切换场景了）
-                if (creditsPanel != null)
-                {
-                    creditsPanel.SetActive(false);
-                }
-
-                // d. 返回主菜单
-                GameManager.Instance.GoToMainMenu();
+                GameManager.Instance.GoTOThanks();
             }
             else
             {
