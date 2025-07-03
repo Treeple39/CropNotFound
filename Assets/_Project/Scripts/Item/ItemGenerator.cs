@@ -69,7 +69,6 @@ public class ItemGenerator : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // 可选：如果需要在场景切换时保留
         }
         else
         {
