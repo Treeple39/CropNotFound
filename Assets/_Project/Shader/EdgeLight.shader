@@ -1,4 +1,4 @@
-Shader "Hidden/EdgeLight" {
+Shader "MyAwesomeShaders/2D/SpriteOutlineDistort" {
     Properties {
         [Space]
         _MainTex("Texture", 2D) = "white" { }
