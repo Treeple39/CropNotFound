@@ -39,9 +39,6 @@ public class GameManager : MonoBehaviour
     // 将你的序列BGM在这里公开，方便在Inspector中拖拽音频文件
     public SequencedBgm level1Bgm;
 
-    private void Start()
-    {
-    }
     private void Awake()
     {
         if (Instance == null)
