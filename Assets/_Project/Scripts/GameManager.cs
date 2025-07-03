@@ -39,12 +39,15 @@ public class GameManager : MonoBehaviour
     // 将你的序列BGM在这里公开，方便在Inspector中拖拽音频文件
     public SequencedBgm level1Bgm;
 
+    private void Start()
+    {
+    }
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+         //   DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartLevel()
     {
-        Debug.Log("GameManager: 开场剧情结束，开始加载对话场景...");
+        Debug.Log("GameManager: 开场剧情结束，开始加载关卡场景...");
         SceneManager.LoadScene(levelSceneName);
         if (AudioManager.S != null)
         {
@@ -105,7 +108,9 @@ public class GameManager : MonoBehaviour
     }
         public void GoTOThanks()
     {
-        Debug.Log("GameManager: 前往抽卡..");
+        Debug.Log("GameManager: 前往致谢..");
         SceneManager.LoadScene(Thanks);
+        Score.ResetScore();
+
     }
 }

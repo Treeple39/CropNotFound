@@ -8,4 +8,9 @@ public static class Score
 
     public static int itemCount = 0;
 
+    public static void ResetScore()
+    {
+        score = 0;
+        itemCount = 0;
+    }
 }
