@@ -120,7 +120,7 @@ public class BottleMovement : BaseMovement
             {
                 // 找到有效位置，进行传送
                 transform.position = randomPosition;
-                Debug.Log($"瓶子在尝试{attempts}次后传送到了新位置: {randomPosition}");
+                //Debug.Log($"瓶子在尝试{attempts}次后传送到了新位置: {randomPosition}");
                 return;
             }
         }
