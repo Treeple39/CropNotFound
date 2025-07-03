@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputController inputController;
 
     private bool isDashing;
-    private float dashTimer;
-    private float dashCooldownTimer;
+    private float dashTimer = 0f;
+    private float dashCooldownTimer = 1.0f;
 
     void Awake()
     {
@@ -33,6 +33,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleTimersAndInput();
+    }
+
+    public float DashCooldownProgress
+    {
+        get
+        {
+            if (dashCooldown <= 0f) return 1.0f;
+            return Mathf.Clamp01(1.0f - (dashCooldownTimer / dashCooldown));
+        }
     }
 
     void FixedUpdate()

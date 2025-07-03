@@ -28,6 +28,10 @@ public class PlayerInputController : MonoBehaviour
         DashPressed = Input.GetMouseButtonDown(1) || Input.GetKeyDown(dashKey);
 
         // 3. 移动引导输入 (持续按住)
-        IsMovementEngaged = Input.GetMouseButton(0); 
+        IsMovementEngaged = Input.GetMouseButton(0);
+    }
+    public void setDashPressed(bool _DashPressed)
+    {
+        DashPressed = _DashPressed;
     }
 }

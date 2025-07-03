@@ -34,7 +34,6 @@ public class PlayerStateMachine : MonoBehaviour
     private FootstepPlayer foot;
     private Rigidbody2D rb;
 
-    // ★★★ 新增：用于存储当前激活的控制器，方便更新 ★★★
     private SpineAnimationController currentController;
 
     void Awake()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6385730595080464003}
   - component: {fileID: 2745897815550863947}
   - component: {fileID: 6970517029914217380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WalkDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,9 +73,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6385730595080464003
 MonoBehaviour:
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 4030059330394634316}
   - component: {fileID: 1507648775205692080}
   - component: {fileID: 7362129546080187521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,9 +211,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4030059330394634316
 MonoBehaviour:
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 7719680112851104415}
   - component: {fileID: 1360138114938087827}
   - component: {fileID: 2855151776134062287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LoopDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cce417bb92ee4f8bbbdf3decee7436c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FlashX: {fileID: 0}
+  polygonDrawerPrefab: {fileID: 1568543906548981391, guid: ddf13274faf134ad3a8000492ef56009, type: 3}
   enemiesToTrack:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   enemyHighlightColor: {r: 1, g: 0.14707795, b: 0.015686274, a: 1}
@@ -445,7 +451,7 @@ GameObject:
   - component: {fileID: 5465690479877077898}
   - component: {fileID: 3313235182204522679}
   - component: {fileID: 1703847076782353526}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WalkLR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,9 +511,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5465690479877077898
 MonoBehaviour:
@@ -583,7 +589,7 @@ GameObject:
   - component: {fileID: 8915022199747962519}
   - component: {fileID: 5129840739595395112}
   - component: {fileID: 199726033264466261}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -622,7 +628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da61bc23440c6495d9ef0fb34855d57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 100
   dashKey: 304
 --- !u!114 &8915022199747962519
 MonoBehaviour:
@@ -636,13 +641,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8553c1c55f7c48f99f6bdf2f8c1c9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  maxVelocity: 6
-  acceleration: 2
-  deceleration: 3
+  maxSpeed: 10
+  deadZoneRadius: 0.5
+  maxThrustRadius: 5
   dashSpeed: 15
   dashDuration: 0.2
-  dashCooldown: 0
+  dashCooldown: 1
   dashEffectPrefab: {fileID: 4914167191793436596, guid: 01aab98d12b68e64e8bfec745f78d774, type: 3}
 --- !u!50 &5129840739595395112
 Rigidbody2D:
@@ -660,7 +664,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c2e8b9a9df7ebaa428d5b88d31a04d9e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -711,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8863027117981882575}
   - component: {fileID: 892180066058430585}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7079538258596760622}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +799,7 @@ GameObject:
   - component: {fileID: 6298497193966068532}
   - component: {fileID: 3677258644838901402}
   - component: {fileID: 4155797761205970377}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FX_cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5579,9 +5583,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 19
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -5636,7 +5640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482102644362394318}
   - component: {fileID: 4945129157285148760}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5702,7 +5706,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3658286965627207051}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5738,7 +5742,7 @@ GameObject:
   - component: {fileID: 2829393663530086776}
   - component: {fileID: 1331216530703491006}
   - component: {fileID: 2937090904998230156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Dizzy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5798,9 +5802,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2829393663530086776
 MonoBehaviour:
@@ -5873,7 +5877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3731408436044695844}
   - component: {fileID: 1168752263691566186}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FootstepPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5924,7 +5928,7 @@ GameObject:
   - component: {fileID: 2001064615845553029}
   - component: {fileID: 1116215144794750038}
   - component: {fileID: 3187671493977584540}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TrailSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6083,7 +6087,7 @@ GameObject:
   - component: {fileID: 6172148959274377060}
   - component: {fileID: 5173424987987254934}
   - component: {fileID: 3699553862837497362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WalkUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6143,9 +6147,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 242214791
+  m_SortingLayer: 1
+  m_SortingOrder: 20
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6172148959274377060
 MonoBehaviour:

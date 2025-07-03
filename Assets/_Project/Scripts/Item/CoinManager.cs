@@ -64,7 +64,7 @@ public class CoinManager : MonoBehaviour
             GameObject newCoin = Instantiate(coinPrefab, randomPosition, Quaternion.identity);
             CoinController newCoinScript = newCoin.GetComponent<CoinController>();
             coinCount++;
-            Debug.Log("���ɽ�ң���ǰ����: " + coinCount);
+            //Debug.Log("���ɽ�ң���ǰ����: " + coinCount);
         }
         else
         {
