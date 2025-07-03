@@ -6,6 +6,7 @@ using CustomStorySystem; // 确保你的数据结构命名空间被正确引用
 using DG.Tweening;      // 确保你已导入DOTween插件
 using System.Linq;
 using UnityEngine.SceneManagement; // 引入Linq以使用 .Where() 和 .ToList()
+
 public class StoryManager : MonoBehaviour
 {
     [Header("UI 引用")]
@@ -26,6 +27,7 @@ public class StoryManager : MonoBehaviour
     public float typeSpeed = 0.05f;
     public float typeTime = 0.1f; // 打字音效的平均间隔
     public float fadeDuration = 0.3f;
+    public float chMoveDuration = 0.3f;
     public float scrollUnrollDuration = 1.0f;
     public float currentScore;
 
@@ -144,12 +146,12 @@ public class StoryManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
-        if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
+        //if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
         //if (InsertImage2 != null) InsertImage2.gameObject.SetActive(false);
 
         CanvasGroup dialogueCG = dialoguePanel.GetComponent<CanvasGroup>() ?? dialoguePanel.AddComponent<CanvasGroup>();
-        dialogueCG.alpha = 0;
-        dialogueCG.DOFade(1, fadeDuration);
+        //dialogueCG.alpha = 0;
+        //dialogueCG.DOFade(1, fadeDuration);
 
         ProcessCharacterAction(character1Image, currentLine.Cha1Action, currentLine.CoordinateX1, currentLine.Cha1ImageSource);
         ProcessCharacterAction(character2Image, currentLine.Cha2Action, currentLine.CoordinateX2, currentLine.Cha2ImageSource);
@@ -168,7 +170,7 @@ public class StoryManager : MonoBehaviour
         {
             if (image.gameObject.activeSelf)
             {
-                image.DOFade(0, fadeDuration).OnComplete(() => image.gameObject.SetActive(false));
+                Config.ImageUFX.UFX_Fade(image, scrollUnrollDuration, () => image.gameObject.SetActive(false));
             }
             return;
         }
@@ -179,9 +181,7 @@ public class StoryManager : MonoBehaviour
             image.sprite = newSprite;
             image.gameObject.SetActive(true);
             image.rectTransform.sizeDelta = new Vector2(0, originalImageSizes[image].y);
-            image.rectTransform.DOSizeDelta(originalImageSizes[image], scrollUnrollDuration).SetEase(Ease.OutQuad);
-            image.color = new Color(1, 1, 1, 0);
-            image.DOFade(1, scrollUnrollDuration);
+            Config.ImageUFX.UFX_Stretch(image, originalImageSizes[image], scrollUnrollDuration);
         }
         else
         {
@@ -466,7 +466,7 @@ public class StoryManager : MonoBehaviour
     IEnumerator MoveCharacter(Image image, float targetX)
     {
         if (image == null || image.color.a < 0.1f) yield break;
-        yield return image.rectTransform.DOAnchorPosX(targetX, fadeDuration).SetEase(Ease.OutQuad).WaitForCompletion();
+        yield return image.rectTransform.DOAnchorPosX(targetX, chMoveDuration).SetEase(Ease.OutQuad).WaitForCompletion();
     }
 
     IEnumerator ShakeCharacter(Image image)

@@ -75,7 +75,7 @@ public class Coin : MonoBehaviour
             //_instance.CoinDestroyed();
             destoryBool = true;            
         }
-        AudioManager.S.PlayFX(coinGet, .5f, .5f);
+        AudioManager.S.PlayFX(coinGet, .5f, 1f);
         Destroy(this.gameObject);
     }
 

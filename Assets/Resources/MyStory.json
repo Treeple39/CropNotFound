@@ -2,21 +2,21 @@
   "storyData": [
     {
       "Key": 1, "ContentTitle": "1", "ContentSpeaker": "天神", "Content": "天使0628，咳咳......", "NextContent": "2", "ContinueTag": "+",
-      "Cha1Action": "AppearAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_watch",
+      "Cha1Action": "AppearAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_think",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
       "Key": 2, "ContentTitle": "2", "ContentSpeaker": "天使", "Content": "在，天神大人。", "NextContent": "3", "ContinueTag": "+",
-      "Cha1Action": "MoveTo", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_idle",
-      "Cha2Action": "ShakeAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_confident"
+      "Cha1Action": "MoveTo", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "ShakeAt", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
     },
     {
-      "Key": 3, "ContentTitle": "3", "ContentSpeaker": "天神", "Content": "我需要你帮我去人间收集一些灵魂碎片。", "NextContent": "4", "ContinueTag": "+",
-      "Cha1Action": "ShakeAt", "CoordinateX1": -400, "Cha1ImageSource": "ch_god_watch",
+      "Key": 3, "ContentTitle": "3", "ContentSpeaker": "天神", "Content": "我的造人实验出了点小错误，灵魂都溜走了……", "NextContent": "4", "ContinueTag": "+",
+      "Cha1Action": "ShakeAt", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_think",
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
     {
-      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "就像这样", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
+      "Key": 4, "ContentTitle": "4", "ContentSpeaker": "天神", "Content": "需要你帮我去人间收集一些灵魂碎片，就像这样。", "NextContent": "5", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
       "Cha1Action": "Continue", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Continue", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_doubt"
     },
@@ -28,7 +28,7 @@
     {
       "Key": 6, "ContentTitle": "6", "ContentSpeaker": "天使", "Content": "要收集多少呢？", "NextContent": "7", "ContinueTag": "+",
       "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
-      "Cha2Action": "ShakeAt", "CoordinateX2": 400, "Cha2ImageSource": "ch_angel_doubt"
+      "Cha2Action": "ShakeAt", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_doubt"
     },
     {
       "Key": 7, "ContentTitle": "7", "ContentSpeaker": "天神", "Content": "（看了看“造人工作台”）", "NextContent": "8", "ContinueTag": "+",
@@ -46,12 +46,12 @@
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
-      "Key": 10, "ContentTitle": "10", "ContentSpeaker": "天使", "Content": "收到.....我知道该怎么做了。", "NextContent": "12", "ContinueTag": "+",
+      "Key": 10, "ContentTitle": "10", "ContentSpeaker": "天使", "Content": "收到！我知道该怎么做了。", "NextContent": "12", "ContinueTag": "+",
       "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
-      "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_sad"
+      "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_confident"
     },
     {
-      "Key": 11, "ContentTitle": "11", "ContentSpeaker": "天使", "Content": "切，明明是您的粗心，还要我背锅......", "NextContent": "13", "ContinueTag": "+",
+      "Key": 11, "ContentTitle": "11", "ContentSpeaker": "天使", "Content": "切，明明是您的粗心，还要我背黑锅......", "NextContent": "13", "ContinueTag": "+",
       "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
       "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_sad"
     },
@@ -61,12 +61,12 @@
       "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
-      "Key": 13, "ContentTitle": "13", "ContentSpeaker": "天神", "Content": "你说什么？", "NextContent": "14", "ContinueTag": "+",
-      "Cha1Action": "ShakeAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_watch",
+      "Key": 13, "ContentTitle": "13", "ContentSpeaker": "天神", "Content": "你说什么？如果不了解怎么做的话，再好好看一遍。", "NextContent": "14", "ContinueTag": "+","InsertImage1Path":"ui_tutor",
+      "Cha1Action": "ShakeAt", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
-      "Key": 14, "ContentTitle": "14", "ContentSpeaker": "天使", "Content": "没有没有！我现在就去！", "NextContent": "0", "ContinueTag": "#",
+      "Key": 14, "ContentTitle": "14", "ContentSpeaker": "天使", "Content": "收到！我现在就去！", "NextContent": "0", "ContinueTag": "#",
       "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "",
       "Cha2Action": "ShakeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_confident"
     }

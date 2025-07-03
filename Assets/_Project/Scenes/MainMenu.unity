@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 42248119}
   - component: {fileID: 42248121}
   - component: {fileID: 42248120}
+  - component: {fileID: 42248122}
   m_Layer: 5
   m_Name: Image (3)
   m_TagString: Untagged
@@ -197,6 +198,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42248118}
   m_CullTransparentMesh: 1
+--- !u!114 &42248122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42248118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: 0.1, y: 0.1}
+  maxOffset: {x: 50, y: 50}
+  smoothTime: 0.2
+  useDeviceTilt: 0
+  tiltSensitivity: 2
 --- !u!1 &283847438
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +386,7 @@ GameObject:
   - component: {fileID: 751656774}
   - component: {fileID: 751656776}
   - component: {fileID: 751656775}
+  - component: {fileID: 751656777}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -392,7 +411,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.01001, y: 0.00084686}
-  m_SizeDelta: {x: 1920, y: 1079.7}
+  m_SizeDelta: {x: 2006.9, y: 1128.5525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &751656775
 MonoBehaviour:
@@ -432,6 +451,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751656773}
   m_CullTransparentMesh: 1
+--- !u!114 &751656777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751656773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: 0.05, y: 0.05}
+  maxOffset: {x: 25, y: 25}
+  smoothTime: 0.5
+  useDeviceTilt: 0
+  tiltSensitivity: 1
 --- !u!1 &768573708
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +480,7 @@ GameObject:
   - component: {fileID: 768573712}
   - component: {fileID: 768573711}
   - component: {fileID: 768573710}
+  - component: {fileID: 768573713}
   m_Layer: 5
   m_Name: Image (7)
   m_TagString: Untagged
@@ -529,6 +566,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768573708}
   m_CullTransparentMesh: 1
+--- !u!114 &768573713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768573708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: 0.2, y: 0}
+  maxOffset: {x: 50, y: 50}
+  smoothTime: 0.2
+  useDeviceTilt: 0
+  tiltSensitivity: 2
 --- !u!1 &809177676
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +595,7 @@ GameObject:
   - component: {fileID: 809177680}
   - component: {fileID: 809177679}
   - component: {fileID: 809177678}
+  - component: {fileID: 809177681}
   m_Layer: 5
   m_Name: Image (6)
   m_TagString: Untagged
@@ -626,6 +681,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809177676}
   m_CullTransparentMesh: 1
+--- !u!114 &809177681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809177676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: -0.2, y: 0}
+  maxOffset: {x: 50, y: 50}
+  smoothTime: 0.2
+  useDeviceTilt: 0
+  tiltSensitivity: 2
 --- !u!1 &850818681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,6 +1122,7 @@ GameObject:
   - component: {fileID: 1393728314}
   - component: {fileID: 1393728316}
   - component: {fileID: 1393728315}
+  - component: {fileID: 1393728317}
   m_Layer: 5
   m_Name: Image (4)
   m_TagString: Untagged
@@ -1114,6 +1187,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393728313}
   m_CullTransparentMesh: 1
+--- !u!114 &1393728317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393728313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: 0.3, y: 0.3}
+  maxOffset: {x: 50, y: 50}
+  smoothTime: 0.3
+  useDeviceTilt: 0
+  tiltSensitivity: 2
 --- !u!1 &1505681050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1290,7 @@ Transform:
   m_GameObject: {fileID: 1505681050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.7, y: 3.9, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1417,6 +1507,7 @@ GameObject:
   - component: {fileID: 1791323353}
   - component: {fileID: 1791323355}
   - component: {fileID: 1791323354}
+  - component: {fileID: 1791323356}
   m_Layer: 5
   m_Name: Image (2)
   m_TagString: Untagged
@@ -1481,6 +1572,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791323352}
   m_CullTransparentMesh: 1
+--- !u!114 &1791323356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791323352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730a16a4406180248af6224c464acb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followIntensity: {x: 0.15, y: 0.1}
+  maxOffset: {x: 50, y: 50}
+  smoothTime: 0.2
+  useDeviceTilt: 0
+  tiltSensitivity: 2
 --- !u!1 &1799477831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,8 +1623,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.01001, y: 0.0029221}
-  m_SizeDelta: {x: 1920, y: 1079.7}
+  m_AnchoredPosition: {x: -0.01001, y: 12.215009}
+  m_SizeDelta: {x: 2000, y: 1104.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1799477833
 MonoBehaviour:
