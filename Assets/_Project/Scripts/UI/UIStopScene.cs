@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GlobalTimeManager : Singleton<GlobalTimeManager>
 {
@@ -25,5 +27,19 @@ public class GlobalTimeManager : Singleton<GlobalTimeManager>
     {
         Time.timeScale = timeScale;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+
+
+    public void TimeRecover()
+    {
+        StartCoroutine(IETimeSlow());
+    }
+
+    private IEnumerator IETimeSlow()
+    {
+        yield return new WaitForSecondsRealtime(5.0f);
+        GlobalTimeManager.Instance.ModifyTime(1.0f);
+        PlayerMovement.Instance.UpdateMaxVelocity(0.5f);
+        Camera.main.transform.GetChild(0).GetComponent<PostProcessVolume>().weight = 0f;
     }
 }

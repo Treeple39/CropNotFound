@@ -1,7 +1,9 @@
 // ItemUsageSystem.cs
 using Inventory;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class ItemUsageSystem : MonoBehaviour
 {
@@ -51,6 +53,7 @@ public class ItemUsageSystem : MonoBehaviour
             Debug.LogWarning($"未实现 {type} 类型的使用逻辑");
         }
     }
+
 
     private void OnDestroy()
     {

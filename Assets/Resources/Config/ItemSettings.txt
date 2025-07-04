@@ -10,7 +10,7 @@
     "canPickedup": 1,
     "canDropped": 1,
     "canCarried": 1,
-    "canUseSpell": 0
+    "canUseSpell": 1
   },
   "1": {
     "itemID": 1001,

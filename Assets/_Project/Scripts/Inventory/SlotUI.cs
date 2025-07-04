@@ -51,13 +51,16 @@ namespace Inventory
             button.onClick.RemoveAllListeners();
 
             //TODO:冷却
-
+            
             if (itemDetails.canUseSpell)
             {
                 button.onClick.AddListener(delegate
                 {
                     ItemType type = (ItemType)System.Enum.Parse(typeof(ItemType), itemDetails.itemType);
                     EventHandler.CallItemSpellUse(type, itemDetails);
+
+                    ///到时候移到施法系统内，并开放冷却时间配置
+                    EventHandler.CallCooldownStart(this, 3f);
                 });
             }
         }

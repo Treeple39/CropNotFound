@@ -49,6 +49,7 @@ namespace Inventory
                     {
                         if (list[i].itemAmount > 0)
                         {
+                            Debug.Log(list[i].itemID);
                             var item = InventoryManager.Instance.GetItemDetail(list[i].itemID);
                             bagSlots[i].UpdateSlot(item, list[i].itemAmount);
                         }
