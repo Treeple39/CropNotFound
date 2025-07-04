@@ -1,9 +1,9 @@
+using Inventory;
 using UnityEngine;
 using UnityEngine.SceneManagement; // 必须引用这个命名空间来管理场景
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance { get; private set; }
 
     [Header("场景名称配置")]
     [Tooltip("开场动画场景的文件名")]
@@ -39,21 +39,6 @@ public class GameManager : MonoBehaviour
     // 将你的序列BGM在这里公开，方便在Inspector中拖拽音频文件
     public SequencedBgm level1Bgm;
 
-    private void Start()
-    {
-    }
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-         //   DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     /// <summary>
     /// 从主菜单开始剧情

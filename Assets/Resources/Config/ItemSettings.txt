@@ -1,0 +1,40 @@
+{
+  "0": {
+    "itemID": 1000,
+    "itemName": "金闪闪钟表",
+    "itemType": "Clock",
+    "itemIcon": "Items/item_goldenClock",
+    "itemSpriteOnWorld": "Items/item_goldenClock",
+    "itemDescription": "杂物",
+    "itemUseRadius": 1.0,
+    "canPickedup": 1,
+    "canDropped": 1,
+    "canCarried": 1,
+    "canUseSpell": 0
+  },
+  "1": {
+    "itemID": 1001,
+    "itemName": "吸引力法杖",
+    "itemType": "Place",
+    "itemIcon": "Items/item_staff",
+    "itemSpriteOnWorld": "Items/item_staff",
+    "itemDescription": "杂物",
+    "itemUseRadius": 1.0,
+    "canPickedup": 1,
+    "canDropped": 1,
+    "canCarried": 1,
+    "canUseSpell": 1,
+    "prefabToSpawnPath": "ItemSpell/Pfb_Staff"
+  },
+  "2": {
+    "itemID": 1002,
+    "itemName": "仙尘",
+    "itemType": "Powder",
+    "itemDescription": "零食",
+    "itemUseRadius": 1.0,
+    "canPickedup": 1,
+    "canDropped": 1,
+    "canCarried": 1,
+    "canUseSpell": 0
+  }
+}

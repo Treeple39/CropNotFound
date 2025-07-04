@@ -1,0 +1,518 @@
+{
+  "1": {
+    "ID": 1,
+    "Name": "你醒啦",
+    "Weather": "Sunny",
+    "LevelType": "Teach",
+    "Description": "睡什么睡，起床上工啦。",
+    "Picture": "UILevelMiniMap/ui_minimap_0_1",
+    "Elves": [
+      0
+    ],
+    "PostcardDesc": "晒衣服并等待它们晾干，这样就可以获得作为精灵生存下去的“气息”了。在这里我遇到了我的第一个前辈，枫。",
+    "PostcardEmo": "Sprites/LevelStart/emo01",
+    "PostcardPic": "Sprites/LevelStart/Pic01",
+    "Tips": "Sprites/UITips/ui_tips_0_1"
+  },
+  "2": {
+    "ID": 2,
+    "Name": "衣服的气息",
+    "Weather": "Sunny",
+    "LevelType": "Teach",
+    "Description": "什么啊，我们的食物，竟然是…",
+    "Picture": "UILevelMiniMap/ui_minimap_0_2",
+    "Elves": [
+      0
+    ],
+    "PostcardDesc": "尽可能晒干一切衣服——如果衣服掉到地上会弄脏衣服的！所以我需要小心的操控衣服呢，加油加油。",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic03",
+    "Tips": "Sprites/UITips/ui_tips_0_2"
+  },
+  "3": {
+    "ID": 3,
+    "Name": "跃动阳光",
+    "Weather": "Sunny",
+    "LevelType": "Teach",
+    "Description": "枫也来帮助我了，感觉很不错。",
+    "Picture": "UILevelMiniMap/ui_minimap_0_3",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "枫也来帮助我啦！拥有跳跃能力的她，能够在晾衣架之间来回跳跃。附身衣服之后还能待着衣服一起跳跃！",
+    "PostcardEmo": "Sprites/LevelStart/emo05",
+    "PostcardPic": "Sprites/LevelStart/Pic04",
+    "Tips": "Sprites/UITips/ui_tips_0_3"
+  },
+  "1001": {
+    "ID": 1001,
+    "Name": "巷陌的清甜",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "老城南的故事里一丝淡淡的清甜。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_1",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "不知道这是哪一天，巷子里突然吵吵嚷嚷了起来，怎么一回事？我想可以通过晾衣慢慢接近再说。",
+    "PostcardEmo": "Sprites/LevelStart/emo01",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_1"
+  },
+  "1002": {
+    "ID": 1002,
+    "Name": "糖水的魔力",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "白砂糖手冲，会好喝吗？",
+    "Picture": "UILevelMiniMap/ui_minimap_1_2",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "原来是糖水奶奶的店。听枫说，这是因为奶奶在“互联网”上成为了网红，嗯……会比枫的头发还红嘛？",
+    "PostcardEmo": "Sprites/LevelStart/emo05",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_2"
+  },
+  "1003": {
+    "ID": 1003,
+    "Name": "宣传语",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "简单的糖水，回忆简单的童年。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_3",
+    "Elves": [
+      0
+    ],
+    "PostcardDesc": "糖水奶奶做的糖水真的特别受欢迎，虽然只是白糖手冲，我也好想去尝一口呢。但是精灵似乎是不能被人类发现的……",
+    "PostcardEmo": "Sprites/LevelStart/emo03",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_3"
+  },
+  "1004": {
+    "ID": 1004,
+    "Name": "得扫码支付",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "不会扫码支付可是会落后时代的。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_4",
+    "Elves": [
+      1
+    ],
+    "PostcardDesc": "虽然枫不允许我去参与人类的事情，但是喝口糖水而已，应该没什么大问题吧。哎……好紧张。",
+    "PostcardEmo": "Sprites/LevelStart/emo02",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_4"
+  },
+  "1005": {
+    "ID": 1005,
+    "Name": "小冒失鬼",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "为什么我们不能和人类接触呢？",
+    "Picture": "UILevelMiniMap/ui_minimap_1_5",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "不知道该写些什么……总之我被枫姐骂了。难受。",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_5"
+  },
+  "1006": {
+    "ID": 1006,
+    "Name": "机器的真诚",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "机器做的糖水还是糖水吗？",
+    "Picture": "UILevelMiniMap/ui_minimap_1_6",
+    "Elves": [
+      1
+    ],
+    "PostcardDesc": "还是忍不住去关注糖水奶奶的店铺，不过这次竟然发现了好几台做糖水的机器，但是也听到了一些不快的声音。",
+    "PostcardEmo": "Sprites/LevelStart/emo03",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_6"
+  },
+  "1007": {
+    "ID": 1007,
+    "Name": "谁在嘲讽",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "店前的顾客越来越少，好难受。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_7",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "糖水店的顾客越来越少了，真的是因为换了机器的原因吗？糖水还是糖水呀。",
+    "PostcardEmo": "Sprites/LevelStart/emo02",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_7"
+  },
+  "1008": {
+    "ID": 1008,
+    "Name": "关店歇业",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "糖水奶奶留下的最后一份礼物。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_8",
+    "Elves": [
+      1
+    ],
+    "PostcardDesc": "糖水铺好像没人排队了，不对，竟然歇业了。好难受我还没尝一口呢。",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_8"
+  },
+  "1009": {
+    "ID": 1009,
+    "Name": "潮流的弃子",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "看来，互联网真的很喧嚣。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_9",
+    "Elves": [
+      1
+    ],
+    "PostcardDesc": "枫说，奶奶的小店开了很多年，但是却在这次之后永久闭店了。网红，到底是什么呢？",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_9"
+  },
+  "1010": {
+    "ID": 1010,
+    "Name": "世界的纷杂",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "人类的世界很复杂，需要学习。",
+    "Picture": "UILevelMiniMap/ui_minimap_1_10",
+    "Elves": [
+      0,
+      1
+    ],
+    "PostcardDesc": "人类的世界太复杂了，可是我们永远只是旁观者……吗？",
+    "PostcardEmo": "Sprites/LevelStart/emo03",
+    "PostcardPic": "Sprites/LevelStart/Pic02",
+    "Tips": "Sprites/UITips/ui_tips_1_10"
+  },
+  "2001": {
+    "ID": 2001,
+    "Name": "新伙伴",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "遇到了烛萤街的可爱精灵。",
+    "Picture": "UILevelMiniMap/ui_minimap_2_1",
+    "Elves": [
+      2
+    ],
+    "PostcardDesc": "糖水事件后不久，我们在巷口工作时无意进入了新的地域，认识了一个叫做澄的精灵",
+    "PostcardEmo": "Sprites/LevelStart/emo01",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_1"
+  },
+  "2002": {
+    "ID": 2002,
+    "Name": "遇见阳光",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "阳光精灵的能力好特别呢。",
+    "Picture": "UILevelMiniMap/ui_minimap_2_2",
+    "Elves": [
+      2
+    ],
+    "PostcardDesc": "原来每个精灵都有自己的独特能力，可我还没有啊。虽然，枫姐说我以后会有的，可还是觉得自己好没用。",
+    "PostcardEmo": "Sprites/LevelStart/emo02",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_2"
+  },
+  "2003": {
+    "ID": 2003,
+    "Name": "未来的方向",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "未来我会拥有独特的能力吗？",
+    "Picture": "UILevelMiniMap/ui_minimap_2_3",
+    "Elves": [
+      1
+    ],
+    "PostcardDesc": "想成为有独特能力的精灵，也想去帮助糖水奶奶摆脱枫所说的“网红”……哎，怎么什么也做不了。",
+    "PostcardEmo": "Sprites/LevelStart/emo02",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_3"
+  },
+  "2004": {
+    "ID": 2004,
+    "Name": "午夜的阳光",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "夜间也可以有阳光，好神奇。",
+    "Picture": "UILevelMiniMap/ui_minimap_2_4",
+    "Elves": [
+      0,
+      1,
+      2
+    ],
+    "PostcardDesc": "阳光精灵的祭祀仪式，原来能力是这样获得的。澄可以为我试试，感觉突然有了光亮呢！",
+    "PostcardEmo": "Sprites/LevelStart/emo01",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_4"
+  },
+  "2005": {
+    "ID": 2005,
+    "Name": "齐心协力",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "齐心协作才能获得最好的效果。",
+    "Picture": "UILevelMiniMap/ui_minimap_2_5",
+    "Elves": [
+      0,
+      2
+    ],
+    "PostcardDesc": "在祭祀之前，我需要去收集三种不同的衣服气息，对了，我记得糖水奶奶的围裙就是甜甜的味道，我应该能复现出来。",
+    "PostcardEmo": "Sprites/LevelStart/emo03",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_5"
+  },
+  "2006": {
+    "ID": 2006,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "小心这些顶棚平台，带好衣服。",
+    "Picture": "UILevelMiniMap/ui_minimap_2_6",
+    "Elves": [
+      2
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_6"
+  },
+  "2007": {
+    "ID": 2007,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这颗巨大的核桃树，承载了多少光阴呢？",
+    "Picture": "UILevelMiniMap/ui_minimap_2_7",
+    "Elves": [
+      2
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_7"
+  },
+  "2008": {
+    "ID": 2008,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_2_8",
+    "Elves": [
+      0
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_8"
+  },
+  "2009": {
+    "ID": 2009,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_2_9",
+    "Elves": [
+      0,
+      2
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_9"
+  },
+  "2010": {
+    "ID": 2010,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_2_10",
+    "Elves": [
+      0,
+      2
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_2_10"
+  },
+  "3001": {
+    "ID": 3001,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_1",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_1"
+  },
+  "3002": {
+    "ID": 3002,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_2",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_2"
+  },
+  "3003": {
+    "ID": 3003,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_3",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_3"
+  },
+  "3004": {
+    "ID": 3004,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_4",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_4"
+  },
+  "3005": {
+    "ID": 3005,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_5",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_5"
+  },
+  "3006": {
+    "ID": 3006,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_6",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_6"
+  },
+  "3007": {
+    "ID": 3007,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_7",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_7"
+  },
+  "3008": {
+    "ID": 3008,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_8",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_8"
+  },
+  "3009": {
+    "ID": 3009,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_9",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_9"
+  },
+  "3010": {
+    "ID": 3010,
+    "Name": "测试",
+    "Weather": "Sunny",
+    "LevelType": "Normal",
+    "Description": "这是一个测试中的关卡",
+    "Picture": "UILevelMiniMap/ui_minimap_3_10",
+    "Elves": [
+      0,
+      3
+    ],
+    "PostcardDesc": "这是一个测试中的关卡",
+    "PostcardEmo": "Sprites/LevelStart/emo04",
+    "PostcardPic": "Sprites/LevelStart/Pic05",
+    "Tips": "Sprites/UITips/ui_tips_3_10"
+  }
+}

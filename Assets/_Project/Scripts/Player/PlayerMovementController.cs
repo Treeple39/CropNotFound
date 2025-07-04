@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
+    //在角色管理器出来之前，暂时先单例吧
+    public static PlayerMovement Instance;
+
     [Header("直接移动参数")]
     public float maxSpeed = 10f;
     public float deadZoneRadius = 0.5f;
@@ -26,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<PlayerInputController>();
     }
@@ -119,5 +123,15 @@ public class PlayerMovement : MonoBehaviour
     {
         dashTimer -= Time.fixedDeltaTime;
         if (dashTimer <= 0f) { isDashing = false; }
+    }
+
+    public void UpdateMaxVelocity(float rate)
+    {
+        maxSpeed *= rate;
+    }
+
+    public Vector3 GetSpawnPosition()
+    {
+        return transform.position;
     }
 }

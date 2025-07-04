@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class PauseManager : MonoBehaviour
+public class GlobalTimeManager : Singleton<GlobalTimeManager>
 {
     public static bool IsPaused { get; private set; }
     public GameObject pauseIcon;
     public GameObject resumeIcon;
+
+
 
     public void TogglePause()
     {
@@ -17,5 +19,11 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = IsPaused;
 
         Debug.Log($"”Œœ∑“—{(IsPaused ? "‘›Õ£" : "ª÷∏¥")}");
+    }
+
+    public void ModifyTime(float timeScale)
+    {
+        Time.timeScale = timeScale;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 }

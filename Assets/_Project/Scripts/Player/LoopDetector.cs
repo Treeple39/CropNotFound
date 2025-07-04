@@ -142,14 +142,14 @@ public class LoopDetector : MonoBehaviour
         // ★★★★★【核心修改：直接从 ItemGenerator 获取列表】★★★★★
 
         // 1. 检查 ItemGenerator 实例是否存在
-        if (ItemGenerator.Instance == null)
+        if (EnemyGenerator.Instance == null)
         {
             Debug.LogWarning("找不到 ItemGenerator 实例，无法检测物体。");
             return;
         }
 
         // 2. 直接获取已生成物体的Transform列表
-        List<Transform> allSpawnedTransforms = ItemGenerator.Instance.spawnedTransforms;
+        List<Transform> allSpawnedTransforms = EnemyGenerator.Instance.spawnedTransforms;
         Debug.Log(allSpawnedTransforms);
 
         // 3. 将Transform列表转换为我们内部的 TrackableObject 结构
@@ -183,7 +183,7 @@ public class LoopDetector : MonoBehaviour
             if (IsPointInPolygon(pos2d, loopPts))
             {
                 Score.itemCount++;
-                CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<ItemData>().BigCoinCount);
+                CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<EnemyData>().BigCoinCount);
                 Destroy(obj.gameObject);
                 //StarExplode(obj.transform.position);
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemData : MonoBehaviour
+public class EnemyData : MonoBehaviour
 {
     [SerializeField] public int BigCoinCount;
 }
