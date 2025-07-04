@@ -34,13 +34,11 @@ public class LoopDetector : MonoBehaviour
         }
     }
 
-    // 内部类：包装 Enemy 组件和渲染组件    
     private class TrackableObject
     {
-        public GameObject gameObject; // 直接引用GameObject
+        public GameObject gameObject; 
         public Transform transform;
         public Renderer renderer;
-        public Color originalColor;
         
         // 如果需要，也可以保留对特定组件的引用
         // public Enemy enemyComponent; 
@@ -54,7 +52,6 @@ public class LoopDetector : MonoBehaviour
 
     [Tooltip("拖入所有要检测的 Enemy 脚本组件")]
     public List<Enemy> enemiesToTrack = new List<Enemy>();
-    public Color enemyHighlightColor = Color.yellow;
 
     [Header("闭环检测")]
     public int minPointsForLoop = 10;
@@ -172,8 +169,6 @@ public class LoopDetector : MonoBehaviour
                     gameObject = itemTransform.gameObject,
                     transform = itemTransform,
                     renderer = rend,
-                    originalColor = rend.material.color,
-                    // enemyComponent = itemTransform.GetComponent<Enemy>() // 如果需要Enemy组件
                 });
             }
         }
@@ -187,9 +182,6 @@ public class LoopDetector : MonoBehaviour
             Vector2 pos2d = obj.transform.position;
             if (IsPointInPolygon(pos2d, loopPts))
             {
-                // 高亮
-                obj.renderer.material.color = enemyHighlightColor;
-
                 Score.itemCount++;
                 CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<ItemData>().BigCoinCount);
                 Destroy(obj.gameObject);
