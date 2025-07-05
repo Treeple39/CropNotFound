@@ -685,7 +685,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: f46a06fe64ea7e74caafb9cc4b239509, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5716864220573726815, guid: dbfc584d025754c14b5bf1e15cf125c9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbfc584d025754c14b5bf1e15cf125c9, type: 3}
@@ -811,6 +812,34 @@ PrefabInstance:
     - target: {fileID: 382970133027504810, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: endBGM
+      value: audio/last
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: openBGM
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: storyBGM
+      value: audio/cg_dialogue_bgm_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: mainMenuBGM
+      value: audio/mainmenu_sound
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: levelsequenceBodyBGM
+      value: audio/ExppBody -  - Salida - Stereo Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: levelsequenceBeginBGM
+      value: audio/ExppHead -  - Salida - Stereo Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: levelsequenceConnectBGM
+      value: audio/ExppConnect -  - Salida - Stereo Out
       objectReference: {fileID: 0}
     - target: {fileID: 8300798529163907367, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_Name

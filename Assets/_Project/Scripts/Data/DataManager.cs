@@ -6,24 +6,29 @@ using System.Resources;
 
 public class DataManager : Singleton<DataManager>
 {
-    // ¾²Ì¬ÅäÖÃÂ·¾¶£¨JSON£©
+    // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½JSONï¿½ï¿½
     private string _jsonConfigPath = "Config/";
 
-    // ¶¯Ì¬Êý¾Ý±£´æÂ·¾¶£¨SO£©
+    // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½SOï¿½ï¿½
     private string _SOSavePath => Path.Combine(Application.persistentDataPath, "SOSaves/");
 
-    // ¾²Ì¬ÅäÖÃÊý¾Ý£¨JSON¼ÓÔØ£©
-    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } // ÎïÆ·ÏêÇé±í
+    // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½JSONï¿½ï¿½ï¿½Ø£ï¿½
+    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    // ¶¯Ì¬Êý¾Ý£¨SOÒýÓÃ + ³Ö¾Ã»¯£©runtimeInventory
-    [Header("ÀàSOÄ£°å")]
+    // ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ý£ï¿½SOï¿½ï¿½ï¿½ï¿½ + ï¿½Ö¾Ã»ï¿½ï¿½ï¿½runtimeInventory
+    [Header("ï¿½ï¿½SOÄ£ï¿½ï¿½")]
     [SerializeField] private InventoryBag_SO bagSO;
 
-    //ÊÇ·ñ¿´¹ý¿ª³¡¶¯»­
+    //ï¿½Ç·ñ¿´¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private const string AnimationSavePath = "AnimationState.json";
 
     private InventoryBag_SO playerBag;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
     public bool HasSeenOpeningAnimation()
     {
         string path = Path.Combine(_SOSavePath, AnimationSavePath);
@@ -32,10 +37,10 @@ public class DataManager : Singleton<DataManager>
             string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<bool>(json);
         }
-        return false; // Ä¬ÈÏÃ»¿´¹ý
+        return false; // Ä¬ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½
     }
 
-    // ÉèÖÃ"ÒÑ¿´¹ý¶¯»­"×´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½"ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"×´Ì¬
     public void SetHasSeenOpeningAnimation(bool hasSeen)
     {
         string path = Path.Combine(_SOSavePath, AnimationSavePath);
@@ -48,7 +53,7 @@ public class DataManager : Singleton<DataManager>
         if (!Directory.Exists(_SOSavePath))
         {
             Directory.CreateDirectory(_SOSavePath);
-            Debug.Log($"´´½¨SO´æµµÄ¿Â¼: {_SOSavePath}");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½SOï¿½æµµÄ¿Â¼: {_SOSavePath}");
         }
     }
 
@@ -56,69 +61,69 @@ public class DataManager : Singleton<DataManager>
     {
         EnsureDirectoriesExist();
         Application.quitting += SaveAllDynamicData;
-        LoadAllStaticConfigs();  //¼ÓÔØ¾²Ì¬JSONÅäÖÃ
-        LoadOrCreateDynamicData(); //³õÊ¼»¯¶¯Ì¬SOÊý¾Ý
+        LoadAllStaticConfigs();  //ï¿½ï¿½ï¿½Ø¾ï¿½Ì¬JSONï¿½ï¿½ï¿½ï¿½
+        LoadOrCreateDynamicData(); //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ì¬SOï¿½ï¿½ï¿½ï¿½
     }
 
-    // === ¾²Ì¬ÅäÖÃ£¨JSON£© ===
+    // === ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ã£ï¿½JSONï¿½ï¿½ ===
     private void LoadAllStaticConfigs()
     {
-        // ¼ÓÔØÎïÆ·ÅäÖÃ±í
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½Ã±ï¿½
         TextAsset textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "ItemSettings");
         string json = textAsset.text;
         this.ItemDetails = JsonConvert.DeserializeObject<Dictionary<int, ItemDetails>>(json);
 
-        Debug.Log($"¼ÓÔØ {ItemDetails.Count} ÌõÎïÆ·ÅäÖÃ");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ {ItemDetails.Count} ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½");
     }
 
-    // === ¶¯Ì¬Êý¾Ý£¨SO£© ===
+    // === ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½Ý£ï¿½SOï¿½ï¿½ ===
     private void LoadOrCreateDynamicData()
     {
-        // ³¢ÊÔ´Ó´æµµ¼ÓÔØ±³°üSO
+        // ï¿½ï¿½ï¿½Ô´Ó´æµµï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½SO
         string inventorySavePath = Path.Combine(_SOSavePath, "PlayerInventory.json");
-        // 1. È·±£Ä£°åSO´æÔÚ
+        // 1. È·ï¿½ï¿½Ä£ï¿½ï¿½SOï¿½ï¿½ï¿½ï¿½
         if (bagSO == null)
         {
-            Debug.LogError("Î´·ÖÅäÄ¬ÈÏ±³°üSOÄ£°å£¡");
+            Debug.LogError("Î´ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï±ï¿½ï¿½ï¿½SOÄ£ï¿½å£¡");
             return;
         }
 
-        // 2. ³¢ÊÔ´Ó´æµµ¼ÓÔØ
+        // 2. ï¿½ï¿½ï¿½Ô´Ó´æµµï¿½ï¿½ï¿½ï¿½
         if (File.Exists(inventorySavePath))
         {
             string json = File.ReadAllText(inventorySavePath);
-            // ¿ËÂ¡Ä£°åSOÒÔ±ÜÃâÎÛÈ¾Ô­Ê¼×Ê²ú
+            // ï¿½ï¿½Â¡Ä£ï¿½ï¿½SOï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½È¾Ô­Ê¼ï¿½Ê²ï¿½
             playerBag = Instantiate(bagSO);
             JsonUtility.FromJsonOverwrite(json, playerBag);
-            Debug.Log("±³°ü´Ó´æµµ¼ÓÔØ³É¹¦");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ó´æµµï¿½ï¿½ï¿½Ø³É¹ï¿½");
         }
         else
         {
-            // 3. ÎÞ´æµµÊ±£¬¿ËÂ¡Ä£°å×÷ÎªÐÂ´æµµ
+            // 3. ï¿½Þ´æµµÊ±ï¿½ï¿½ï¿½ï¿½Â¡Ä£ï¿½ï¿½ï¿½ï¿½Îªï¿½Â´æµµ
             playerBag = Instantiate(bagSO);
-            Debug.Log("´´½¨ÐÂ±³°ü£¨»ùÓÚÄ£°å£©");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½å£©");
         }
     }
 
-    // === ´æµµ¹ÜÀí ===
+    // === ï¿½æµµï¿½ï¿½ï¿½ï¿½ ===
     public void SaveAllDynamicData()
     {
         if (!Directory.Exists(_SOSavePath))
             Directory.CreateDirectory(_SOSavePath);
 
-        //ÐòÁÐ»¯µ±Ç°±³°ü×´Ì¬,²»±£´æÄ£°åSO£©
+        //ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½×´Ì¬,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½SOï¿½ï¿½
         string inventoryJson = JsonUtility.ToJson(playerBag);
         File.WriteAllText(Path.Combine(_SOSavePath, "PlayerInventory.json"), inventoryJson);
-        Debug.Log("¶¯Ì¬Êý¾ÝÒÑ±£´æ");
+        Debug.Log("ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½");
     }
 
-    // === ¹¤¾ß·½·¨ ===
+    // === ï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½ ===
     public ItemDetails GetItemDetail(int itemId)
     {
         if (ItemDetails.TryGetValue(itemId, out var detail))
             return detail;
 
-        Debug.LogError($"ÎïÆ·ID {itemId + 1000} ²»´æÔÚÓÚÅäÖÃ±íÖÐ£¡");
+        Debug.LogError($"ï¿½ï¿½Æ·ID {itemId + 1000} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½ï¿½Ð£ï¿½");
         return null;
     }
 }
