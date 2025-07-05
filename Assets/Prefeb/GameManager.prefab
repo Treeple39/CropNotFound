@@ -44,10 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd66f89dcdb341ef943575b2d82c01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storySceneName: StoryTest
-  levelSceneName: MainScene
+  openSceneName: OpeningAnimation
+  openBGM: 
   mainMenuSceneName: MainMenu
-  level1Bgm:
-    introClip: {fileID: 8300000, guid: 2ce60cb309fce4325a6e1b578fae842a, type: 3}
-    themeClip: {fileID: 8300000, guid: 50557139d9cac4d419307c1bcea5fffe, type: 3}
-    bridgeClip: {fileID: 8300000, guid: 43f8f0220fb504938b88fdf32a8f7d69, type: 3}
+  mainMenuBGM: audio/mainmenu_sound
+  storySceneName: StoryTest
+  storyBGM: audio/cg_dialogue_bgm_02
+  levelSceneName: MainScene
+  levelsequenceBeginBGM: audio/ExppHead -  - Salida - Stereo Out
+  levelsequenceBodyBGM: audio/ExppBody -  - Salida - Stereo Out
+  levelsequenceConnectBGM: audio/ExppConnect -  - Salida - Stereo Out
+  EndSceneName: EndScene
+  endBGM: audio/last
+  DrawCardsName: DrawCards
+  drawCardsBGM: 
+  Thanks: Thank
+  thankBGM: 
