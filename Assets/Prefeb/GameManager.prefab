@@ -49,7 +49,7 @@ MonoBehaviour:
   mainMenuSceneName: MainMenu
   mainMenuBGM: audio/mainmenu_sound
   storySceneName: StoryTest
-  storyBGM: audio/cg_dialogue_bgm_02
+  storyBGM: audio/dialogue_scene
   levelSceneName: MainScene
   levelsequenceBeginBGM: audio/ExppHead -  - Salida - Stereo Out
   levelsequenceBodyBGM: audio/ExppBody -  - Salida - Stereo Out
@@ -57,6 +57,6 @@ MonoBehaviour:
   EndSceneName: EndScene
   endBGM: audio/last
   DrawCardsName: DrawCards
-  drawCardsBGM: 
+  drawCardsBGM: "audio/\u7ED3\u7B97\u573A\u666F"
   Thanks: Thank
-  thankBGM: 
+  thankBGM: audio/ExppBody -  - Salida - Stereo Out
