@@ -13,16 +13,7 @@ public class UIMainMenu : MonoBehaviour
     }
 
     public void NewGame() {
-        //SceneManager.instance.DeleteSaveData();
-        if (!Score.skipAnim) {
-            Score.AnimSkip();
-            GameManager.Instance.StartStory(); 
-        }
-        else
-        {
-            GameManager.Instance.StartLevel();
-        }
-
+            GameManager.Instance.StartLog();
     }
 
     public void DrawCard() {

@@ -19,7 +19,29 @@ public class DataManager : Singleton<DataManager>
     [Header("类SO模板")]
     [SerializeField] private InventoryBag_SO bagSO;
 
+    //是否看过开场动画
+    private const string AnimationSavePath = "AnimationState.json";
+
     private InventoryBag_SO playerBag;
+
+    public bool HasSeenOpeningAnimation()
+    {
+        string path = Path.Combine(_SOSavePath, AnimationSavePath);
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<bool>(json);
+        }
+        return false; // 默认没看过
+    }
+
+    // 设置"已看过动画"状态
+    public void SetHasSeenOpeningAnimation(bool hasSeen)
+    {
+        string path = Path.Combine(_SOSavePath, AnimationSavePath);
+        string json = JsonConvert.SerializeObject(hasSeen);
+        File.WriteAllText(path, json);
+    }
 
     private void EnsureDirectoriesExist()
     {

@@ -54,7 +54,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLog()
     {
-        Debug.Log("GameManager: 开场剧情结束，开始加载对话场景...");
+        Debug.Log("GameManager: 主菜单结束，开始加载对话场景...");
         SceneManager.LoadScene(storySceneName);
     }
 
@@ -63,7 +63,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLevel()
     {
-        Debug.Log("GameManager: 开场剧情结束，开始加载关卡场景...");
+        Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         SceneManager.LoadScene(levelSceneName);
         if (AudioManager.S != null)
         {
@@ -78,6 +78,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 返回主菜单...");
         SceneManager.LoadScene(mainMenuSceneName);
+        DataManager.Instance.SetHasSeenOpeningAnimation(true);
     }
 
     public void GoToEndScene()
@@ -97,5 +98,10 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(Thanks);
         Score.ResetScore();
 
+    }
+
+    public void SkipOpeningAnimation()
+    {
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 }
