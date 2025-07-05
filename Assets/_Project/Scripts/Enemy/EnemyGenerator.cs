@@ -90,7 +90,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         // 从Resources文件夹加载预制体
         // 注意：预制体应该放在Resources文件夹下
-        prefabs = Resources.LoadAll<GameObject>("Prefabs");
+        prefabs = Resources.LoadAll<GameObject>("Prefabs/Enemies");
 
         if (prefabs == null || prefabs.Length == 0)
         {
