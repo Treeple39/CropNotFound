@@ -16,6 +16,10 @@ Shader "MyAwesomeShaders/2D/SpriteOutlineDistort" {
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass {
+
+            Tags{"LightMode" = "ForwardBase"}
+            Cull Off
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
