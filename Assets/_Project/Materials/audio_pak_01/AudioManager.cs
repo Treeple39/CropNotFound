@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using System.Collections;
 
-// ★★★ SequencedBgm 类定义放在这里，或者放在它自己的文件里 ★★★
-// 将它从 MonoBehaviour 继承中解放出来
 [System.Serializable]
 public class SequencedBgm
 {
@@ -20,17 +18,9 @@ public class SequencedBgm
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager S;
-
-    [Header("BGM 自动播放配置")]
-    [Tooltip("如果只想播放单曲循环，请填写此项")]
-    public AudioClip singleBgmToPlay;
-    [Tooltip("如果想播放序列音乐，请配置此项 (优先级高于单曲)")]
-    public SequencedBgm sequencedBgmToPlay;
-
-    [Header("音频源 (自动获取)")]
-    [HideInInspector] public AudioSource bgmSource;
-    [HideInInspector] public AudioSource fxSource;
-    [HideInInspector] public AudioSource vocalSource;
+    public AudioSource bgmSource;
+    private AudioSource fxSource;
+    private AudioSource vocalSource;
     private AudioMixer mixer;
     private Coroutine bgmCoroutine;
 
@@ -39,6 +29,7 @@ public class AudioManager : MonoBehaviour
         if (S == null)
         {
             S = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -52,21 +43,6 @@ public class AudioManager : MonoBehaviour
         vocalSource = MakeSource("Vocal");
     }
 
-    // ★★★ 核心修改：在Start方法中自动播放配置好的音乐 ★★★
-    void Start()
-    {
-        // 优先播放序列音乐
-        if (sequencedBgmToPlay != null && sequencedBgmToPlay.themeClip != null)
-        {
-            PlaySequencedBGM(sequencedBgmToPlay);
-        }
-        // 如果没有配置序列音乐，再检查是否配置了单曲音乐
-        else if (singleBgmToPlay != null)
-        {
-            PlayBGM(singleBgmToPlay);
-        }
-    }
-
     AudioSource MakeSource(string groupName)
     {
         var src = gameObject.AddComponent<AudioSource>();
@@ -74,8 +50,6 @@ public class AudioManager : MonoBehaviour
         if (group.Length > 0) src.outputAudioMixerGroup = group[0];
         return src;
     }
-
-    // --- 播放方法现在主要是内部使用，但也可以保留为public ---
 
     public void PlayBGM(AudioClip clip)
     {
@@ -131,7 +105,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // --- FX 和 Vocal 方法保持不变 ---
     public void PlayFX(AudioClip clip, float volume = 1f, float pitch = 1f)
     {
         var src = gameObject.AddComponent<AudioSource>();
