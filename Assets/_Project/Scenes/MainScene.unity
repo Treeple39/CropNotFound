@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93c38bedbe3f2743960377fa4185193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
 --- !u!1 &90511906 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7657915137937597054, guid: 849607878a747764cbaaaf7c232cb04d, type: 3}
@@ -4856,6 +4857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93c38bedbe3f2743960377fa4185193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
 --- !u!212 &816467588
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5818,16 +5820,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs: []
-  ChairCount: 5
-  DollCount: 20
+  ChairCount: 3
+  DollCount: 10
   BottleCount: 10
-  PillowCount: 5
-  BookCount: 10
+  PillowCount: 3
+  BookCount: 5
   SlippersCount: 2
   ItemMinDistance: 0.5
-  MovableItemRatio: 0.9
+  MovableItemRatio: 0.95
   difficultyLevel: 1
-  continuousSpawnInterval: 1
+  continuousSpawnInterval: 2
   maxDifficultyLevel: 4
   spawnProbability:
     chairProb:
