@@ -472,6 +472,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: 0}
+  rarityDatabase: {fileID: 0}
+  outlineRenderers: []
+  canChangeRarity: 0
 --- !u!1 &90511906 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7657915137937597054, guid: 849607878a747764cbaaaf7c232cb04d, type: 3}
@@ -1142,6 +1146,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: 0}
+  rarityDatabase: {fileID: 0}
+  outlineRenderers: []
+  canChangeRarity: 0
 --- !u!212 &816467588
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18796,3 +18804,5 @@ SceneRoots:
   - {fileID: 49023569}
   - {fileID: 528968926}
   - {fileID: 1420688147}
+  - {fileID: 75956121}
+  - {fileID: 816467589}
