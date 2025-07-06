@@ -29,3 +29,13 @@ public struct InventoryItem //struct£∫÷µ¿‡–Õ
     public int itemID;
     public int itemAmount;
 }
+
+[System.Serializable]
+public struct RarityData
+{
+    public Rarity rarity;
+    public Color outlineColor;
+    public float outlineWidth;
+    public float statMultiplier;
+    public string displayName;
+}

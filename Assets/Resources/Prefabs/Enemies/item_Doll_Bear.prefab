@@ -103,6 +103,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: -3190895437787294005}
+  rarityDatabase: {fileID: 11400000, guid: 89adf8f6fb6066945be80c7c42a45d47, type: 2}
+  outlineRenderers:
+  - {fileID: 8355008819670953308}
+  canChangeRarity: 0
 --- !u!114 &5641131482611929962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,3 +234,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BigCoinCount: 2
+  Rarity: 0

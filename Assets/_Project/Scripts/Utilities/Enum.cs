@@ -1,3 +1,4 @@
+
 public enum ItemType
 {
     Clock,Place,Powder,Furniture,Potion,Fruit,
@@ -7,6 +8,15 @@ public enum ItemType
 public enum SlotType
 {
 
+}
+
+public enum Rarity
+{
+    Common,     // 普通
+    Uncommon,   // 稀有
+    Rare,       // 罕见
+    Epic,       // 史诗
+    Legendary   // 传说
 }
 
 public enum InventoryLocation

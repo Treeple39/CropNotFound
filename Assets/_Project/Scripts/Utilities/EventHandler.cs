@@ -11,6 +11,8 @@ public static class EventHandler
     public static event Action<ItemType, ItemDetails> ItemSpellUse;
     public static event Action<SlotUI, float> OnCooldownStart;
     public static event Action<SlotUI> OnCooldownEnd;
+    public static event Action<Rarity> OnRarityChanged;
+    public static event Action<int, float> OnRarityUpgraded;
     public static void CallUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
     {
         UpdateInventoryUI?.Invoke(location, list);
@@ -29,5 +31,15 @@ public static class EventHandler
     public static void CallCooldownEnd(SlotUI slot)
     {
         OnCooldownEnd?.Invoke(slot);
+    }
+
+    public static void CallRarityChange(Rarity rarity)
+    {
+        OnRarityChanged?.Invoke(rarity);
+    }
+
+    public static void CallRarityUpgrade(int rank, float rate)
+    {
+        OnRarityUpgraded?.Invoke(rank, rate);
     }
 }
