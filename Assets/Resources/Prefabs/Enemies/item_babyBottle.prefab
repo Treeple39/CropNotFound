@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3489618050169199934}
   m_Layer: 8
   m_Name: item_babyBottle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +104,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: 5658647419539641612}
+  rarityDatabase: {fileID: 11400000, guid: 89adf8f6fb6066945be80c7c42a45d47, type: 2}
+  outlineRenderers:
+  - {fileID: 3802360013019566948}
+  canChangeRarity: 0
 --- !u!114 &6588848286932375522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BigCoinCount: 5
+  Rarity: 0
 --- !u!108 &3489618050169199934
 Light:
   m_ObjectHideFlags: 0

@@ -71,6 +71,7 @@ public class Coin : MonoBehaviour
     {
         if (!destoryBool)
         {
+            Score.coinCount--;
             Score.score+=10;
             //_instance.CoinDestroyed();
             destoryBool = true;            

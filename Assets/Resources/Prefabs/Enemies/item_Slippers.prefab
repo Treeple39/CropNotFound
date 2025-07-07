@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3600734057470473768}
   m_Layer: 8
   m_Name: item_Slippers
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +103,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: 3600734057470473768}
+  rarityDatabase: {fileID: 11400000, guid: 89adf8f6fb6066945be80c7c42a45d47, type: 2}
+  outlineRenderers:
+  - {fileID: 7330992688547155203}
+  canChangeRarity: 0
 --- !u!95 &7994843312914359018
 Animator:
   serializedVersion: 5
@@ -234,3 +239,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BigCoinCount: 5
+  Rarity: 0

@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("特效")]
     public GameObject dashEffectPrefab;
+    
+    [Header("UI交互")]
+    [Tooltip("UI防误触管理器")]
+    public UI_PreventAccidentalTouch uiTouchManager;
 
     private Rigidbody2D rb;
     private PlayerInputController inputController;
@@ -32,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<PlayerInputController>();
+        
+        // 如果没有通过Inspector指定UI防误触管理器，尝试在场景中查找
+        if (uiTouchManager == null)
+        {
+            uiTouchManager = FindObjectOfType<UI_PreventAccidentalTouch>();
+        }
     }
 
     void Update()
@@ -56,6 +66,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            // 检查是否应该阻止角色移动（UI防误触）
+            if (uiTouchManager != null && uiTouchManager.ShouldBlockCharacterMovement)
+            {
+                // 如果应该阻止移动，不执行移动逻辑
+                return;
+            }
+            
             // ★★★★★【核心修改】★★★★★
             // 只有在玩家按住鼠标左键时，才执行引导逻辑
             if (inputController.IsMovementEngaged)

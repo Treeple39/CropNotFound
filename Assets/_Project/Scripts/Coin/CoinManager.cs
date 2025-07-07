@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CoinManager : MonoBehaviour
+public class CoinManager : Singleton<CoinManager>
 {
     [SerializeField]
     public AudioClip ghostDie1;
@@ -13,7 +13,6 @@ public class CoinManager : MonoBehaviour
 
     [SerializeField] public GameObject coinPrefab; // ���Ԥ����
     [SerializeField] public GameObject bigCoinPrefab;
-    public int coinCount = 0; // ��ǰ��Ҽ���
     private const int maxCoinCount = 100; // ���������
 
     [SerializeField] private int spawnAreaMinX = -40; // ��С���ɷ�Χ
@@ -37,7 +36,7 @@ public class CoinManager : MonoBehaviour
 
     public void Update()
     {
-        if (coinCount >= maxCoinCount)
+        if (Score.coinCount >= maxCoinCount)
         {
             Debug.Log("�Ѵﵽ�������������: " + maxCoinCount);
             return;
@@ -45,11 +44,6 @@ public class CoinManager : MonoBehaviour
         else {
             CreateNewCoin();
         }
-    }
-
-    public void CoinDestroyed()
-    {
-        coinCount--;
     }
 
     private void CreateNewCoin()
@@ -63,7 +57,7 @@ public class CoinManager : MonoBehaviour
         );
             GameObject newCoin = Instantiate(coinPrefab, randomPosition, Quaternion.identity);
             CoinController newCoinScript = newCoin.GetComponent<CoinController>();
-            coinCount++;
+            Score.coinCount++;
             //Debug.Log("���ɽ�ң���ǰ����: " + coinCount);
         }
         else

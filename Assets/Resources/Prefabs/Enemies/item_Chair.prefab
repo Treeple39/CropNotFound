@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1079254499491338661}
   m_Layer: 8
   m_Name: item_Chair
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,6 +191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
+  enemyData: {fileID: 1079254499491338661}
+  rarityDatabase: {fileID: 11400000, guid: 89adf8f6fb6066945be80c7c42a45d47, type: 2}
+  outlineRenderers:
+  - {fileID: 185290153673193145}
+  canChangeRarity: 0
 --- !u!50 &2368808540180221929
 Rigidbody2D:
   serializedVersion: 4
@@ -231,3 +236,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BigCoinCount: 3
+  Rarity: 0
