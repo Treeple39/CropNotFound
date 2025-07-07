@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using CustomStorySystem; // 确保你的数据结构命名空间被正确引用
 using DG.Tweening;      // 确保你已导入DOTween插件
 using System.Linq;
-using UnityEngine.SceneManagement; // 引入Linq以使用 .Where() 和 .ToList()
+using UnityEngine.SceneManagement;
+using Unity.VisualScripting; // 引入Linq以使用 .Where() 和 .ToList()
 
 public class StoryManager : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class StoryManager : MonoBehaviour
 
         InitializeImage(character1Image);
         InitializeImage(character2Image);
-        InitializeImage(InsertImage1);
+        //InitializeImage(InsertImage1);
 
         HideAllImmediately();
         ShowLine(currentLineKey);
@@ -160,28 +161,46 @@ public class StoryManager : MonoBehaviour
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeLineCoroutine(currentLine.Content));
 
-        ProcessInsertImage(InsertImage1, currentLine.InsertImage1Path);
+        if (!string.IsNullOrEmpty(currentLine.InsertImage1Path))
+            ProcessInsertImage(InsertImage1, currentLine.InsertImage1Path);
     }
 
     void ProcessInsertImage(Image image, string imagePath)
     {
-        if (image == null) return;
+        if (image == null || image.gameObject == null) return;
+
         if (string.IsNullOrEmpty(imagePath))
         {
+
             if (image.gameObject.activeSelf)
             {
                 Config.ImageUFX.UFX_Fade(image, scrollUnrollDuration, () => image.gameObject.SetActive(false));
             }
+            else
+            {
+                image.gameObject.SetActive(false); // 直接隐藏
+            }
+
             return;
         }
 
+        imagePath = $"Characters/{imagePath}"; // 或者 Path.Combine
         Sprite newSprite = Resources.Load<Sprite>(imagePath);
+
         if (newSprite != null)
         {
             image.sprite = newSprite;
             image.gameObject.SetActive(true);
-            image.rectTransform.sizeDelta = new Vector2(0, originalImageSizes[image].y);
-            Config.ImageUFX.UFX_Stretch(image, originalImageSizes[image], scrollUnrollDuration);
+
+            if (originalImageSizes.TryGetValue(image, out Vector2 originalSize))
+            {
+                image.rectTransform.sizeDelta = new Vector2(0, originalSize.y);
+                Config.ImageUFX.UFX_Stretch(image, originalSize, scrollUnrollDuration);
+            }
+            else
+            {
+                //Debug.LogWarning($"未找到 {image} 的原始尺寸，无法调整大小");
+            }
         }
         else
         {
@@ -189,7 +208,6 @@ public class StoryManager : MonoBehaviour
             image.gameObject.SetActive(false);
         }
     }
-
     void ProcessCharacterAction(Image characterImage, string action, float xPos, string imageSource)
     {
         if (characterImage == null) return;
@@ -243,11 +261,16 @@ public class StoryManager : MonoBehaviour
             return;
         }
 
-        string nextContentString = currentLine.NextContent;
+        string nextContentString = currentLine.ContinueTag;
+        if (nextContentString != "?")
+        {
+            nextContentString = currentLine.NextContent;
+        }
         int nextKey;
 
         // ★★★★★【核心修改 #2：执行抽卡逻辑】★★★★★
         // 我们约定，当NextContent是"?"时，执行抽卡逻辑
+        Debug.Log(nextContentString);
         if (nextContentString == "?")
         {
             Debug.Log("检测到抽卡节点 '?'，开始根据分数选择结局...");
@@ -258,8 +281,9 @@ public class StoryManager : MonoBehaviour
                 return;
             }
         }
-        else // 否则，走原来的普通跳转或随机分支逻辑
+        else
         {
+            Debug.Log("原来的");
             if (nextContentString.Contains("|"))
             {
                 // (保留旧的随机分支逻辑，以备不时之需)
@@ -519,8 +543,6 @@ public class StoryManager : MonoBehaviour
         rt.DOSizeDelta(targetSize, scrollUnrollDuration).SetEase(Ease.OutQuad);
 
         // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        if (InsertImage2 != null)
-            InsertImage2.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(scrollUnrollDuration);
     }

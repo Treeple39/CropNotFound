@@ -13,7 +13,7 @@ namespace CustomStorySystem
         public string ContentSpeaker;
         public string Content;
         public string NextContent;
-        // 以下字段可以根据你的Excel表格增删
+        public string ContinueTag;
         public string Cha1Action;
         public float CoordinateX1;
         public string Cha1ImageSource;

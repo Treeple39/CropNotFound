@@ -37,7 +37,7 @@
     {
       "Key": 7, "ContentTitle": "7", "ContentSpeaker": "天神", "Content": "嗯……你是第一个造出的天使的天使。", "NextContent": "8", "ContinueTag": "+",
       "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
-      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
+      "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
