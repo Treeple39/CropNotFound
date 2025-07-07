@@ -280,6 +280,7 @@ public class StoryManager : MonoBehaviour
                 EndStory();
                 return;
             }
+
         }
         else
         {
@@ -357,6 +358,8 @@ public class StoryManager : MonoBehaviour
             int randomIndex = Random.Range(0, possibleEndings.Count);
             int chosenEndingKey = possibleEndings[randomIndex];
             Debug.Log($"从 {possibleEndings.Count} 个可能结局中，抽中了 Key: {chosenEndingKey}");
+            ArchiveManager.Instance.UnlockByStoryKey(chosenEndingKey);
+            FindObjectOfType<SimpleArchiveUI>().RefreshAllSlots();
             return chosenEndingKey;
         }
         else

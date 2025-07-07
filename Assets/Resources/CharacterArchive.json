@@ -1,0 +1,54 @@
+{
+  "archiveItems": [
+    {
+      "ID": 1,
+      "imagePath": "story_end/baby_B_03",
+      "isActivated": false
+    },
+    {
+      "ID": 2,
+      "imagePath": "story_end/baby_B_02",
+      "isActivated": false
+    },
+    {
+      "ID": 3,
+      "imagePath": "story_end/baby_B_01",
+      "isActivated": false
+    },
+    {
+      "ID": 4,
+      "imagePath": "story_end/baby_A_03",
+      "isActivated": false
+    },
+    {
+      "ID": 5,
+      "imagePath": "story_end/baby_A_02",
+      "isActivated": false
+    },
+    {
+      "ID": 6,
+      "imagePath": "story_end/baby_A_01",
+      "isActivated": false
+    },
+    {
+      "ID": 7,
+      "imagePath": "story_end/baby_S_03",
+      "isActivated": false
+    },
+    {
+      "ID": 8,
+      "imagePath": "story_end/baby_S_02",
+      "isActivated": false
+    },
+    {
+      "ID": 9,
+      "imagePath": "story_end/baby_S_01",
+      "isActivated": false
+    },
+    {
+      "ID": 10,
+      "imagePath": "story_end/baby_SSS_01",
+      "isActivated": false
+    }
+  ]
+}

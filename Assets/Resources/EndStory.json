@@ -67,7 +67,7 @@
     {
       "Key": 12, "ContentTitle": "12", "ContentSpeaker": "？？？", "Content": "于是龙快乐地生活在了大海里。", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -85,7 +85,7 @@
     {
       "Key": 15, "ContentTitle": "15", "ContentSpeaker": "？？？", "Content": "于是恶魔决定掀翻了天神的桌子……", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -103,7 +103,7 @@
     {
       "Key": 18, "ContentTitle": "18", "ContentSpeaker": "？？？", "Content": "于是小精灵承包了天神的晾衣服工作……", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -121,7 +121,7 @@
     {
       "Key": 21, "ContentTitle": "21", "ContentSpeaker": "？？？", "Content": "于是孩子开始了正常的人的一生。", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -139,7 +139,7 @@
     {
       "Key": 24, "ContentTitle": "24", "ContentSpeaker": "？？？", "Content": "于是小狼人快乐地生活在了森林里。", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -157,7 +157,7 @@
     {
       "Key": 27, "ContentTitle": "27", "ContentSpeaker": "？？？", "Content": "于是天神把天选之子送回了东方。", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -175,7 +175,7 @@
     {
       "Key": 30, "ContentTitle": "30", "ContentSpeaker": "？？？", "Content": "于是被神眷顾的孩子开始了呼风唤雨的生活……", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -193,7 +193,7 @@
     {
       "Key": 33, "ContentTitle": "33", "ContentSpeaker": "？？？", "Content": "于是吸血鬼在西欧开始了茹毛饮血的生活。", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
     {
@@ -211,7 +211,7 @@
     {
       "Key": 36, "ContentTitle": "36", "ContentSpeaker": "？？？", "Content": "于是天使0628成为了新一届天神！（鼓掌）", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
-      "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_02",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_02",
       "Cha2Action": "FadeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_godlize"
     }
   ]
