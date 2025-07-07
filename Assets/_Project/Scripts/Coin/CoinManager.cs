@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CoinManager : MonoBehaviour
+public class CoinManager : Singleton<CoinManager>
 {
     [SerializeField]
     public AudioClip ghostDie1;
