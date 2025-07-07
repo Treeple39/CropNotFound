@@ -10,10 +10,12 @@ public static class Score
 
     public static bool skipAnim = false;
 
+    public static int coinCount = 0;
     public static void ResetScore()
     {
         score = 0;
         itemCount = 0;
+        coinCount = 0;
     }
 
     public static void AnimSkip()
