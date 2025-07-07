@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("特效")]
     public GameObject dashEffectPrefab;
+    public Sprite speedChangeChSprite;
     
     [Header("UI交互")]
     [Tooltip("UI防误触管理器")]
@@ -48,6 +50,36 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleTimersAndInput();
     }
+
+    private void OnEnable()
+    {
+        EventHandler.OnChangeSpeed += OnBoostPlayerSpeed;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.OnChangeSpeed -= OnBoostPlayerSpeed;
+    }
+
+    private void OnBoostPlayerSpeed(float speedBoostMultiplier, float speedBoostDuration)
+    {
+        UpdateMaxVelocity(speedBoostMultiplier);
+
+        ItemUIData messageData = default;
+        messageData.messageImage = speedChangeChSprite;
+        messageData.message = $"速度提升 {speedBoostMultiplier}倍! 持续 {speedBoostDuration}秒,冲啊！";
+        messageData.messageID = -1;
+
+        EventHandler.CallMessageShow(messageData);
+        StartCoroutine(ResetSpeed(speedBoostMultiplier, speedBoostDuration));
+    }
+
+    private IEnumerator ResetSpeed(float speedBoostMultiplier, float speedBoostDuration)
+    {
+        yield return new WaitForSecondsRealtime(speedBoostDuration);
+        UpdateMaxVelocity(1/speedBoostMultiplier);
+    }
+
 
     public float DashCooldownProgress
     {

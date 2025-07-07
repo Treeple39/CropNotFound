@@ -24,19 +24,15 @@ namespace Inventory
             //其他方法………………
         }
 
-        public void AddItem(Item item, bool toDestory)
+        public void AddItem(int itemID)
         {
-            var index = GetItemIndexInBag(item.itemID);
-            AddItemAtIndex(item.itemID, index, 1); //暂时写一个，之后扩充叠加功能
-
-            if (toDestory)
-            {
-                Destroy(item.gameObject);
-            }
+            var index = GetItemIndexInBag(itemID);
+            AddItemAtIndex(itemID, index, 1); //暂时写一个，之后扩充叠加功能
 
             //刷新UI
             EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
         }
+
 
         public void RemoveItem(int itemID, int removeAmount)
         {
