@@ -9,6 +9,7 @@ public class UIMessagePanel : MonoBehaviour
     [SerializeField] public Image eventImage;
     [SerializeField] public Text messageText;
     [SerializeField] public GameObject messageContainer;
+    [SerializeField] private Animator anim;
 
     private itemUITipDatabase itemUIDataList; // 配置itemID与图片/文本的关联
     private Dictionary<int, ItemUIData> _itemUIDict; // 用字典快速查找
@@ -46,6 +47,7 @@ public class UIMessagePanel : MonoBehaviour
         {
             return;
         }
+        anim.SetBool("close", false);
         messageContainer.SetActive(true);
         if(itemUIData.messageID == -1)
         {
@@ -67,7 +69,7 @@ public class UIMessagePanel : MonoBehaviour
     private IEnumerator CloseTab(float d)
     {
         yield return new WaitForSecondsRealtime(d);
-        messageContainer.SetActive(false);
+        anim.SetBool("close", true);
     }
 
 }

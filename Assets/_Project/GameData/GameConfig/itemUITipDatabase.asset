@@ -16,24 +16,24 @@ MonoBehaviour:
   - messageID: 0
     messageImage: {fileID: 21300000, guid: d7711a0da1b504774a087be24fdde390, type: 3}
     message: "\u5E72\u5F97\u4E0D\u9519\u554A\uFF01"
-  - messageID: 0
+  - messageID: 1
     messageImage: {fileID: 21300000, guid: 8d43993175e19a4448a3816fb12c3a3c, type: 3}
     message: "\u4F60\u77E5\u9053\u5417\uFF0C\u718A\u718A\u5176\u5B9E\u6709\u4E00\u4E2A\u5348\u591C\u540E\u5BAB\uFF01"
-  - messageID: 0
+  - messageID: 2
     messageImage: {fileID: 21300000, guid: 79b851ec192f246888c2c3ca4d45d7e0, type: 3}
     message: "\u600E\u4E48\u8FD8\u6CA1\u6709\u4E0B\u73ED\uFF1F\uFF01"
-  - messageID: 0
+  - messageID: 3
     messageImage: {fileID: 160539741, guid: dda85efb38282944b8e064ef2b646288, type: 3}
     message: "\u6536\u96C6\u4E86\u597D\u591A\u7075\u9B42\u5440\uFF01~"
-  - messageID: 0
+  - messageID: 4
     messageImage: {fileID: 21300000, guid: b92dde0678a42de45b18cff09597db30, type: 3}
     message: "\u4F60\u77E5\u9053\u5417\uFF1F\u5976\u74F6\u53EF\u662F\u4F1A\u77AC\u95F4\u79FB\u52A8\u7684\uFF01"
-  - messageID: 0
+  - messageID: 5
     messageImage: {fileID: 21300000, guid: c946ba1626b1c0941bbfc2f6751c926c, type: 3}
     message: "\u6765\u5566\uFF1F\u4F60\u5750\u5440\uFF01"
-  - messageID: 0
+  - messageID: 6
     messageImage: {fileID: 21300000, guid: 6afa2898a31f9e143859f326ba61e264, type: 3}
     message: "\u556A\u55D2\u556A\u55D2\u2026\u2026"
-  - messageID: 0
+  - messageID: 7
     messageImage: {fileID: 21300000, guid: c59af81127fd246e6841c458c2ab50e1, type: 3}
     message: "\u600E\u4E48\u8FD9\u4E48\u96BE\u554A\u2026\u2026"
