@@ -13,11 +13,11 @@ public class UIMessagePanel : MonoBehaviour
     [SerializeField] private List<ItemUIData> iTEM;
 
     private itemUITipDatabase itemUIDataList; // ����itemID��ͼƬ/�ı��Ĺ���
-    private Dictionary<int, ItemUIData> _itemUIDict; // ���ֵ���ٲ���
+    private Dictionary<int, ItemUIData> _itemUIDict; // ���ֵ���ٲ���?
 
     private void Start()
     {
-        ///δ���Ž��ؿ���ʼ�� ����н���
+        ///δ���Ž��ؿ���ʼ�� ����н���?
         ScoreDetector.Instance._lastItemCount = 0;
 
     }
@@ -25,12 +25,7 @@ public class UIMessagePanel : MonoBehaviour
     public void InitMessages(itemUITipDatabase itemUIDataList)
     {
         this.itemUIDataList = itemUIDataList;
-<<<<<<< HEAD
 
-        // ��ʼ���ֵ�
-=======
-        // ��ʼ���ֵ�
->>>>>>> 33945926f4d063053867a800d2bfbb1e42e8e675
         _itemUIDict = new Dictionary<int, ItemUIData>();
         foreach (var data in this.itemUIDataList.ItemUIDatas)
         {
@@ -73,11 +68,9 @@ public class UIMessagePanel : MonoBehaviour
         }
 
         ItemUIData randomMessage;
-<<<<<<< HEAD
+
         if(_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count-3), out randomMessage)&&d<3)
-=======
-        if (_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count), out randomMessage))
->>>>>>> 33945926f4d063053867a800d2bfbb1e42e8e675
+
         {
             eventImage.sprite = randomMessage.messageImage;
             messageText.text = randomMessage.message;

@@ -6,13 +6,14 @@ using DG.Tweening;
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField] public UIMessagePanel UIMessagePanel;
-    [SerializeField] public itemUITipDatabase itemUITipDatabase;
+    //[SerializeField] public itemUITipDatabase itemUITipDatabase;
 
     protected override void Awake()
     {
         base.Awake();
 
-        InitMessageUI(itemUITipDatabase);
+        //if(itemUITipDatabase != null)
+        //    InitMessageUI(itemUITipDatabase);
         DontDestroyOnLoad(gameObject);
     }
     public void FadeUIDuration(CanvasGroup UIPanel, float fadeStrength, float duration)

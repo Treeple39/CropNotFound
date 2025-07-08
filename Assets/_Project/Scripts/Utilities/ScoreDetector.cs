@@ -10,6 +10,11 @@ public class ScoreDetector : Singleton<ScoreDetector>
     [SerializeField] public List<int> itemIdList = new List<int>(); //在这里可以设定领奖物品
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
 
+    private void Start()
+    {
+        UIManager.Instance.InitMessageUI(itemUITipDatabase);
+    }
+
     private void Update()
     {
         // 持续检测itemCount变化
