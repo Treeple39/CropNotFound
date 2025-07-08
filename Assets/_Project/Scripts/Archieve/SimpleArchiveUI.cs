@@ -1,60 +1,86 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Collections.Generic;
 
 public class SimpleArchiveUI : MonoBehaviour
 {
-    [Header("基本设置")]
-    public Transform gridParent;  // 放所有格子的父物体
-    public Transform[] slotPositions; // 改为手动指定位置（在Inspector中拖入）
-    public GameObject slotPrefab; // 格子预制件
+    public Transform slotRoot;
+    public Transform activeContainer;
+    public Transform inactiveContainer;
+    public GameObject slotPrefab;
+
+    public Material silhouetteMaterial;
+
+    private Dictionary<int, Transform> idToSlotMap;
 
     void Start()
     {
-        // 确保有位置数据
-        if (slotPositions == null || slotPositions.Length == 0)
-        {
-            slotPositions = gridParent.GetComponentsInChildren<Transform>();
-            Debug.LogWarning("自动获取到" + (slotPositions.Length - 1) + "个位置点");
-        }
-
+        BuildSlotMap();
         RefreshAllSlots();
     }
 
-    public void RefreshAllSlots()
+    void BuildSlotMap()
     {
-        // 清空现有实例（防止重复创建）
-        foreach (Transform pos in slotPositions)
+        idToSlotMap = new Dictionary<int, Transform>();
+        foreach (Transform t in slotRoot.GetComponentsInChildren<Transform>())
         {
-            if (pos.childCount > 0)
+            if (t.name.StartsWith("Slot_"))
             {
-                Destroy(pos.GetChild(0).gameObject);
+                if (int.TryParse(t.name.Substring(5), out int id))
+                {
+                    idToSlotMap[id] = t;
+                }
             }
-        }
-
-        // 为每个图鉴项创建格子
-        var items = ArchiveManager.Instance.GetAllItems();
-        for (int i = 0; i < Mathf.Min(slotPositions.Length, items.Count); i++)
-        {
-            CreateSlot(items[i], slotPositions[i]);
         }
     }
 
-    private void CreateSlot(ArchiveManager.ArchiveItem item, Transform parent)
+public void RefreshAllSlots()
+{
+    foreach (Transform t in activeContainer) Destroy(t.gameObject);
+    foreach (Transform t in inactiveContainer) Destroy(t.gameObject);
+
+    var items = ArchiveManager.Instance.GetAllItems();
+    var itemDict = new Dictionary<int, ArchiveManager.ArchiveItem>();
+    foreach (var item in items)
+        itemDict[item.ID] = item;
+
+    foreach (Transform slot in slotRoot)
     {
-        GameObject newSlot = Instantiate(slotPrefab, parent);
-        Image icon = newSlot.GetComponent<Image>();
+        if (!slot.name.StartsWith("Slot_")) continue;
+
+        if (!int.TryParse(slot.name.Substring(5), out int id)) continue;
+
+        if (!itemDict.TryGetValue(id, out var item)) continue;
+
+        var parent = item.isActivated ? activeContainer : inactiveContainer;
+        var newSlot = Instantiate(slotPrefab, parent);
+
+        // ✅ 保证遮挡关系按 slot 顺序
+        newSlot.transform.SetSiblingIndex(parent.childCount - 1);
+
+        newSlot.transform.localPosition = slot.localPosition;
+        newSlot.transform.localRotation = slot.localRotation;
+        newSlot.transform.localScale = slot.localScale;
+
+        var image = newSlot.GetComponent<Image>();
 
         Sprite sprite = Resources.Load<Sprite>("Characters/" + item.imagePath);
         if (sprite != null)
         {
-            icon.sprite = sprite;
-            icon.preserveAspect = true;
-            icon.color = item.isActivated ? Color.white : new Color(0.3f, 0.3f, 0.3f, 0.6f);
+            image.sprite = sprite;
+            image.preserveAspect = true;
+            image.SetNativeSize();
         }
-        if (item.isActivated == false)
+
+        image.color = item.isActivated ? Color.white : Color.clear;
+
+        if (!item.isActivated)
         {
-            icon.material = new Material(Shader.Find("UI/BlackWithAlpha"));
+            image.material = silhouetteMaterial;
         }
     }
+}
+
+
 }
