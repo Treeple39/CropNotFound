@@ -25,12 +25,7 @@ public class UIMessagePanel : MonoBehaviour
     public void InitMessages(itemUITipDatabase itemUIDataList)
     {
         this.itemUIDataList = itemUIDataList;
-<<<<<<< HEAD
-
-        // ³õÊ¼»¯×Öµä
-=======
-        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Öµï¿½
->>>>>>> 33945926f4d063053867a800d2bfbb1e42e8e675
+        // åˆå§‹åŒ–å­—å…¸
         _itemUIDict = new Dictionary<int, ItemUIData>();
         foreach (var data in this.itemUIDataList.ItemUIDatas)
         {
@@ -73,11 +68,7 @@ public class UIMessagePanel : MonoBehaviour
         }
 
         ItemUIData randomMessage;
-<<<<<<< HEAD
-        if(_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count-3), out randomMessage)&&d<3)
-=======
-        if (_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count), out randomMessage))
->>>>>>> 33945926f4d063053867a800d2bfbb1e42e8e675
+        if(_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count), out randomMessage))
         {
             eventImage.sprite = randomMessage.messageImage;
             messageText.text = randomMessage.message;

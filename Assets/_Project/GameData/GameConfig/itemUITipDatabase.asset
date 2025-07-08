@@ -37,12 +37,12 @@ MonoBehaviour:
   - messageID: 7
     messageImage: {fileID: 21300000, guid: c59af81127fd246e6841c458c2ab50e1, type: 3}
     message: "\u600E\u4E48\u8FD9\u4E48\u96BE\u554A\u2026\u2026"
-  - messageID: 1000
+  - messageID: 8
     messageImage: {fileID: 21300000, guid: 5a69286d64fdf81419e9fb6726923dec, type: 3}
-    message: "\u54C7\u585E\uFF01\u662F\u91D1\u65F6\u949F"
-  - messageID: 1001
+    message: "\u54C7\u585E\uFF0C\u662F\u91D1\u65F6\u949F\uFF01"
+  - messageID: 9
     messageImage: {fileID: 21300000, guid: 0362905f6f913af418ea290bd9c86aed, type: 3}
     message: "\u5438\u5C18\u5668\u53EF\u4EE5\u542F\u52A8\u54AF~"
-  - messageID: 1002
+  - messageID: 10
     messageImage: {fileID: 21300000, guid: 7e46bcb128d9e0e41903120339b64ece, type: 3}
     message: "\u5939\u5B50GET\uFF01\u563B\u563B"
