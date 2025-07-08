@@ -44,6 +44,12 @@ public class GameManager : Singleton<GameManager>
     public string Thanks = "Thank";
     public string thankBGM = "";
 
+    [Tooltip("​​Archive​​")]
+
+    public string Archive = "Archive";
+    public string archiveBGM = "";
+
+
 
     protected override void Awake()
     {
@@ -61,6 +67,7 @@ public class GameManager : Singleton<GameManager>
     public void GoToMainMenu()
     {
         Debug.Log("GameManager: 返回主菜单...");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(mainMenuSceneName);
         DataManager.Instance.SetHasSeenOpeningAnimation(true);
         PlayBGM(mainMenuBGM);
@@ -72,8 +79,8 @@ public class GameManager : Singleton<GameManager>
     public void StartStory()
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(openSceneName);
-
         PlayBGM(storyBGM);
     }
 
@@ -84,6 +91,7 @@ public class GameManager : Singleton<GameManager>
     public void StartLog()
     {
         Debug.Log("GameManager: 主菜单结束，开始加载对话场景...");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(storySceneName);
 
         PlayBGM(storyBGM);
@@ -97,6 +105,7 @@ public class GameManager : Singleton<GameManager>
     public void StartLevel()
     {
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(levelSceneName);
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
@@ -107,6 +116,7 @@ public class GameManager : Singleton<GameManager>
     public void GoToEndScene()
     {
         Debug.Log("GameManager: 前往结算..");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(EndSceneName);
         PlayBGM(endBGM);
     }
@@ -114,14 +124,24 @@ public class GameManager : Singleton<GameManager>
     public void GoToCardScene()
     {
         Debug.Log("GameManager: 前往抽卡..");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(DrawCardsName);
         PlayBGM(drawCardsBGM);
     }
-    public void GoTOThanks()
+    public void GoToThanks()
     {
         Debug.Log("GameManager: 前往致谢..");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(Thanks);
         Score.ResetScore();
+        PlayBGM("");
+    }
+
+    public void GoToArchive()
+    {
+        Debug.Log("GameManager: 前往图鉴..");
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        SceneManager.LoadScene(Archive);
         PlayBGM("");
     }
 
@@ -129,6 +149,7 @@ public class GameManager : Singleton<GameManager>
     {
         SceneManager.LoadScene(mainMenuSceneName);
     }
+
 
     private static void PlayBGM(string bgmPath)
     {

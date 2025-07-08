@@ -11,19 +11,19 @@ public class UIMessagePanel : MonoBehaviour
     [SerializeField] public GameObject messageContainer;
     [SerializeField] private Animator anim;
 
-    private itemUITipDatabase itemUIDataList; // ÅäÖÃitemIDÓëÍ¼Æ¬/ÎÄ±¾µÄ¹ØÁª
-    private Dictionary<int, ItemUIData> _itemUIDict; // ÓÃ×Öµä¿ìËÙ²éÕÒ
+    private itemUITipDatabase itemUIDataList; // ï¿½ï¿½ï¿½ï¿½itemIDï¿½ï¿½Í¼Æ¬/ï¿½Ä±ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½
+    private Dictionary<int, ItemUIData> _itemUIDict; // ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ù²ï¿½ï¿½ï¿½
 
     private void Start()
     {
-        ///Î´À´·Å½ø¹Ø¿¨³õÊ¼»¯ Àï½øÐÐ½âñî
+        ///Î´ï¿½ï¿½ï¿½Å½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½
         ScoreDetector.Instance._lastItemCount = 0;
     }
-    
+
     public void InitMessages(itemUITipDatabase itemUIDataList)
     {
         this.itemUIDataList = itemUIDataList;
-        // ³õÊ¼»¯×Öµä
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Öµï¿½
         _itemUIDict = new Dictionary<int, ItemUIData>();
         foreach (var data in this.itemUIDataList.ItemUIDatas)
         {
@@ -49,16 +49,16 @@ public class UIMessagePanel : MonoBehaviour
         }
         anim.SetBool("close", false);
         messageContainer.SetActive(true);
-        if(itemUIData.messageID == -1)
+        if (itemUIData.messageID == -1)
         {
             eventImage.sprite = itemUIData.messageImage;
             messageText.text = itemUIData.message;
-            CloseTab(d);
+            StartCoroutine(CloseTab(d));
             return;
         }
 
         ItemUIData randomMessage;
-        if(_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count), out randomMessage))
+        if (_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count), out randomMessage))
         {
             eventImage.sprite = randomMessage.messageImage;
             messageText.text = randomMessage.message;
@@ -70,6 +70,13 @@ public class UIMessagePanel : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(d);
         anim.SetBool("close", true);
+    }
+
+    public void ForceClosePanel()
+    {
+        anim.SetBool("close", true);
+        messageContainer.SetActive(false);
+        StopAllCoroutines();
     }
 
 }

@@ -212,7 +212,7 @@
       "Key": 36, "ContentTitle": "36", "ContentSpeaker": "？？？", "Content": "于是天使0628成为了新一届天神！（鼓掌）", "NextContent": "0", "ContinueTag": "#",
       "InsertImage1Path": "", "InsertImage2Path": "",
       "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_02",
-      "Cha2Action": "FadeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_godlize"
+      "Cha2Action": "FadeAt", "CoordinateX2": 0, "Cha2ImageSource": ""
     }
   ]
 }
