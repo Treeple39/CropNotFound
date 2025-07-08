@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class CoinManager : Singleton<CoinManager>
@@ -21,6 +22,7 @@ public class CoinManager : Singleton<CoinManager>
     [SerializeField] private int spawnAreaMaxY = 10;  // ������ɷ�Χ
 
     public static CoinManager _instance;
+    
     private void Start()
     {
         if (_instance == null)
@@ -42,6 +44,11 @@ public class CoinManager : Singleton<CoinManager>
             return;
         }
         else {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            if (currentSceneName != GameManager.Instance.levelSceneName)
+            {
+                return;
+            }
             CreateNewCoin();
         }
     }
