@@ -275,6 +275,8 @@ public class StoryManager : MonoBehaviour
         {
             Debug.Log("检测到抽卡节点 '?'，开始根据分数选择结局...");
             nextKey = DetermineEndingByScore();
+
+
             if (nextKey == 0) // 如果抽卡失败，则结束剧情
             {
                 EndStory();
@@ -358,8 +360,33 @@ public class StoryManager : MonoBehaviour
             int randomIndex = Random.Range(0, possibleEndings.Count);
             int chosenEndingKey = possibleEndings[randomIndex];
             Debug.Log($"从 {possibleEndings.Count} 个可能结局中，抽中了 Key: {chosenEndingKey}");
+
+            if (ArchiveManager.Instance.IsUnlocked(chosenEndingKey) == false)
+            {
+                var item = ArchiveManager.Instance.GetItem(StoryKeyToArchiveId(chosenEndingKey));
+
+                if (item != null)
+                {
+                    ItemUIData messageData = default;
+                    messageData.messageImage = Resources.Load<Sprite>("Characters/" + item.imagePath);
+                    messageData.message = $"恭喜解锁新角色！";
+                    messageData.messageID = -1;
+
+                    EventHandler.CallMessageShow(messageData);
+                }
+                else
+                {
+                    Debug.Log("item is null");
+                }
+            }
+            else
+            {
+                Debug.Log("不是新角色");
+            }
+
             ArchiveManager.Instance.UnlockByStoryKey(chosenEndingKey);
-            FindObjectOfType<SimpleArchiveUI>().RefreshAllSlots();
+
+
             return chosenEndingKey;
         }
         else
@@ -471,7 +498,7 @@ public class StoryManager : MonoBehaviour
         {
             if (End)
             {
-                GameManager.Instance.GoTOThanks();
+                GameManager.Instance.GoToThanks();
             }
             else
             {
@@ -550,4 +577,6 @@ public class StoryManager : MonoBehaviour
         yield return new WaitForSeconds(scrollUnrollDuration);
     }
     #endregion
+    private int StoryKeyToArchiveId(int storyKey) =>
+   (storyKey - 7) / 3 + 1; // 7→1, 10→2, 13→3...
 }

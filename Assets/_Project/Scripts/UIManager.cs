@@ -8,11 +8,13 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UIMessagePanel UIMessagePanel;
     [SerializeField] public itemUITipDatabase itemUITipDatabase;
 
-    private void Awake()
+    protected override void Awake()
     {
-        InitMessageUI(itemUITipDatabase);
-    }
+        base.Awake();
 
+        InitMessageUI(itemUITipDatabase);
+        DontDestroyOnLoad(gameObject);
+    }
     public void FadeUIDuration(CanvasGroup UIPanel, float fadeStrength, float duration)
     {
         UIPanel.gameObject.SetActive(true);

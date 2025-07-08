@@ -46,12 +46,17 @@ public static class EventHandler
         OnRarityUpgraded?.Invoke(rank, rate);
     }
 
-    public static void CallBoostSpeed(float speedBoostMultiplier, float speedBoostDuration)
+    public static void CallBoostSpeed(float speedBoostMultiplier, float speedBoostDuration, float duration = 5.0f)
     {
         OnChangeSpeed?.Invoke(speedBoostMultiplier, speedBoostDuration);
     }
 
     public static void CallMessageShow(ItemUIData itemUIData = default, float duration = 2.0f)
+    {
+        OnMessageShow?.Invoke(itemUIData, duration);
+    }
+
+    public static void CallItemGet(ItemUIData itemUIData, float duration = 3.0f)
     {
         OnMessageShow?.Invoke(itemUIData, duration);
     }
