@@ -16,7 +16,7 @@ public class Config : MonoBehaviour
 
             target.DOFade(0, duration).OnComplete(() =>
             {
-                callback?.Invoke(); 
+                callback?.Invoke();
             });
 
             return;
@@ -64,7 +64,7 @@ public class Config : MonoBehaviour
         // UFX_Color
         public static void UFX_Color(Image target, Color endColor, float duration, System.Action callback = null)
         {
-            if (duration == 0) 
+            if (duration == 0)
             {
                 target.color = endColor;
                 return;
@@ -72,9 +72,14 @@ public class Config : MonoBehaviour
             target.DOColor(endColor, duration).OnComplete(() =>
             {
                 callback?.Invoke();
-            }); 
+            });
 
             return;
         }
+    }
+
+    public static class Random
+    {
+        
     }
 }

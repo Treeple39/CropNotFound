@@ -8,4 +8,9 @@ public class AnimationEvent : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
+
+    public void DeActivateAfterAnimation()
+    {
+        this.gameObject.SetActive(false);
+    }
 }

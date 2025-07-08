@@ -39,3 +39,11 @@ public struct RarityData
     public float statMultiplier;
     public string displayName;
 }
+
+[System.Serializable]
+public struct ItemUIData   //这个是为60%的随机事件做的，物体的在上面那个预制体表加。然后需要做成掉落，就加预制体，如果是直接增加数量就改下面的函数
+{
+    public int messageID;       // 物品编号
+    public Sprite messageImage; // 对应图片
+    public string message;   // 对应文本
+}

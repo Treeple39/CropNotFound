@@ -21,45 +21,13 @@ public class ItemEventManager : MonoBehaviour
     [Header("Item Settings")]
     [SerializeField] public List<Item> possibleItems; // 物品预制体列表（需配置itemID）
 
-    [System.Serializable]
-    public struct ItemUIData   //这个是为60%的随机事件做的，物体的在上面那个预制体表加。然后需要做成掉落，就加预制体，如果是直接增加数量就改下面的函数
-    {
-        public int itemID;       // 物品编号
-        public Sprite itemImage; // 对应图片
-        public string message;   // 对应文本
-    }
+    
     public List<ItemUIData> itemUIDataList; // 配置itemID与图片/文本的关联
 
 
     private Dictionary<int, ItemUIData> _itemUIDict; // 用字典快速查找
     private int _lastItemCount;
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-
-        popupWindow.SetActive(false);
-        _lastItemCount = 0;
-
-        // 初始化字典
-        _itemUIDict = new Dictionary<int, ItemUIData>();
-        foreach (var data in itemUIDataList)
-        {
-            _itemUIDict[data.itemID] = data;
-        }
-    }
-
-    // 外部调用：itemCount变化时触发
-    private void Update()
-    {
-        // 持续检测itemCount是否变化
-        if (Score.itemCount >= _lastItemCount+soulAte)
-        {
-            _lastItemCount = Score.itemCount;
-            TriggerRandomEvent();
-            Debug.Log("触发了一次");
-        }
-    }
 
     private void TriggerRandomEvent()
     {
@@ -79,7 +47,7 @@ public class ItemEventManager : MonoBehaviour
 
         // 随机选一个物品的UI数据
         var randomData = itemUIDataList[Random.Range(0, 5)];
-        eventImage.sprite = randomData.itemImage;
+        eventImage.sprite = randomData.messageImage;
         messageText.text = randomData.message;
         ShowPopup(3f);
     }
@@ -93,12 +61,12 @@ public class ItemEventManager : MonoBehaviour
         Item newItem = Instantiate(randomItemPrefab);
 
         // 调用你的InventoryManager.AddItem()
-        InventoryManager.Instance.AddItem(newItem, toDestory: true);
+        InventoryManager.Instance.AddItem(0);
 
         // 根据itemID显示对应UI
         if (_itemUIDict.TryGetValue(newItem.itemID, out var itemData)||true)
         {
-            eventImage.sprite = itemData.itemImage;
+            eventImage.sprite = itemData.messageImage;
             messageText.text = $"获得: {itemData.message}";
             ShowPopup(3f);
         }
@@ -111,7 +79,7 @@ public class ItemEventManager : MonoBehaviour
 
         PlayerMovement.Instance.UpdateMaxVelocity(2f);
         var Data = itemUIDataList[7];
-        eventImage.sprite = Data.itemImage;
+        eventImage.sprite = Data.messageImage;
         messageText.text = $"速度提升 {speedBoostMultiplier}倍! 持续 {speedBoostDuration}秒,冲啊！";
         ShowPopup(3f);
         Invoke(nameof(ResetPlayerSpeed), speedBoostDuration);
