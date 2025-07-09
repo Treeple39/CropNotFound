@@ -123,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   moveDirection: {x: 0, y: 0, z: 0}
+  facingright: 1
   minStayTime: 3
   maxStayTime: 7
   teleportRadius: 10
