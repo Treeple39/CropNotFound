@@ -99,7 +99,7 @@ public class BottleMovement : BaseMovement
     {
         stayTimer = 0f;
         currentStayTime = Random.Range(minStayTime, maxStayTime);
-        Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒");
+        //Debug.Log($"瓶子将停留 {currentStayTime:F1} 秒");
     }
     
     // 传送到随机位置

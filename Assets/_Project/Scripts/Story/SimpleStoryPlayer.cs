@@ -19,7 +19,6 @@ public class StoryManager : MonoBehaviour
     public GameObject dialoguePanel;
     public GameObject choicePanel;
     public Image InsertImage1;
-    public Image InsertImage2;
     public Button[] choiceButtons;
     [Tooltip("用于场景切换的黑屏遮罩")]
     public Image blackScreenImage;
@@ -97,7 +96,7 @@ public class StoryManager : MonoBehaviour
 
         InitializeImage(character1Image);
         InitializeImage(character2Image);
-        //InitializeImage(InsertImage1);
+        InitializeImage(InsertImage1);
 
         HideAllImmediately();
         ShowLine(currentLineKey);
@@ -147,8 +146,7 @@ public class StoryManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
-        //if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
-        //if (InsertImage2 != null) InsertImage2.gameObject.SetActive(false);
+        if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
 
         CanvasGroup dialogueCG = dialoguePanel.GetComponent<CanvasGroup>() ?? dialoguePanel.AddComponent<CanvasGroup>();
         //dialogueCG.alpha = 0;
@@ -171,20 +169,20 @@ public class StoryManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(imagePath))
         {
-
+            Debug.Log(imagePath + "Do not exit");
             if (image.gameObject.activeSelf)
             {
                 Config.ImageUFX.UFX_Fade(image, scrollUnrollDuration, () => image.gameObject.SetActive(false));
             }
             else
             {
-                image.gameObject.SetActive(false); // 直接隐藏
+                image.gameObject.SetActive(false);
             }
 
             return;
         }
 
-        imagePath = $"Characters/{imagePath}"; // 或者 Path.Combine
+        imagePath = $"{imagePath}";
         Sprite newSprite = Resources.Load<Sprite>(imagePath);
 
         if (newSprite != null)

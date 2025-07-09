@@ -36,7 +36,7 @@
     },
     {
       "Key": 7, "ContentTitle": "7", "ContentSpeaker": "天神", "Content": "嗯……你是第一个造出的天使的天使。", "NextContent": "8", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -54,7 +54,7 @@
     },
     {
       "Key": 10, "ContentTitle": "10", "ContentSpeaker": "天神", "Content": "嗯……收集的灵魂似乎不太够。", "NextContent": "11", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -72,7 +72,7 @@
     },
     {
       "Key": 13, "ContentTitle": "13", "ContentSpeaker": "天神", "Content": "嗯……你是地狱派来的卧底吗？", "NextContent": "14", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_B_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -90,7 +90,7 @@
     },
     {
       "Key": 16, "ContentTitle": "16", "ContentSpeaker": "天神", "Content": "嗯……你是来客串的吗？", "NextContent": "17", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -108,7 +108,7 @@
     },
     {
       "Key": 19, "ContentTitle": "19", "ContentSpeaker": "天神", "Content": "嗯……你做的很好，你造出了健康的人类", "NextContent": "20", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -126,7 +126,7 @@
     },
     {
       "Key": 22, "ContentTitle": "22", "ContentSpeaker": "天神", "Content": "嗯……这是……狼还是狗？", "NextContent": "23", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_A_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -144,7 +144,7 @@
     },
     {
       "Key": 25, "ContentTitle": "25", "ContentSpeaker": "天神", "Content": "嗯……这是东方的那个三只眼睛的那个谁？", "NextContent": "26", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_03",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -162,7 +162,7 @@
     },
     {
       "Key": 28, "ContentTitle": "28", "ContentSpeaker": "天神", "Content": "嗯……你收集的灵魂多得都快溢出来了！", "NextContent": "29", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_02",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -180,7 +180,7 @@
     },
     {
       "Key": 31, "ContentTitle": "31", "ContentSpeaker": "天神", "Content": "嗯……你收集的灵魂疑似有点太多了，但……", "NextContent": "32", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_S_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -198,7 +198,7 @@
     },
     {
       "Key": 34, "ContentTitle": "34", "ContentSpeaker": "天使", "Content": "嗯……天神……大人？", "NextContent": "35", "ContinueTag": "+",
-      "InsertImage1Path": "story_end/baby_back", "InsertImage2Path": "",
+      "InsertImage1Path": "Characters/story_end/baby_back", "InsertImage2Path": "",
       "Cha1Action": "FadeAt", "CoordinateX1": 0, "Cha1ImageSource": "story_end/baby_SSS_01",
       "Cha2Action": "", "CoordinateX2": 0, "Cha2ImageSource": ""
     },

@@ -104,6 +104,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLevel()
     {
+        ScoreDetector.Instance._lastItemCount = 0;
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(levelSceneName);
