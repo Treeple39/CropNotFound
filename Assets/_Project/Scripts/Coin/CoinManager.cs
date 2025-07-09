@@ -64,7 +64,6 @@ public class CoinManager : Singleton<CoinManager>
             GameObject newCoin = Instantiate(coinPrefab, randomPosition, Quaternion.identity);
             CoinController newCoinScript = newCoin.GetComponent<CoinController>();
             Score.coinCount++;
-            //Debug.Log("���ɽ�ң���ǰ����: " + coinCount);
         }
         else
         {
@@ -75,16 +74,14 @@ public class CoinManager : Singleton<CoinManager>
     public void CreateDeadCoin(Vector3 position, int bigCoinCount)
     {
         int randomNumber = Random.Range(1, 4);
-        if(randomNumber ==1)
+        if (randomNumber == 1)
             AudioManager.S.PlayFX(ghostDie1, 1.5f, 1f);
-        else if(randomNumber ==2)
+        else if (randomNumber == 2)
             AudioManager.S.PlayFX(ghostDie2, 1.5f, 1f);
-        else if(randomNumber ==3)
+        else if (randomNumber == 3)
             AudioManager.S.PlayFX(ghostDie3, 1.5f, 1f);
-        for (int i = 0; i < bigCoinCount; i++)
-        {
-            GameObject newCoin = Instantiate(bigCoinPrefab, position, Quaternion.identity);
-            CoinController newCoinScript = newCoin.GetComponent<CoinController>();
-        }
+        GameObject newCoin = Instantiate(bigCoinPrefab, position, Quaternion.identity);
+        BigCoin bigCoin = newCoin.GetComponent<BigCoin>();
+        bigCoin.scoreCount = bigCoinCount;
     }
 }

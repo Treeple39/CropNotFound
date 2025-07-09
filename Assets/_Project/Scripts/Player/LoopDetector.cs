@@ -184,11 +184,8 @@ public class LoopDetector : MonoBehaviour
             {
                 Score.itemCount++;
                 CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<EnemyData>().BigCoinCount);
+
                 Destroy(obj.gameObject);
-                //StarExplode(obj.transform.position);
-
-
-                // 将待销毁的GameObject加入列表
                 objectsToDestroy.Add(obj.gameObject);
             }
         }

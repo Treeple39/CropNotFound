@@ -9,6 +9,8 @@ public class BigCoin : MonoBehaviour
     [SerializeField] float detectRange = 3;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float minDistance = 0.5f;
+    [SerializeField] private GameObject scoreAddPrefab;
+    [SerializeField] public int scoreCount = 1;
 
 
     private bool destoryBool = false;
@@ -55,18 +57,43 @@ public class BigCoin : MonoBehaviour
                 moveSpeed * Time.deltaTime
             );
         }
-        else if (distance < minDistance) {
+        else if (distance < minDistance)
+        {
+            ScoreAdd ScoreAdd;
+            MeshRenderer renderer = player.GetComponentInChildren<MeshRenderer>();
+            if (renderer != null)
+            {
+                Vector3 headPos = player.transform.position + Vector3.up * (renderer.bounds.extents.y + 0.3f);
+
+                ScoreAdd = Instantiate(scoreAddPrefab, headPos, Quaternion.identity).GetComponent<ScoreAdd>();
+            }
+            else
+            {
+                ScoreAdd = Instantiate(scoreAddPrefab, player.transform.position, Quaternion.identity).GetComponent<ScoreAdd>();
+            }
+            int totalScore = 50 * scoreCount;
+            if (totalScore >= 500)
+            {
+                ScoreAdd.ShowScore(50 * scoreCount, 1);
+            }
+            else
+            {
+                ScoreAdd.ShowScore(50 * scoreCount, 0);
+            }
+
+
             DestroySelf();
         }
     }
 
     public void DestroySelf()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (!destoryBool)
         {
-            Score.score+=50;
-            //_instance.CoinDestroyed();
-            destoryBool = true;            
+            Score.score += 50 * scoreCount;
+
+            destoryBool = true;
         }
         AudioManager.S.PlayFX(coinGet, .5f, .5f);
         Destroy(this.gameObject);
