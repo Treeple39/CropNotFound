@@ -12,12 +12,20 @@ public class UIMessagePanel : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private List<ItemUIData> iTEM;
 
+<<<<<<< HEAD
     private itemUITipDatabase itemUIDataList; // ����itemID��ͼƬ/�ı��Ĺ���
     private Dictionary<int, ItemUIData> _itemUIDict; // ���ֵ���ٲ���?
 
     private void Start()
     {
         ///δ���Ž��ؿ���ʼ�� ����н���?
+=======
+    private itemUITipDatabase itemUIDataList;
+    private Dictionary<int, ItemUIData> _itemUIDict; 
+
+    private void Start()
+    {
+>>>>>>> 1a34810149b08431c76d7a671417fd9f34afa9cf
         ScoreDetector.Instance._lastItemCount = 0;
 
     }

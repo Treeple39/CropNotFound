@@ -12,8 +12,8 @@ public class GameInit : MonoBehaviour
 
     IEnumerator InitManager()
     {
+        yield return new WaitUntil(() => DataManager.Instance != null);
         DataManager.Instance.Init();
-        Debug.Log("111110");
         yield return null;
         //UIManager.Instance.Init();
         //yield return null;
