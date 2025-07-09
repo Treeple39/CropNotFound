@@ -6,20 +6,15 @@ using System.Resources;
 
 public class DataManager : Singleton<DataManager>
 {
-    // ��̬����·����JSON��
     private string _jsonConfigPath = "Config/";
 
-    // ��̬���ݱ���·����SO��
     private string _SOSavePath => Path.Combine(Application.persistentDataPath, "SOSaves/");
 
-    // ��̬�������ݣ�JSON���أ�
-    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } // ��Ʒ�����
+    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } 
 
-    // ��̬���ݣ�SO���� + �־û���runtimeInventory
     [Header("��SOģ��")]
     [SerializeField] private InventoryBag_SO bagSO;
 
-    //�Ƿ񿴹���������
     private const string AnimationSavePath = "AnimationState.json";
 
     private InventoryBag_SO playerBag;
@@ -37,7 +32,7 @@ public class DataManager : Singleton<DataManager>
             string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<bool>(json);
         }
-        return false; // Ĭ��û����
+        return false; 
     }
 
     // ����"�ѿ�������"״̬
@@ -61,14 +56,12 @@ public class DataManager : Singleton<DataManager>
     {
         EnsureDirectoriesExist();
         Application.quitting += SaveAllDynamicData;
-        LoadAllStaticConfigs();  //���ؾ�̬JSON����
-        LoadOrCreateDynamicData(); //��ʼ����̬SO����
+        LoadAllStaticConfigs();  
+        LoadOrCreateDynamicData();
     }
 
-    // === ��̬���ã�JSON�� ===
     private void LoadAllStaticConfigs()
     {
-        // ������Ʒ���ñ�
         TextAsset textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "ItemSettings");
         string json = textAsset.text;
         this.ItemDetails = JsonConvert.DeserializeObject<Dictionary<int, ItemDetails>>(json);
@@ -76,15 +69,11 @@ public class DataManager : Singleton<DataManager>
         Debug.Log($"���� {ItemDetails.Count} ����Ʒ����");
     }
 
-    // === ��̬���ݣ�SO�� ===
     private void LoadOrCreateDynamicData()
     {
-        // ���ԴӴ浵���ر���SO
         string inventorySavePath = Path.Combine(_SOSavePath, "PlayerInventory.json");
-        // 1. ȷ��ģ��SO����
         if (bagSO == null)
         {
-            Debug.LogError("δ����Ĭ�ϱ���SOģ�壡");
             return;
         }
 
@@ -92,16 +81,13 @@ public class DataManager : Singleton<DataManager>
         if (File.Exists(inventorySavePath))
         {
             string json = File.ReadAllText(inventorySavePath);
-            // ��¡ģ��SO�Ա�����Ⱦԭʼ�ʲ�
             playerBag = Instantiate(bagSO);
             JsonUtility.FromJsonOverwrite(json, playerBag);
-            Debug.Log("�����Ӵ浵���سɹ�");
         }
         else
         {
             // 3. �޴浵ʱ����¡ģ����Ϊ�´浵
             playerBag = Instantiate(bagSO);
-            Debug.Log("�����±���������ģ�壩");
         }
     }
 
@@ -110,11 +96,8 @@ public class DataManager : Singleton<DataManager>
     {
         if (!Directory.Exists(_SOSavePath))
             Directory.CreateDirectory(_SOSavePath);
-
-        //���л���ǰ����״̬,������ģ��SO��
         string inventoryJson = JsonUtility.ToJson(playerBag);
         File.WriteAllText(Path.Combine(_SOSavePath, "PlayerInventory.json"), inventoryJson);
-        Debug.Log("��̬�����ѱ���");
     }
 
     // === ���߷��� ===
@@ -122,8 +105,6 @@ public class DataManager : Singleton<DataManager>
     {
         if (ItemDetails.TryGetValue(itemId, out var detail))
             return detail;
-
-        Debug.LogError($"��ƷID {itemId + 1000} �����������ñ��У�");
         return null;
     }
 }
