@@ -6,24 +6,37 @@ using System.Resources;
 
 public class DataManager : Singleton<DataManager>
 {
+    // Static config path (JSON files in Resources)
     private string _jsonConfigPath = "Config/";
 
+    // Persistent SO save path (for runtime data)
     private string _SOSavePath => Path.Combine(Application.persistentDataPath, "SOSaves/");
 
-    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } 
+    // Static data loaded from JSON
+    public Dictionary<int, ItemDetails> ItemDetails { get; private set; } // Item settings
+    public Dictionary<int, TechLevelEventData> TechLevelEventDatas { get; private set; } // Tech level unlock triggers
+    public Dictionary<int, TechLevelDetails> TechLevelDetails { get; private set; } // Tech level requirements
 
-    [Header("��SOģ��")]
+    // Runtime SO data (e.g. inventory, tech level, unlock progress)
+    [Header("SO Model")]
     [SerializeField] private InventoryBag_SO bagSO;
+    [SerializeField] private TechLevel_SO techLevelSO;
+    [SerializeField] private TechUnlockProgess_SO techUnlockProgessSO;
 
+    // Animation opening flag (whether opening animation has been seen)
     private const string AnimationSavePath = "AnimationState.json";
 
-    private InventoryBag_SO playerBag;
+    [Header("SO Temp Data")]
+    public InventoryBag_SO playerBag;
+    public TechLevel_SO archiveTechLevel;
+    public TechUnlockProgess_SO techUnlockProgess;
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
     }
+
     public bool HasSeenOpeningAnimation()
     {
         string path = Path.Combine(_SOSavePath, AnimationSavePath);
@@ -32,10 +45,10 @@ public class DataManager : Singleton<DataManager>
             string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<bool>(json);
         }
-        return false; 
+        return false; // Default: not seen
     }
 
-    // ����"�ѿ�������"״̬
+    // Save the opening animation watched state
     public void SetHasSeenOpeningAnimation(bool hasSeen)
     {
         string path = Path.Combine(_SOSavePath, AnimationSavePath);
@@ -48,63 +61,104 @@ public class DataManager : Singleton<DataManager>
         if (!Directory.Exists(_SOSavePath))
         {
             Directory.CreateDirectory(_SOSavePath);
-            Debug.Log($"����SO�浵Ŀ¼: {_SOSavePath}");
+            Debug.Log($"Created SO save directory: {_SOSavePath}");
         }
     }
 
     public void Init()
     {
         EnsureDirectoriesExist();
-        Application.quitting += SaveAllDynamicData;
-        LoadAllStaticConfigs();  
+        LoadAllStaticConfigs();
         LoadOrCreateDynamicData();
     }
 
+    private void OnApplicationQuit()
+    {
+        //SaveAllDynamicData();
+    }
+
+    // === Load static data from JSON configs ===
     private void LoadAllStaticConfigs()
     {
         TextAsset textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "ItemSettings");
         string json = textAsset.text;
         this.ItemDetails = JsonConvert.DeserializeObject<Dictionary<int, ItemDetails>>(json);
 
-        Debug.Log($"���� {ItemDetails.Count} ����Ʒ����");
+        textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "TechLevelEventSettings");
+        json = textAsset.text;
+        this.TechLevelEventDatas = JsonConvert.DeserializeObject<Dictionary<int, TechLevelEventData>>(json);
+
+        textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "TechLevelSettings");
+        json = textAsset.text;
+        this.TechLevelDetails = JsonConvert.DeserializeObject<Dictionary<int, TechLevelDetails>>(json);
+
+        Debug.Log($"Loaded {ItemDetails.Count} item configs.");
     }
 
+    // === Load or create dynamic data (SO runtime state) ===
     private void LoadOrCreateDynamicData()
     {
         string inventorySavePath = Path.Combine(_SOSavePath, "PlayerInventory.json");
-        if (bagSO == null)
-        {
-            return;
-        }
+        string techLevelSavePath = Path.Combine(_SOSavePath, "ArchiveTechLevel.json");
+        string techUnlockSavePath = Path.Combine(_SOSavePath, "TechUnlockProgess.json");
 
-        // 2. ���ԴӴ浵����
-        if (File.Exists(inventorySavePath))
+        playerBag = JsonOverwriteSO(inventorySavePath, bagSO);
+        archiveTechLevel = JsonOverwriteSO(techLevelSavePath, techLevelSO);
+        techUnlockProgess = JsonOverwriteSO(techUnlockSavePath, techUnlockProgessSO);
+    }
+
+    private T JsonOverwriteSO<T>(string jsonPath, T model) where T : ScriptableObject
+    {
+        T instance = Instantiate(model);
+        if (File.Exists(jsonPath))
         {
-            string json = File.ReadAllText(inventorySavePath);
-            playerBag = Instantiate(bagSO);
-            JsonUtility.FromJsonOverwrite(json, playerBag);
+            string json = File.ReadAllText(jsonPath);
+            JsonUtility.FromJsonOverwrite(json, instance);
+            Debug.Log($"Loaded JSON into {typeof(T)}: {json}");
         }
         else
         {
-            // 3. �޴浵ʱ����¡ģ����Ϊ�´浵
-            playerBag = Instantiate(bagSO);
+            Debug.Log($"Created new {typeof(T)} instance (no JSON found)");
         }
+        return instance;
     }
 
-    // === �浵���� ===
+
+    // === Save all runtime data ===
     public void SaveAllDynamicData()
     {
         if (!Directory.Exists(_SOSavePath))
             Directory.CreateDirectory(_SOSavePath);
+
+        // Save data to Application.persistentDataPath
         string inventoryJson = JsonUtility.ToJson(playerBag);
         File.WriteAllText(Path.Combine(_SOSavePath, "PlayerInventory.json"), inventoryJson);
+
+        string techLevelJson = JsonUtility.ToJson(archiveTechLevel);
+        File.WriteAllText(Path.Combine(_SOSavePath, "ArchiveTechLevel.json"), techLevelJson);
+
+        string techUnlockJson = JsonUtility.ToJson(techUnlockProgess);
+        File.WriteAllText(Path.Combine(_SOSavePath, "TechUnlockProgess.json"), techUnlockJson);
+
+        Debug.Log($"[SaveAllDynamicData] Saving unlocked items: {string.Join(",", techUnlockProgess.unlockedItemIDs)}");
     }
 
-    // === ���߷��� ===
+    public void SaveDynamicData(ScriptableObject SO, string name)
+    {
+        if (!Directory.Exists(_SOSavePath))
+            Directory.CreateDirectory(_SOSavePath);
+
+        string Json = JsonUtility.ToJson(SO);
+        File.WriteAllText(Path.Combine(_SOSavePath, name), Json);
+    }
+
+    // === Utility functions ===
     public ItemDetails GetItemDetail(int itemId)
     {
         if (ItemDetails.TryGetValue(itemId, out var detail))
             return detail;
+
+        Debug.LogError($"Item ID {itemId + 1000} not found in config.");
         return null;
     }
 }
