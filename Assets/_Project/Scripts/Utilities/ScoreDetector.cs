@@ -45,6 +45,7 @@ public class ScoreDetector : Singleton<ScoreDetector>
     public void Init()
     {
         UIManager.Instance.InitMessageUI(itemUITipDatabase);
+        techUnlockSO = DataManager.Instance.techUnlockProgess;
     }
 
     private void Update()
@@ -64,10 +65,6 @@ public class ScoreDetector : Singleton<ScoreDetector>
     //分数检测的随机事件（未来出配置需求）
     private void TriggerRandomEvent()
     {
-        if (techUnlockSO.unlockedItemIDs.Count == 0)
-            Debug.LogError("你好大的胆子，居然敢不配置SO！");
-            return;
-
         float randomValue = Random.Range(0f, 1f);
         if (randomValue <= .6f)
         {   // 0.0-0.6 (60%)
