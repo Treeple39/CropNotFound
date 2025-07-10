@@ -1,0 +1,68 @@
+{
+  "0": 
+    {
+      "techLevel": 1,
+      "triggerEvents": ["Default"],
+      "triggerID": [0]
+    },
+  "1": 
+    {
+      "techLevel": 2,
+      "triggerEvents": ["UnlockMonster"],
+      "triggerID": [8001]
+    },
+  "2": 
+    {
+      "techLevel": 3,
+      "triggerEvents": ["UnlockMonster", "UnlockItem"],
+      "triggerID": [8002, 1002]
+    },
+  "3": 
+    {
+      "techLevel": 4,
+      "triggerEvents": ["UnlockMonster"],
+      "triggerID": [8003]
+    },
+  "4": 
+    {
+      "techLevel": 5,
+      "triggerEvents": ["UnlockMonster", "UnlockItem"],
+      "triggerID": [8004, 1000]
+    },
+  "5": 
+    {
+      "techLevel": 6,
+      "triggerEvents": ["UnlockMonster"],
+      "triggerID": [8005]
+    },
+  "6": 
+    {
+      "techLevel": 7,
+      "triggerEvents": ["UnlockMonster", "UnlockItem"],
+      "triggerID": [8006, 1001]
+    },
+  "7": 
+    {
+      "techLevel": 8,
+      "triggerEvents": ["UnlockMonster"],
+      "triggerID": [8007]
+    },
+  "8": 
+    {
+      "techLevel": 9,
+      "triggerEvents": ["UnlockSkill"],
+      "triggerID": [1]
+    },
+  "9": 
+    {
+      "techLevel": 10,
+      "triggerEvents": ["UnlockSkill", "PlayStory"],
+      "triggerID": [5010]
+    },
+  "10": 
+    {
+      "techLevel": 11,
+      "triggerEvents": ["Default"],
+      "triggerID": [0]
+    }
+}

@@ -11,8 +11,9 @@ namespace Inventory
         //数据来源：DataManager
         public InventoryBag_SO _runtimeInventory;
 
-        private void Start()
+        public void Init()
         {
+            _runtimeInventory = DataManager.Instance.playerBag;
             //更新一次玩家背包暂存SO的UI
             EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
         }

@@ -16,6 +16,9 @@ public static class EventHandler
     public static event Action<int, float> OnRarityUpgraded;
     public static event Action<float, float> OnChangeSpeed; //速度调整，时长
     public static event Action<ItemUIData, float> OnMessageShow;
+    public static event Action<int, TechLevelUnlockEventType, int> OnTechLevelUpEvent;
+    public static event Action<float> OnTechPointsChanged;
+
     public static void CallUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
     {
         UpdateInventoryUI?.Invoke(location, list);
@@ -59,5 +62,15 @@ public static class EventHandler
     public static void CallItemGet(ItemUIData itemUIData, float duration = 3.0f)
     {
         OnMessageShow?.Invoke(itemUIData, duration);
+    }
+
+    public static void CallTechPointChange(float points)
+    {
+        OnTechPointsChanged?.Invoke(points);
+    }
+
+    public static void CallTechLevelUpEvent(int newLevel, TechLevelUnlockEventType evnetType, int num)
+    {
+        OnTechLevelUpEvent?.Invoke(newLevel, evnetType, num);
     }
 }

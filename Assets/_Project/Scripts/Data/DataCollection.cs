@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,21 @@ public class ItemDetails
     public string prefabToSpawnPath { get; set; }
 }
 
+[System.Serializable]
+public class TechLevelEventData
+{
+    public int techLevel { get; set; }
+    public List<TechLevelUnlockEventType> triggerEvents { get; set; }
+    public List<int> triggerID { get; set; }
+}
+
+[System.Serializable]
+public class TechLevelDetails
+{
+    public int techLevel { get; set; }
+    public float needPoints { get; set; }
+}
+
 //采用ScriptObject管理游戏内动态资源
 [System.Serializable]
 public struct InventoryItem //struct：值类型
@@ -41,9 +57,30 @@ public struct RarityData
 }
 
 [System.Serializable]
-public struct ItemUIData   
+public class ItemUIData   
 {
     public int messageID;       // 物品编号
     public Sprite messageImage; // 对应图片
     public string message;   // 对应文本
 }
+
+[System.Serializable]
+public class TechLevelData
+{
+    public int techLevel;
+    public bool techLevelEventHasTrigger;
+
+    public void SetBool(bool i)
+    {
+        techLevelEventHasTrigger = i;
+    }
+}
+
+[System.Serializable]
+public class TechUnlockSaveData
+{
+    public List<int> unlockedItemIDs;
+    public List<int> unlockedMonsterIDs;
+    public List<int> unlockedSkillIDs;
+}
+

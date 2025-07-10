@@ -19,6 +19,15 @@ public enum Rarity
     Legendary   // 传说
 }
 
+public enum TechLevelUnlockEventType
+{
+    Default,
+    UnlockMonster,   // 开怪物
+    UnlockItem,      // 开道具
+    PlayStory,       // 开剧情
+    UnlockSkill      // 开技能（之后设计）
+}
+
 public enum InventoryLocation
 {
     Player,Box

@@ -10,12 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d42bb6c32a2b6424081188594da3c9e4, type: 3}
-  m_Name: PlayerBag_SO
+  m_Name: InventoryBag_SO
   m_EditorClassIdentifier: 
-  itemList:
-  - itemID: 1000
-    itemAmount: 26
-  - itemID: 1001
-    itemAmount: 11
-  - itemID: 1002
-    itemAmount: 27
+  itemList: []

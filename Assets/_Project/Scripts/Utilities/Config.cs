@@ -82,4 +82,39 @@ public class Config : MonoBehaviour
     {
         
     }
+
+    public static class ConditionalMath
+    {
+        public static bool ConditionalMathf(float path1, int sign, float path2)
+        {
+            switch (sign)
+            {
+                case 0: //equal
+                    if(path1 == path2)
+                        return true;
+                    break;
+                case 1: //greater/equal
+                    if (path1 >= path2)
+                        return true;
+                    break;
+                case 2: //lesser/equal
+                    if (path1 <= path2)
+                        return true;
+                    break;
+                case 3: //greater
+                    if (path1 > path2)
+                        return true;
+                    break;
+                case 4: //lesser
+                    if (path1 < path2)
+                        return true;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return false;
+        }
+    }
 }

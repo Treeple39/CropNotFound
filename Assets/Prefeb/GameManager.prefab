@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8287077037445645446}
   - component: {fileID: 7750838153563842390}
   - component: {fileID: 355988865146726179}
+  - component: {fileID: 5059925933306809374}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -62,6 +63,8 @@ MonoBehaviour:
   drawCardsBGM: "audio/\u7ED3\u7B97\u573A\u666F"
   Thanks: Thank
   thankBGM: audio/ExppBody -  - Salida - Stereo Out
+  Archive: Archive
+  archiveBGM: 
 --- !u!114 &7750838153563842390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +89,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4244bbe959e394b851d7f2d4dbbf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5059925933306809374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300798529163907367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35582472f15b55640804f3396593d038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentTechLevel: 0
+  CurrentPoins: 0
+  _runtimeTechLevel: {fileID: 11400000, guid: 85d735d2bdd4dab49834f12c95182391, type: 2}
