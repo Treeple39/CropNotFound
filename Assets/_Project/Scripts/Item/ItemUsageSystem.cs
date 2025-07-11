@@ -38,13 +38,13 @@ public class ItemUsageSystem : MonoBehaviour
     {
         if (_spells.TryGetValue(type, out var spell))
         {
-            if (InventoryManager.Instance.CanRemoveItem(item.itemID, 1))
+            if (InventoryManager.Instance.CanRemoveItem(item.ID, 1))
             {
                 bool success = spell.Execute(item);
                 if (success)
                 {
                     // 使用成功，更新背包
-                    InventoryManager.Instance.RemoveItem(item.itemID, 1);
+                    InventoryManager.Instance.RemoveItem(item.ID, 1);
                 }
             }
         }

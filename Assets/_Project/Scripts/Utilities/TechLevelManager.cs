@@ -10,8 +10,12 @@ public class TechLevelManager : Singleton<TechLevelManager>
     public float CurrentPoints;
     private TechLevel_SO _runtimeTechLevel;
 
+    //事件触发缓存池
+    private List<(TechLevelUnlockEventType evtType, int id)> _pendingUnlockEvents = new();
+
     public void demoCall()
     {
+        DataManager.Instance.SaveDynamicData(_runtimeTechLevel, "ArchiveTechLevel.json");
         EventHandler.CallTechPointChange(5);
     }
 
@@ -76,8 +80,10 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
-                // 更新UI显示
+                // 更新UI套件，响应各路神仙
+                EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下……");
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
+                UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 
                 // 检查是否还能继续升级
                 CheckLevelUp(); // 递归检查
@@ -94,15 +100,19 @@ public class TechLevelManager : Singleton<TechLevelManager>
         if (_runtimeTechLevel.EventHasTrigger(CurrentTechLevel))
             return;
 
-        // 触发事件（索引 = CurrentLevel - 1）
         TechLevelEventData data;
         if (DataManager.Instance.TechLevelEventDatas.TryGetValue(CurrentTechLevel - 1, out data))
         {
-            for (int i = 0; i < data.triggerEvents.Count; i++) 
+            _pendingUnlockEvents.Clear();
+
+            for (int i = 0; i < data.triggerEvents.Count; i++)
             {
-                if(data.triggerID.Count > i && data.triggerID[i] != 0)
+                if (data.triggerID.Count > i && data.triggerID[i] != 0)
                 {
-                    DispatchUpgradeEvent(data.triggerEvents[i], data.triggerID[i]);
+                    UIManager.Instance.UILevelUpPanel.InitContents(data.triggerEvents.Count, data.triggerEvents[i], data.triggerID[i]);
+
+                    //暂存事件，等玩家确认界面时再触发
+                    _pendingUnlockEvents.Add((data.triggerEvents[i], data.triggerID[i]));
                 }
                 else
                 {
@@ -113,7 +123,15 @@ public class TechLevelManager : Singleton<TechLevelManager>
             _runtimeTechLevel.techLevelData[CurrentTechLevel - 1].SetBool(true);
         }
     }
+    public void TriggerPendingUnlockEvents()
+    {
+        foreach (var evt in _pendingUnlockEvents)
+        {
+            DispatchUpgradeEvent(evt.evtType, evt.id);
+        }
 
+        _pendingUnlockEvents.Clear();
+    }
     private void DispatchUpgradeEvent(TechLevelUnlockEventType evt, int num)
     {
         EventHandler.CallTechLevelUpEvent(CurrentTechLevel, evt, num);

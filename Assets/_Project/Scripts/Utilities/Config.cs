@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Config : MonoBehaviour
+public static class Config
 {
     //Image UFX Fundamental Utilities
     public static class ImageUFX
@@ -115,6 +115,16 @@ public class Config : MonoBehaviour
             }
 
             return false;
+        }
+    }
+
+    public static void RemoveAllChildren(GameObject parent)
+    {
+        Transform transform;
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            transform = parent.transform.GetChild(i);
+            GameObject.Destroy(transform.gameObject);
         }
     }
 }

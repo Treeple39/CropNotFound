@@ -51,7 +51,8 @@ public class UIMessagePanel : MonoBehaviour
         }
         anim.SetBool("close", false);
         messageContainer.SetActive(true);
-        if (itemUIData.messageID == -1)
+
+        if (itemUIData != null && itemUIData.messageID == -1)
         {
             eventImage.sprite = itemUIData.messageImage;
             messageText.text = itemUIData.message;

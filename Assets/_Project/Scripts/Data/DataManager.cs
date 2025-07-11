@@ -155,10 +155,11 @@ public class DataManager : Singleton<DataManager>
     // === Utility functions ===
     public ItemDetails GetItemDetail(int itemId)
     {
-        if (ItemDetails.TryGetValue(itemId, out var detail))
+        if (ItemDetails.TryGetValue(itemId - 1000, out var detail))
             return detail;
 
-        Debug.LogError($"Item ID {itemId + 1000} not found in config.");
+        Debug.LogError($"Item ID {itemId} not found in config.");
         return null;
     }
+
 }

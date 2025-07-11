@@ -16,6 +16,8 @@ public class GameInit : MonoBehaviour
         yield return new WaitUntil(() => DataManager.Instance != null);
         DataManager.Instance.Init();
         yield return null;
+        UnlockManager.Instance.Init();
+        yield return null;
         //UIManager.Instance.Init();
         //yield return null;
         //SceneManager.Instance.Init();

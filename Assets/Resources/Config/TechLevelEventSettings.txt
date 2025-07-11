@@ -8,8 +8,8 @@
   "1": 
     {
       "techLevel": 2,
-      "triggerEvents": ["UnlockMonster"],
-      "triggerID": [8001]
+      "triggerEvents": ["UnlockItem"],
+      "triggerID": [1001]
     },
   "2": 
     {

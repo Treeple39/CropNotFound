@@ -3,24 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 //采用Json管理游戏内静态资源
 [System.Serializable]
 
-public class ItemDetails
+public class ItemDetails : Details
 {
-    public int itemID { get; set; }
-    public string itemName { get; set; }
     public string itemType { get; set; }
-    public string itemIcon { get; set; }
     public string itemSpriteOnWorld { get; set; }
-    public string itemDescription { get; set; }
     public float itemUseRadius { get; set; }
     public bool canPickedup { get; set; }
     public bool canDropped { get; set; }
     public bool canCarried { get; set; }
     public bool canUseSpell { get; set; }
     public string prefabToSpawnPath { get; set; }
+}
+
+public class EnemyDetails : Details
+{
+    public string EnemyType { get; set; }
+    public string moveMod { get; set; }
+    public string prefabToSpawnPath { get; set; }
+}
+
+public class SkillDetails : Details
+{
+    public string skillType { get; set; }
 }
 
 [System.Serializable]
@@ -82,5 +89,14 @@ public class TechUnlockSaveData
     public List<int> unlockedItemIDs;
     public List<int> unlockedMonsterIDs;
     public List<int> unlockedSkillIDs;
+}
+
+[System.Serializable]
+public class LevelUpContentData
+{
+    public string contentText;
+    public string contentTitle;
+    public string contentTypeTip;
+    public Sprite contentImage;
 }
 

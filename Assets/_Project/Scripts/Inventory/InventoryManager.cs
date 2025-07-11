@@ -21,7 +21,7 @@ namespace Inventory
         //调用DataManager工具，得到物品信息
         public ItemDetails GetItemDetail(int ID)
         {
-            return DataManager.Instance.GetItemDetail(ID - 1000);
+            return DataManager.Instance.GetItemDetail(ID);
             //其他方法………………
         }
 

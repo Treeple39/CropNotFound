@@ -31,7 +31,7 @@ namespace Inventory
         {
             isSelected = false;
 
-            if (itemDetails.itemID == 0)
+            if (itemDetails.ID == 0)
             {
                 UpdateEmptySlot();
             }
@@ -39,7 +39,7 @@ namespace Inventory
 
         public void UpdateSlot(ItemDetails item, int amount)
         {
-            Sprite icon = ResourceManager.LoadSprite(item.itemIcon);
+            Sprite icon = ResourceManager.LoadSprite(item.IconPath);
 
             itemDetails = item;
             slotImage.sprite = icon;
