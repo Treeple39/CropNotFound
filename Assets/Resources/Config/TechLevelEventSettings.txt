@@ -8,8 +8,8 @@
   "1": 
     {
       "techLevel": 2,
-      "triggerEvents": ["UnlockItem"],
-      "triggerID": [1001]
+      "triggerEvents": ["UnlockMonster"],
+      "triggerID": [8001, 6000]
     },
   "2": 
     {
@@ -51,13 +51,13 @@
     {
       "techLevel": 9,
       "triggerEvents": ["UnlockSkill"],
-      "triggerID": [1]
+      "triggerID": [6001]
     },
   "9": 
     {
       "techLevel": 10,
       "triggerEvents": ["UnlockSkill", "PlayStory"],
-      "triggerID": [5010]
+      "triggerID": [6002,0]
     },
   "10": 
     {

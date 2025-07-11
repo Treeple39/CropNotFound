@@ -14,6 +14,8 @@ public class DataManager : Singleton<DataManager>
 
     // Static data loaded from JSON
     public Dictionary<int, ItemDetails> ItemDetails { get; private set; } // Item settings
+    public Dictionary<int, EnemyDetails> EnemyDetails { get; private set; } // Tech level requirements
+    public Dictionary<int, SkillDetails> SkillDetails { get; private set; } // Tech level requirements
     public Dictionary<int, TechLevelEventData> TechLevelEventDatas { get; private set; } // Tech level unlock triggers
     public Dictionary<int, TechLevelDetails> TechLevelDetails { get; private set; } // Tech level requirements
 
@@ -74,7 +76,7 @@ public class DataManager : Singleton<DataManager>
 
     private void OnApplicationQuit()
     {
-        //SaveAllDynamicData();
+        SaveAllDynamicData();
     }
 
     // === Load static data from JSON configs ===
@@ -83,6 +85,14 @@ public class DataManager : Singleton<DataManager>
         TextAsset textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "ItemSettings");
         string json = textAsset.text;
         this.ItemDetails = JsonConvert.DeserializeObject<Dictionary<int, ItemDetails>>(json);
+
+        textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "EnemySettings");
+        json = textAsset.text;
+        this.EnemyDetails = JsonConvert.DeserializeObject<Dictionary<int, EnemyDetails>>(json);
+
+        textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "SkillSettings");
+        json = textAsset.text;
+        this.SkillDetails = JsonConvert.DeserializeObject<Dictionary<int, SkillDetails>>(json);
 
         textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "TechLevelEventSettings");
         json = textAsset.text;
@@ -159,6 +169,24 @@ public class DataManager : Singleton<DataManager>
             return detail;
 
         Debug.LogError($"Item ID {itemId} not found in config.");
+        return null;
+    }
+
+    public EnemyDetails GetMonsterDetail(int itemId)
+    {
+        if (EnemyDetails.TryGetValue(itemId - 8000, out var detail))
+            return detail;
+
+        Debug.LogError($"Enemy ID {itemId} not found in config.");
+        return null;
+    }
+
+    public SkillDetails GetSkillDetail(int itemId)
+    {
+        if (SkillDetails.TryGetValue(itemId - 6000, out var detail))
+            return detail;
+
+        Debug.LogError($"Skill ID {itemId} not found in config.");
         return null;
     }
 

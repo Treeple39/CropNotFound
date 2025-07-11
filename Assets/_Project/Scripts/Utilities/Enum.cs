@@ -5,6 +5,16 @@ public enum ItemType
     CaptureTool,AttackTool,MoveTool,
 }
 
+public enum EnemyType
+{
+    Doll, Slippers, Chair, Bottle, Pillow, Book,
+}
+
+public enum SkillType
+{
+    Unlock, ValueAdd, ItemAdd,
+}
+
 public enum SlotType
 {
 

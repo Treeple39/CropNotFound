@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 100216713557268296}
   - component: {fileID: 447219163583900078}
   - component: {fileID: 7349327338592482814}
+  - component: {fileID: 7728057204596003041}
   m_Layer: 5
   m_Name: UFX_Ribbon
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_Particles:
   - {fileID: 3634748143825393552}
   - {fileID: 3256858482866512956}
+--- !u!114 &7728057204596003041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386871574638520477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b239f733b24b84cb33a83920d4c879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4754585011963419496
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,9 +129,9 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4754585011963419496}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1.6
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -5013,9 +5026,9 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6991228452597625440}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1.6
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}

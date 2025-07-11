@@ -12,6 +12,7 @@ public class UILevelUpPanel : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private AnimationEvent animEvent;
     [SerializeField] private GameObject pfb_ContentContainer;
+    [SerializeField] private GameObject LevelUpPanel;
     [SerializeField] private Button fadeButton;
 
     public void InitLevel(int sanlevel, int adolevel)
@@ -20,7 +21,7 @@ public class UILevelUpPanel : MonoBehaviour
         animEvent.content = adolevel.ToString();
     }
 
-    public void InitContents(int initCount, TechLevelUnlockEventType contentType, int contentID)
+    public void InitContent(int initCount, List<TechLevelUnlockEventType> contentType, List<int> contentID)
     {
         if (AwardContainer.childCount != 0) 
         {
@@ -29,7 +30,7 @@ public class UILevelUpPanel : MonoBehaviour
 
         for (int i = 0; i < initCount; i++)
         {
-            LevelUpContentData content = UnlockManager.Instance.GetContentData(contentType, contentID);
+            LevelUpContentData content = UnlockManager.Instance.GetContentData(contentType[i], contentID[i]);
             if (content == null)
             {
                 continue;
@@ -52,6 +53,12 @@ public class UILevelUpPanel : MonoBehaviour
         anim.SetBool("close", true);
 
         fadeButton.onClick.RemoveListener(OnConfirmUnlockDetails);
+    }
+
+    public void CloseTab()
+    {
+        this.gameObject.SetActive(false);
+        LevelUpPanel.SetActive(false);
     }
 
 }

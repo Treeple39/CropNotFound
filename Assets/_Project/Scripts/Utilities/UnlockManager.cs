@@ -10,8 +10,8 @@ public class UnlockManager : Singleton<UnlockManager>
         _unlockMethods = new Dictionary<TechLevelUnlockEventType, Func<int, Details>>()
         {
             { TechLevelUnlockEventType.UnlockItem, DataManager.Instance.GetItemDetail },
-            //{ TechLevelUnlockEventType.UnlockMonster, DataManager.Instance.GetMonsterDetail },
-            //{ TechLevelUnlockEventType.UnlockSkill, DataManager.Instance.GetSkillDetail }
+            { TechLevelUnlockEventType.UnlockMonster, DataManager.Instance.GetMonsterDetail },
+            { TechLevelUnlockEventType.UnlockSkill, DataManager.Instance.GetSkillDetail }
         };
     }
 
@@ -45,7 +45,7 @@ public class UnlockManager : Singleton<UnlockManager>
         {
             contentTitle = detail.Name,
             contentText = detail.Description,
-            contentImage = detail.Icon,
+            contentImage = ResourceManager.LoadSprite(detail.IconPath),
             contentTypeTip = typeTip
         };
     }

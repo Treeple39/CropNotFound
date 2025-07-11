@@ -109,16 +109,17 @@ public class TechLevelManager : Singleton<TechLevelManager>
             {
                 if (data.triggerID.Count > i && data.triggerID[i] != 0)
                 {
-                    UIManager.Instance.UILevelUpPanel.InitContents(data.triggerEvents.Count, data.triggerEvents[i], data.triggerID[i]);
 
                     //暂存事件，等玩家确认界面时再触发
                     _pendingUnlockEvents.Add((data.triggerEvents[i], data.triggerID[i]));
                 }
                 else
                 {
-                    Debug.LogWarning($"事件{i}未正确配置triggerID");
+                    Debug.LogWarning($"事件{i}未正确配置triggerID, 将使用默认ID");
                 }
             }
+
+            UIManager.Instance.UILevelUpPanel.InitContent(data.triggerEvents.Count, data.triggerEvents, data.triggerID);
 
             _runtimeTechLevel.techLevelData[CurrentTechLevel - 1].SetBool(true);
         }
