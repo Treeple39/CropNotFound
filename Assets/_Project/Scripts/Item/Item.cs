@@ -30,7 +30,7 @@ namespace Inventory
             itemDetails = InventoryManager.Instance.GetItemDetail(itemID);
 
             Sprite sprite = ResourceManager.LoadSprite(itemDetails.itemSpriteOnWorld);
-            Sprite icon = ResourceManager.LoadSprite(itemDetails.itemIcon);
+            Sprite icon = ResourceManager.LoadSprite(itemDetails.IconPath);
 
             //Åö×²Ìå×ÔÊÊÓ¦
             if (itemDetails != null)

@@ -1,0 +1,66 @@
+{
+  "0": {
+    "ID": 8000,
+    "Name": "大熊",
+    "EnemyType": "enemyType.Doll",
+    "IconPath": "Enemies/enemy_bear01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Doll_Bear"
+  },
+  "1": {
+    "ID": 8001,
+    "Name": "拖鞋",
+    "EnemyType": "enemyType.Slippers",
+    "IconPath": "Enemies/enemy_slippers01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Slippers"
+  },
+  "2": {
+    "ID": 8002,
+    "Name": "板凳",
+    "EnemyType": "enemyType.Chair",
+    "IconPath": "Enemies/enemy_woodenBench01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Chair"
+  },
+  "3": {
+    "ID": 8003,
+    "Name": "奶瓶",
+    "EnemyType": "enemyType.Bottle",
+    "IconPath": "Enemies/enemy_babyBottle01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_babyBottle"
+  },
+  "4": {
+    "ID": 8004,
+    "Name": "枕头",
+    "EnemyType": "enemyType.Pillow",
+    "IconPath": "Enemies/enemy_pillow01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Pillow"
+  },
+  "5": {
+    "ID": 8005,
+    "Name": "书本",
+    "EnemyType": "enemyType.Book",
+    "IconPath": "Enemies/enemy_book01",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Book"
+  },
+  "6": {
+    "ID": 8006,
+    "Name": "凉鞋",
+    "EnemyType": "enemyType.Slippers",
+    "IconPath": "Enemies/enemy_slippers02",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Slippers2"
+  },
+  "7": {
+    "ID": 8007,
+    "Name": "巨熊",
+    "EnemyType": "enemyType.Doll",
+    "IconPath": "Enemies/enemy_bear02",
+    "Description": "新的怪物可以捕捉了！",
+    "prefabToSpawnPath": "Enemies/item_Doll_Bear2"
+  }
+}

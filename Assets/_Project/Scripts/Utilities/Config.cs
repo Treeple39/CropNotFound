@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class Config : MonoBehaviour
+public static class Config
 {
     //Image UFX Fundamental Utilities
     public static class ImageUFX
@@ -81,5 +81,50 @@ public class Config : MonoBehaviour
     public static class Random
     {
         
+    }
+
+    public static class ConditionalMath
+    {
+        public static bool ConditionalMathf(float path1, int sign, float path2)
+        {
+            switch (sign)
+            {
+                case 0: //equal
+                    if(path1 == path2)
+                        return true;
+                    break;
+                case 1: //greater/equal
+                    if (path1 >= path2)
+                        return true;
+                    break;
+                case 2: //lesser/equal
+                    if (path1 <= path2)
+                        return true;
+                    break;
+                case 3: //greater
+                    if (path1 > path2)
+                        return true;
+                    break;
+                case 4: //lesser
+                    if (path1 < path2)
+                        return true;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return false;
+        }
+    }
+
+    public static void RemoveAllChildren(GameObject parent)
+    {
+        Transform transform;
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            transform = parent.transform.GetChild(i);
+            GameObject.Destroy(transform.gameObject);
+        }
     }
 }

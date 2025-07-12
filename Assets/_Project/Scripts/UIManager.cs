@@ -6,7 +6,9 @@ using DG.Tweening;
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField] public UIMessagePanel UIMessagePanel;
-    //[SerializeField] public itemUITipDatabase itemUITipDatabase;
+    [SerializeField] public UISystemMessage UISystemMessagePanel;
+    [SerializeField] public UITechLevel TechLevelPanel;
+    [SerializeField] public UILevelUpPanel UILevelUpPanel;
 
     protected override void Awake()
     {

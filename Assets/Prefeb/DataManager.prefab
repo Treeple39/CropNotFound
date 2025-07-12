@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bagSO: {fileID: 11400000, guid: f32f01919ddaa5948bbbcd6417489a5e, type: 2}
+  techLevelSO: {fileID: 11400000, guid: 85d735d2bdd4dab49834f12c95182391, type: 2}
+  playerBag: {fileID: 0}
+  archiveTechLevel: {fileID: 0}

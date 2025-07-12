@@ -7,12 +7,45 @@ public class ScoreDetector : Singleton<ScoreDetector>
 {
     [SerializeField] public int _lastItemCount;
     [SerializeField] public int soulAte = 2; //在这里可以设定吃多少个灵魂触发一次
-    [SerializeField] public List<int> itemIdList = new List<int>(); //在这里可以设定领奖物品
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
+    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//在这里可以设定领奖物品
 
-    private void Start()
+    private void OnEnable()
+    {
+        EventHandler.OnTechLevelUpEvent += UnlockItem;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.OnTechLevelUpEvent -= UnlockItem;
+    }
+
+    //TODO:三种解锁逻辑暂不整合，有空再做吧
+    private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
+    {
+        if (eventType == TechLevelUnlockEventType.UnlockItem)
+        {
+            if (!techUnlockSO.unlockedItemIDs.Contains(num))
+                techUnlockSO.unlockedItemIDs.Add(num);
+            DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
+        }
+    }
+
+    /// <summary>
+    /// 这里写解锁怪物的方法
+    /// </summary>
+    //private void UnlockEnemy(int techLevel, TechLevelUnlockEventType eventType, int num)
+    //{
+    //    if (eventType == TechLevelUnlockEventType.UnlockMonster)
+    //    {
+    //        EnemyList.Add(num);
+    //    }
+    //}
+
+    public void Init()
     {
         UIManager.Instance.InitMessageUI(itemUITipDatabase);
+        techUnlockSO = DataManager.Instance.techUnlockProgess;
     }
 
     private void Update()
@@ -25,7 +58,7 @@ public class ScoreDetector : Singleton<ScoreDetector>
             //执行抽卡
             TriggerRandomEvent();
 
-            Debug.Log("触发了一次");
+            Debug.Log("触发");
         }
     }
 
@@ -40,9 +73,9 @@ public class ScoreDetector : Singleton<ScoreDetector>
         else if (randomValue < 0.9f && randomValue > 0.6f)
         {  // 0.6-0.9 (30%)
             
-            int temp = Random.Range(0, itemIdList.Count);
+            int temp = Random.Range(0, techUnlockSO.unlockedItemIDs.Count);
 
-            int selectedItemId = itemIdList[temp];
+            int selectedItemId = techUnlockSO.unlockedItemIDs[temp];
             InventoryManager.Instance.AddItem(selectedItemId);
 
             ItemUIData itemGet = itemUITipDatabase.GetItemUIData(selectedItemId);
