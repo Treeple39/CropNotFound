@@ -21,7 +21,8 @@ namespace CustomStorySystem
         public float CoordinateX2;
         public string Cha2ImageSource;
         public string InsertImage1Path;
-        public string InsertImage2Path;
+
+        public bool InsertImage1Persistent = false;
         public string BackgroundImagePath;
         public string BackgroundAudioPath;
     }

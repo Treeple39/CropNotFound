@@ -5,12 +5,18 @@ using static Cinemachine.DocumentationSortingAttribute;
 
 public class TechLevelManager : Singleton<TechLevelManager>
 {
-    //È«¾Ö¿Æ¼¼µÈ¼¶
+    //È«ï¿½Ö¿Æ¼ï¿½ï¿½È¼ï¿½
     public int CurrentTechLevel;
     public float CurrentPoints;
     private TechLevel_SO _runtimeTechLevel;
 
-    //ÊÂ¼þ´¥·¢»º´æ³Ø
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
+
+    //ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private List<(TechLevelUnlockEventType evtType, int id)> _pendingUnlockEvents = new();
 
     public void demoCall()
@@ -33,18 +39,18 @@ public class TechLevelManager : Singleton<TechLevelManager>
     {
         _runtimeTechLevel = DataManager.Instance.archiveTechLevel;
 
-        // ³õÊ¼»¯¶¯Ì¬Êý¾Ý
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
         CurrentTechLevel = _runtimeTechLevel.CurrentLevel;
         CurrentPoints = _runtimeTechLevel.CurrentPoints;
 
-        // ÉèÖÃµãÊýÉÏÏÞ£¨Ë÷Òý = CurrentLevel - 1£©
+        // ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½ï¿½ï¿½ï¿½ = CurrentLevel - 1ï¿½ï¿½
         TechLevelDetails detail;
         if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
         {
             UIManager.Instance.TechLevelPanel.pointsLimit = detail.needPoints;
         }
 
-        // ³õÊ¼»¯UIÏÔÊ¾
+        // ï¿½ï¿½Ê¼ï¿½ï¿½UIï¿½ï¿½Ê¾
         UIManager.Instance.TechLevelPanel.InitTechLevelUI(CurrentTechLevel, CurrentPoints);
     }
 
@@ -57,14 +63,14 @@ public class TechLevelManager : Singleton<TechLevelManager>
         CheckLevelUp();
         _runtimeTechLevel.CurrentPoints = CurrentPoints;
 
-        // Ã¿´Î»ñµÃ¾­Ñé¾ù×Ô¶¯´æ´¢Êý¾Ý
+
         DataManager.Instance.archiveTechLevel = _runtimeTechLevel;
         DataManager.Instance.SaveDynamicData(_runtimeTechLevel, "ArchiveTechLevel.json");
     }
 
     private void CheckLevelUp()
     {
-        // »ñÈ¡ÏÂÒ»¼¶µÄÐÅÏ¢£¨Ë÷Òý = CurrentLevel£¬ÒòÎª0¶ÔÓ¦1¼¶£©
+        // ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = CurrentLevelï¿½ï¿½ï¿½ï¿½Îª0ï¿½ï¿½Ó¦1ï¿½ï¿½ï¿½ï¿½
         TechLevelDetails nextLevelDetail;
         if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out nextLevelDetail))
         {
@@ -74,19 +80,19 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 LevelUp();
                 
                 
-                // ÉèÖÃÐÂµÄµãÊýÉÏÏÞ£¨ÐÂµÄCurrentLevel£©
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ£ï¿½ï¿½Âµï¿½CurrentLevelï¿½ï¿½
                 TechLevelDetails newLevelDetail;
                 if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out newLevelDetail))
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
-                // ¸üÐÂUIÌ×¼þ£¬ÏìÓ¦¸÷Â·ÉñÏÉ
-                EventHandler.CallSystemMessageShow("ÓÐÐ©ÊÂÇéÏëÔÚ½ñÌì½áÊøµÄÊ±ºò¿¼ÂÇÒ»ÏÂ¡­¡­");
+                // ï¿½ï¿½ï¿½ï¿½UIï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½
+                EventHandler.CallSystemMessageShow("ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Â¡ï¿½ï¿½ï¿½");
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
                 UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 
-                // ¼ì²éÊÇ·ñ»¹ÄÜ¼ÌÐøÉý¼¶
-                CheckLevelUp(); // µÝ¹é¼ì²é
+                // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ü¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                CheckLevelUp(); // ï¿½Ý¹ï¿½ï¿½ï¿½
             }
         }
     }
@@ -110,12 +116,12 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 if (data.triggerID.Count > i && data.triggerID[i] != 0)
                 {
 
-                    //ÔÝ´æÊÂ¼þ£¬µÈÍæ¼ÒÈ·ÈÏ½çÃæÊ±ÔÙ´¥·¢
+                    //ï¿½Ý´ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½Ï½ï¿½ï¿½ï¿½Ê±ï¿½Ù´ï¿½ï¿½ï¿½
                     _pendingUnlockEvents.Add((data.triggerEvents[i], data.triggerID[i]));
                 }
                 else
                 {
-                    Debug.LogWarning($"ÊÂ¼þ{i}Î´ÕýÈ·ÅäÖÃtriggerID, ½«Ê¹ÓÃÄ¬ÈÏID");
+                    Debug.LogWarning($"ï¿½Â¼ï¿½{i}Î´ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½triggerID, ï¿½ï¿½Ê¹ï¿½ï¿½Ä¬ï¿½ï¿½ID");
                 }
             }
 

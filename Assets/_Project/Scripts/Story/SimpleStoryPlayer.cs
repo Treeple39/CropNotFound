@@ -146,8 +146,11 @@ public class StoryManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
-        ///TODO:
-        if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
+
+        if (InsertImage1 != null && (currentLine == null || !currentLine.InsertImage1Persistent))
+        {
+            InsertImage1.gameObject.SetActive(false);
+        }
 
         CanvasGroup dialogueCG = dialoguePanel.GetComponent<CanvasGroup>() ?? dialoguePanel.AddComponent<CanvasGroup>();
         //dialogueCG.alpha = 0;
@@ -281,7 +284,6 @@ public class StoryManager : MonoBehaviour
                 EndStory();
                 return;
             }
-
         }
         else
         {
@@ -387,6 +389,31 @@ public class StoryManager : MonoBehaviour
 
             ArchiveManager.Instance.UnlockByStoryKey(chosenEndingKey);
 
+            // 根据抽到的结局稀有度，触发科技点增加事件
+            if (endingRarityMap.TryGetValue(chosenEndingKey, out Rarity rarity))
+            {
+                float techPoints = 0f;
+                switch (rarity)
+                {
+                    case Rarity.B:
+                        techPoints = 10f;
+                        break;
+                    case Rarity.A:
+                        techPoints = 12f;
+                        break;
+                    case Rarity.S:
+                        techPoints = 15f;
+                        break;
+                    case Rarity.SSS:
+                        techPoints = 20f;
+                        break;
+                }
+
+                Debug.Log($"抽到稀有度为 {rarity} 的结局，触发加科技点数：{techPoints}");
+                EventHandler.CallTechPointChange(techPoints);
+                UIManager.Instance.UILevelUpPanel.OpenTab();
+            }
+
 
             return chosenEndingKey;
         }
@@ -396,6 +423,7 @@ public class StoryManager : MonoBehaviour
             return 0; // 返回0表示失败
         }
     }
+    
     void ShowChoices()
     {
         dialoguePanel.SetActive(false);

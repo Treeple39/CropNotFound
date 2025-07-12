@@ -6,9 +6,9 @@ using UnityEngine;
 public class ScoreDetector : Singleton<ScoreDetector>
 {
     [SerializeField] public int _lastItemCount;
-    [SerializeField] public int soulAte = 2; //ÔÚÕâÀï¿ÉÒÔÉè¶¨³Ô¶àÉÙ¸öÁé»ê´¥·¢Ò»´Î
+    [SerializeField] public int soulAte = 2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ï¿½Ô¶ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ê´¥ï¿½ï¿½Ò»ï¿½ï¿½
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
-    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//ÔÚÕâÀï¿ÉÒÔÉè¶¨Áì½±ÎïÆ·
+    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ï¿½ì½±ï¿½ï¿½Æ·
 
     private void OnEnable()
     {
@@ -20,7 +20,6 @@ public class ScoreDetector : Singleton<ScoreDetector>
         EventHandler.OnTechLevelUpEvent -= UnlockItem;
     }
 
-    //TODO:ÈıÖÖ½âËøÂß¼­Ôİ²»ÕûºÏ£¬ÓĞ¿ÕÔÙ×ö°É
     private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
     {
         if (eventType == TechLevelUnlockEventType.UnlockItem)
@@ -32,7 +31,7 @@ public class ScoreDetector : Singleton<ScoreDetector>
     }
 
     /// <summary>
-    /// ÕâÀïĞ´½âËø¹ÖÎïµÄ·½·¨
+    /// ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
     /// </summary>
     //private void UnlockEnemy(int techLevel, TechLevelUnlockEventType eventType, int num)
     //{
@@ -50,19 +49,19 @@ public class ScoreDetector : Singleton<ScoreDetector>
 
     private void Update()
     {
-        // ³ÖĞø¼ì²âitemCount±ä»¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½itemCountï¿½ä»¯
         if (Score.itemCount >= _lastItemCount + soulAte)
         {
             _lastItemCount = Score.itemCount;
 
-            //Ö´ĞĞ³é¿¨
+            //Ö´ï¿½Ğ³é¿¨
             TriggerRandomEvent();
 
-            Debug.Log("´¥·¢");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
-    //·ÖÊı¼ì²âµÄËæ»úÊÂ¼ş£¨Î´À´³öÅäÖÃĞèÇó£©
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void TriggerRandomEvent()
     {
         float randomValue = Random.Range(0f, 1f);

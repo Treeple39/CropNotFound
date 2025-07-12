@@ -66,6 +66,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void GoToMainMenu()
     {
+        UIManager.Instance.SetAllUIPanelsActive(false);
         Debug.Log("GameManager: 返回主菜单...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(mainMenuSceneName);
@@ -107,6 +108,7 @@ public class GameManager : Singleton<GameManager>
         ScoreDetector.Instance._lastItemCount = 0;
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
@@ -115,6 +117,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 前往结算..");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.SetAllUIPanelsActive(false);
         SceneManager.LoadScene(EndSceneName);
         UIManager.Instance.UILevelUpPanel.OpenTab();
         PlayBGM(endBGM);

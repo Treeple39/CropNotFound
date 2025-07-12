@@ -8,16 +8,21 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UIMessagePanel UIMessagePanel;
     [SerializeField] public UISystemMessage UISystemMessagePanel;
     [SerializeField] public UITechLevel TechLevelPanel;
+
+
     [SerializeField] public UILevelUpPanel UILevelUpPanel;
+
+    [Header("set active use")]
+    [SerializeField] private GameObject BagPanel;
+    [SerializeField] private GameObject ScorePanel;
+
 
     protected override void Awake()
     {
         base.Awake();
-
-        //if(itemUITipDatabase != null)
-        //    InitMessageUI(itemUITipDatabase);
         DontDestroyOnLoad(gameObject);
     }
+
     public void FadeUIDuration(CanvasGroup UIPanel, float fadeStrength, float duration)
     {
         UIPanel.gameObject.SetActive(true);
@@ -34,4 +39,22 @@ public class UIManager : Singleton<UIManager>
         UIMessagePanel.InitMessages(itemUITipDatabase);
     }
 
+
+    public void SetAllUIPanelsActive(bool isActive)
+    {
+        if (UILevelUpPanel != null)
+        {
+            UILevelUpPanel.gameObject.SetActive(isActive);
+        }
+
+        if (BagPanel != null)
+        {
+            BagPanel.SetActive(isActive);
+        }
+
+        if (ScorePanel != null)
+        {
+            ScorePanel.SetActive(isActive);
+        }
+    }
 }
