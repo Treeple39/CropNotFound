@@ -50,7 +50,7 @@ public static class EventHandler
         OnRarityUpgraded?.Invoke(rank, rate);
     }
 
-    public static void CallBoostSpeed(float speedBoostMultiplier, float speedBoostDuration, float duration = 5.0f)
+    public static void CallBoostSpeed(float speedBoostMultiplier, float speedBoostDuration = 5.0f)
     {
         OnChangeSpeed?.Invoke(speedBoostMultiplier, speedBoostDuration);
     }

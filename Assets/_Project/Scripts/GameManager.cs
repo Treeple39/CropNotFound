@@ -111,14 +111,12 @@ public class GameManager : Singleton<GameManager>
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
 
-
-
-
     public void GoToEndScene()
     {
         Debug.Log("GameManager: 前往结算..");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(EndSceneName);
+        UIManager.Instance.UILevelUpPanel.OpenTab();
         PlayBGM(endBGM);
     }
 

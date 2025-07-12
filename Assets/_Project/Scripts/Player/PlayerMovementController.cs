@@ -65,10 +65,12 @@ public class PlayerMovement : MonoBehaviour
     {
         UpdateMaxVelocity(speedBoostMultiplier);
 
-        ItemUIData messageData = default;
-        messageData.messageImage = speedChangeChSprite;
-        messageData.message = $"速度提升 {speedBoostMultiplier}倍! 持续 {speedBoostDuration}秒,冲啊！";
-        messageData.messageID = -1;
+        ItemUIData messageData = new ItemUIData
+        {
+            messageImage = speedChangeChSprite,
+            message = $"速度提升 {speedBoostMultiplier}倍! 持续 {speedBoostDuration}秒,冲啊！",
+            messageID = -1,
+        };
 
         EventHandler.CallMessageShow(messageData);
         StartCoroutine(ResetSpeed(speedBoostMultiplier, speedBoostDuration));

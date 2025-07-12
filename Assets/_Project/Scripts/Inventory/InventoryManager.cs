@@ -11,6 +11,12 @@ namespace Inventory
         //数据来源：DataManager
         public InventoryBag_SO _runtimeInventory;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            DontDestroyOnLoad(gameObject);
+        }
+
         public void Init()
         {
             _runtimeInventory = DataManager.Instance.playerBag;
