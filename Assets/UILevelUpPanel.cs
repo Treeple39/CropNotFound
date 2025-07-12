@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Cinemachine.DocumentationSortingAttribute;
@@ -38,6 +39,18 @@ public class UILevelUpPanel : MonoBehaviour
 
             var contentUI = Instantiate(pfb_ContentContainer, AwardContainer);
             contentUI.GetComponent<UILevelUpContent>().ShowContent(content);
+            contentUI.SetActive(false);
+        }
+    }
+
+    private void ActivateContentContainer()
+    {
+        if(AwardContainer.childCount != 0)
+        {
+            for (int i = 0; i < AwardContainer.childCount; i++) 
+            {
+                AwardContainer.GetChild(i).gameObject.SetActive(true);
+            }
         }
     }
 
@@ -59,6 +72,13 @@ public class UILevelUpPanel : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         LevelUpPanel.SetActive(false);
+    }
+
+    public void OpenTab()
+    {
+        this.gameObject.SetActive(true);
+        LevelUpPanel.SetActive(true);
+        ActivateContentContainer();
     }
 
 }

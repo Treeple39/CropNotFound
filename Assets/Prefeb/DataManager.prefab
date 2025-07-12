@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5706722737427384649}
   - component: {fileID: 2679266852498026759}
+  - component: {fileID: 9075586343934972578}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -44,7 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1471ec4b3591df34db5c7d04460ea1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bagSO: {fileID: 11400000, guid: f32f01919ddaa5948bbbcd6417489a5e, type: 2}
-  techLevelSO: {fileID: 11400000, guid: 85d735d2bdd4dab49834f12c95182391, type: 2}
+  bagSO: {fileID: 11400000, guid: 6b3b685a91eaeb54eba40847459288ac, type: 2}
+  techLevelSO: {fileID: 11400000, guid: b735fc84d89a32848b7086f50aec3c8c, type: 2}
+  techUnlockProgessSO: {fileID: 11400000, guid: 5526f43fbcdeca84293964c8dca50f9a, type: 2}
   playerBag: {fileID: 0}
   archiveTechLevel: {fileID: 0}
+  techUnlockProgess: {fileID: 0}
+--- !u!114 &9075586343934972578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640666055792284528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e3c2d669386a24288acb86a0236836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

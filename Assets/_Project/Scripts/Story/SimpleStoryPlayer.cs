@@ -146,6 +146,7 @@ public class StoryManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         choicePanel.SetActive(false);
+        ///TODO:
         if (InsertImage1 != null) InsertImage1.gameObject.SetActive(false);
 
         CanvasGroup dialogueCG = dialoguePanel.GetComponent<CanvasGroup>() ?? dialoguePanel.AddComponent<CanvasGroup>();
@@ -365,10 +366,12 @@ public class StoryManager : MonoBehaviour
 
                 if (item != null)
                 {
-                    ItemUIData messageData = default;
-                    messageData.messageImage = Resources.Load<Sprite>("Characters/" + item.imagePath);
-                    messageData.message = $"恭喜解锁新角色！";
-                    messageData.messageID = -1;
+                    ItemUIData messageData = new ItemUIData
+                    {
+                        messageImage = Resources.Load<Sprite>("Characters/" + item.imagePath),
+                        message = $"解锁了新的宝子！好耶！",
+                        messageID = -1,
+                    };
 
                     EventHandler.CallMessageShow(messageData);
                 }

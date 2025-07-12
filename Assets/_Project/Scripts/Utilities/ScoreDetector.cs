@@ -66,11 +66,11 @@ public class ScoreDetector : Singleton<ScoreDetector>
     private void TriggerRandomEvent()
     {
         float randomValue = Random.Range(0f, 1f);
-        if (randomValue <= .6f)
+        if (randomValue <= .1f)
         {   // 0.0-0.6 (60%)
             EventHandler.CallMessageShow();
         }
-        else if (randomValue < 0.9f && randomValue > 0.6f)
+        else if (randomValue < 0.2f && randomValue > 0.1f)
         {  // 0.6-0.9 (30%)
             
             int temp = Random.Range(0, techUnlockSO.unlockedItemIDs.Count);

@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4730f6ae56fd64d982c820fa58489c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 7463642913677261377, guid: 898d24710962f154691dacac815dfddc, type: 3}
-  coinCount: 0
+  ghostDie1: {fileID: 8300000, guid: 6c6741f13bc0dbb43bfd3e5a2ee6cb53, type: 3}
+  ghostDie2: {fileID: 8300000, guid: e8c2f861be6a5e94fad3d2935273027e, type: 3}
+  ghostDie3: {fileID: 8300000, guid: f13ba746bc61ad54fbd42aa0c0b7c4e3, type: 3}
+  coinPrefab: {fileID: 8724591403730285258, guid: 3f7d60b39cd2d774e8a26d44e24ec512, type: 3}
+  bigCoinPrefab: {fileID: 8724591403730285258, guid: 2ab02550e55a63f4ea9aa81a6f3b56fa, type: 3}
   spawnAreaMinX: -40
   spawnAreaMaxX: 30
   spawnAreaMinY: -40
@@ -66,5 +69,4 @@ MonoBehaviour:
   detectRange: 3
   moveSpeed: 7
   minDistance: 0.5
-  audioManager: {fileID: 0}
-  coinGet: {fileID: 8300000, guid: bff1ff6cf0a8f4a96a541aec833230b5, type: 3}
+  coinGet: {fileID: 8300000, guid: 1b95ff95a9fb8f14994c99c61a0fe279, type: 3}
