@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Thank.unity
     guid: dae94fb2bfe194e85b425aeaa1077592
+  - enabled: 1
+    path: Assets/_Project/Scenes/Archive.unity
+    guid: a324b3869be724d858ba614f73f96e05
   m_configObjects: {}

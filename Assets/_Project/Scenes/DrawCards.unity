@@ -841,6 +841,7 @@ MonoBehaviour:
   typingPitchRange: {x: 0.9, y: 1.1}
   End: 1
   creditsPanel: {fileID: 871030499}
+  archiveButtonPrefab: {fileID: 2299267719635477445, guid: f103cd7682b4b486297c400269e359b6, type: 3}
 --- !u!114 &605596606
 MonoBehaviour:
   m_ObjectHideFlags: 0

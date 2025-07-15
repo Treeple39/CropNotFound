@@ -74,6 +74,12 @@ public class StoryManager : Singleton<StoryManager>
         { 34, Rarity.SSS } // 新神
     };
 
+    [Header("提示按钮设置")]
+    public GameObject archiveButtonPrefab; // 拖入刚创建的预制体
+    private GameObject _currentButton;      // 当前按钮实例
+
+    private bool _isArchiveOpen = false;
+
     void Start()
     {
         if (blackScreenImage != null)
@@ -112,19 +118,30 @@ public class StoryManager : Singleton<StoryManager>
 
     void Update()
     {
-        if (choicePanel.activeSelf) return;
+        if (_isArchiveOpen || choicePanel.activeSelf) return;
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            if (isTyping)
-            {
-                CompleteLine();
-            }
-            else if (typingCoroutine == null)
-            {
-                GoToNextLine();
-            }
+            if (isTyping) CompleteLine();
+            else if (typingCoroutine == null) GoToNextLine();
         }
+    }
+
+
+    private void OnEnable()
+    {
+        EventHandler.OnArchivePanelStateChanged += OnArchivePanelToggle;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.OnArchivePanelStateChanged -= OnArchivePanelToggle;
+    }
+
+    private void OnArchivePanelToggle(bool isOpen)
+    {
+        _isArchiveOpen = isOpen;
+        Debug.Log($"图鉴面板状态: {isOpen}");
     }
 
     void ShowLine(int key)
@@ -271,8 +288,7 @@ public class StoryManager : Singleton<StoryManager>
         int nextKey;
 
         // ★★★★★【核心修改 #2：执行抽卡逻辑】★★★★★
-        // 我们约定，当NextContent是"?"时，执行抽卡逻辑
-        Debug.Log(nextContentString);
+        //Debug.Log(nextContentString);
         if (nextContentString == "?")
         {
             Debug.Log("检测到抽卡节点 '?'，开始根据分数选择结局...");
@@ -376,6 +392,7 @@ public class StoryManager : Singleton<StoryManager>
                     };
 
                     EventHandler.CallMessageShow(messageData);
+
                 }
                 else
                 {
@@ -411,11 +428,15 @@ public class StoryManager : Singleton<StoryManager>
 
                 Debug.Log($"抽到稀有度为 {rarity} 的结局，触发加科技点数：{techPoints}");
 
-                
+
                 EventHandler.CallTechPointChange(techPoints);
                 UIManager.Instance.UILevelUpPanel.OpenTab();
             }
 
+            if (!ArchiveManager.Instance.IsUnlocked(chosenEndingKey))
+            {
+                ShowNewCardButton();
+            }
 
             return chosenEndingKey;
         }
@@ -425,7 +446,7 @@ public class StoryManager : Singleton<StoryManager>
             return 0; // 返回0表示失败
         }
     }
-    
+
     void ShowChoices()
     {
         dialoguePanel.SetActive(false);
@@ -610,4 +631,29 @@ public class StoryManager : Singleton<StoryManager>
     #endregion
     public int StoryKeyToArchiveId(int storyKey) =>
    (storyKey - 7) / 3 + 1; // 7→1, 10→2, 13→3...
+
+    private void ShowNewCardButton()
+    {
+        if (archiveButtonPrefab == null || _currentButton != null) return;
+
+        _currentButton = Instantiate(archiveButtonPrefab, FindObjectOfType<Canvas>().transform);
+
+        RectTransform rt = _currentButton.GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector2(-150, 200);
+
+        rt.DOAnchorPosX(50, 0.5f).SetEase(Ease.OutBack);
+
+
+        _currentButton.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            UIManager.Instance.SetArchivePanelActive(true);
+            Destroy(_currentButton);
+        });
+
+        _currentButton.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            _isArchiveOpen = true; // 暂停剧情
+            UIManager.Instance.SetArchivePanelActive(true);
+        });
+    }
 }
