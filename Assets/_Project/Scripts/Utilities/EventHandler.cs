@@ -3,6 +3,7 @@ using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ public static class EventHandler
     public static event Action<string, float> OnSystemMessageShow;
     public static event Action<int, TechLevelUnlockEventType, int> OnTechLevelUpEvent;
     public static event Action<float> OnTechPointsChanged;
+    public static event Action<int> OnNewArchiveItemGet;
 
     public static void CallUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
     {
@@ -78,5 +80,10 @@ public static class EventHandler
     public static void CallTechLevelUpEvent(int newLevel, TechLevelUnlockEventType evnetType, int num)
     {
         OnTechLevelUpEvent?.Invoke(newLevel, evnetType, num);
+    }
+
+    public static void CallNewArchiveGetEvent(int archiveID)
+    {
+        OnNewArchiveItemGet?.Invoke(archiveID);
     }
 }

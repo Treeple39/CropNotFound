@@ -2,7 +2,7 @@
   "0": {
     "ID": 1000,
     "Name": "金怀表",
-    "itemType": "itemType.Clock",
+    "itemType": "Clock",
     "IconPath": "Items/item_goldenClock",
     "itemSpriteOnWorld": "Items/item_goldenClock",
     "Description": "能放慢区域内的时间！",
@@ -15,7 +15,7 @@
   "1": {
     "ID": 1001,
     "Name": "吸尘杖",
-    "itemType": "itemType.Place",
+    "itemType": "Place",
     "IconPath": "Items/item_staff",
     "itemSpriteOnWorld": "Items/item_staff",
     "Description": "吸引怪物，提高得分！",
@@ -29,7 +29,7 @@
   "2": {
     "ID": 1002,
     "Name": "捕兽夹",
-    "itemType": "itemType.Place",
+    "itemType": "Place",
     "IconPath": "Items/item_trap",
     "itemSpriteOnWorld": "Items/item_trap",
     "Description": "好猎人都会使用陷阱！",

@@ -13,6 +13,8 @@ public class GameInit : MonoBehaviour
 
     IEnumerator InitManager()
     {
+        yield return new WaitUntil(() => MapManager.Instance != null);
+        MapManager.Instance.Init();
         yield return new WaitUntil(() => DataManager.Instance != null);
         DataManager.Instance.Init();
         yield return null;

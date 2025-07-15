@@ -41,6 +41,366 @@
   },
   "10": {
     "techLevel": 11,
+    "needPoints": 999.0
+  },
+  "11": {
+    "techLevel": 12,
+    "needPoints": 1999.0
+  },
+  "12": {
+    "techLevel": 13,
+    "needPoints": 2999.0
+  },
+  "13": {
+    "techLevel": 14,
+    "needPoints": 3999.0
+  },
+  "14": {
+    "techLevel": 15,
+    "needPoints": 4999.0
+  },
+  "15": {
+    "techLevel": 16,
+    "needPoints": 5999.0
+  },
+  "16": {
+    "techLevel": 17,
+    "needPoints": 6999.0
+  },
+  "17": {
+    "techLevel": 18,
+    "needPoints": 7999.0
+  },
+  "18": {
+    "techLevel": 19,
+    "needPoints": 8999.0
+  },
+  "19": {
+    "techLevel": 20,
     "needPoints": 9999.0
+  },
+  "20": {
+    "techLevel": 21,
+    "needPoints": 9999.0
+  },
+  "21": {
+    "techLevel": 22,
+    "needPoints": 9999.0
+  },
+  "22": {
+    "techLevel": 23,
+    "needPoints": 9999.0
+  },
+  "23": {
+    "techLevel": 24,
+    "needPoints": 9999.0
+  },
+  "24": {
+    "techLevel": 25,
+    "needPoints": 9999.0
+  },
+  "25": {
+    "techLevel": 26,
+    "needPoints": 9999.0
+  },
+  "26": {
+    "techLevel": 27,
+    "needPoints": 9999.0
+  },
+  "27": {
+    "techLevel": 28,
+    "needPoints": 9999.0
+  },
+  "28": {
+    "techLevel": 29,
+    "needPoints": 9999.0
+  },
+  "29": {
+    "techLevel": 30,
+    "needPoints": 9999.0
+  },
+  "30": {
+    "techLevel": 31,
+    "needPoints": 9999.0
+  },
+  "31": {
+    "techLevel": 32,
+    "needPoints": 9999.0
+  },
+  "32": {
+    "techLevel": 33,
+    "needPoints": 9999.0
+  },
+  "33": {
+    "techLevel": 34,
+    "needPoints": 9999.0
+  },
+  "34": {
+    "techLevel": 35,
+    "needPoints": 9999.0
+  },
+  "35": {
+    "techLevel": 36,
+    "needPoints": 9999.0
+  },
+  "36": {
+    "techLevel": 37,
+    "needPoints": 9999.0
+  },
+  "37": {
+    "techLevel": 38,
+    "needPoints": 9999.0
+  },
+  "38": {
+    "techLevel": 39,
+    "needPoints": 9999.0
+  },
+  "39": {
+    "techLevel": 40,
+    "needPoints": 9999.0
+  },
+  "40": {
+    "techLevel": 41,
+    "needPoints": 9999.0
+  },
+  "41": {
+    "techLevel": 42,
+    "needPoints": 9999.0
+  },
+  "42": {
+    "techLevel": 43,
+    "needPoints": 9999.0
+  },
+  "43": {
+    "techLevel": 44,
+    "needPoints": 9999.0
+  },
+  "44": {
+    "techLevel": 45,
+    "needPoints": 9999.0
+  },
+  "45": {
+    "techLevel": 46,
+    "needPoints": 9999.0
+  },
+  "46": {
+    "techLevel": 47,
+    "needPoints": 9999.0
+  },
+  "47": {
+    "techLevel": 48,
+    "needPoints": 9999.0
+  },
+  "48": {
+    "techLevel": 49,
+    "needPoints": 9999.0
+  },
+  "49": {
+    "techLevel": 50,
+    "needPoints": 9999.0
+  },
+  "50": {
+    "techLevel": 51,
+    "needPoints": 9999.0
+  },
+  "51": {
+    "techLevel": 52,
+    "needPoints": 9999.0
+  },
+  "52": {
+    "techLevel": 53,
+    "needPoints": 9999.0
+  },
+  "53": {
+    "techLevel": 54,
+    "needPoints": 9999.0
+  },
+  "54": {
+    "techLevel": 55,
+    "needPoints": 9999.0
+  },
+  "55": {
+    "techLevel": 56,
+    "needPoints": 9999.0
+  },
+  "56": {
+    "techLevel": 57,
+    "needPoints": 9999.0
+  },
+  "57": {
+    "techLevel": 58,
+    "needPoints": 9999.0
+  },
+  "58": {
+    "techLevel": 59,
+    "needPoints": 9999.0
+  },
+  "59": {
+    "techLevel": 60,
+    "needPoints": 9999.0
+  },
+  "60": {
+    "techLevel": 61,
+    "needPoints": 9999.0
+  },
+  "61": {
+    "techLevel": 62,
+    "needPoints": 9999.0
+  },
+  "62": {
+    "techLevel": 63,
+    "needPoints": 9999.0
+  },
+  "63": {
+    "techLevel": 64,
+    "needPoints": 9999.0
+  },
+  "64": {
+    "techLevel": 65,
+    "needPoints": 9999.0
+  },
+  "65": {
+    "techLevel": 66,
+    "needPoints": 9999.0
+  },
+  "66": {
+    "techLevel": 67,
+    "needPoints": 9999.0
+  },
+  "67": {
+    "techLevel": 68,
+    "needPoints": 9999.0
+  },
+  "68": {
+    "techLevel": 69,
+    "needPoints": 9999.0
+  },
+  "69": {
+    "techLevel": 70,
+    "needPoints": 9999.0
+  },
+  "70": {
+    "techLevel": 71,
+    "needPoints": 9999.0
+  },
+  "71": {
+    "techLevel": 72,
+    "needPoints": 9999.0
+  },
+  "72": {
+    "techLevel": 73,
+    "needPoints": 9999.0
+  },
+  "73": {
+    "techLevel": 74,
+    "needPoints": 9999.0
+  },
+  "74": {
+    "techLevel": 75,
+    "needPoints": 9999.0
+  },
+  "75": {
+    "techLevel": 76,
+    "needPoints": 9999.0
+  },
+  "76": {
+    "techLevel": 77,
+    "needPoints": 9999.0
+  },
+  "77": {
+    "techLevel": 78,
+    "needPoints": 9999.0
+  },
+  "78": {
+    "techLevel": 79,
+    "needPoints": 9999.0
+  },
+  "79": {
+    "techLevel": 80,
+    "needPoints": 9999.0
+  },
+  "80": {
+    "techLevel": 81,
+    "needPoints": 9999.0
+  },
+  "81": {
+    "techLevel": 82,
+    "needPoints": 9999.0
+  },
+  "82": {
+    "techLevel": 83,
+    "needPoints": 9999.0
+  },
+  "83": {
+    "techLevel": 84,
+    "needPoints": 9999.0
+  },
+  "84": {
+    "techLevel": 85,
+    "needPoints": 9999.0
+  },
+  "85": {
+    "techLevel": 86,
+    "needPoints": 9999.0
+  },
+  "86": {
+    "techLevel": 87,
+    "needPoints": 9999.0
+  },
+  "87": {
+    "techLevel": 88,
+    "needPoints": 9999.0
+  },
+  "88": {
+    "techLevel": 89,
+    "needPoints": 9999.0
+  },
+  "89": {
+    "techLevel": 90,
+    "needPoints": 9999.0
+  },
+  "90": {
+    "techLevel": 91,
+    "needPoints": 9999.0
+  },
+  "91": {
+    "techLevel": 92,
+    "needPoints": 9999.0
+  },
+  "92": {
+    "techLevel": 93,
+    "needPoints": 9999.0
+  },
+  "93": {
+    "techLevel": 94,
+    "needPoints": 9999.0
+  },
+  "94": {
+    "techLevel": 95,
+    "needPoints": 9999.0
+  },
+  "95": {
+    "techLevel": 96,
+    "needPoints": 9999.0
+  },
+  "96": {
+    "techLevel": 97,
+    "needPoints": 9999.0
+  },
+  "97": {
+    "techLevel": 98,
+    "needPoints": 9999.0
+  },
+  "98": {
+    "techLevel": 99,
+    "needPoints": 9999.0
+  },
+  "99": {
+    "techLevel": 100,
+    "needPoints": 9999.0
+  },
+  "100": {
+    "techLevel": 101,
+    "needPoints": 9999999.0
   }
 }

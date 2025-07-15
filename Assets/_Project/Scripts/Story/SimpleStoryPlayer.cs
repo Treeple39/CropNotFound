@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting; // 引入Linq以使用 .Where() 和 .ToList()
 
-public class StoryManager : MonoBehaviour
+public class StoryManager : Singleton<StoryManager>
 {
     [Header("UI 引用")]
     public TextAsset storyJsonFile;
@@ -606,6 +606,6 @@ public class StoryManager : MonoBehaviour
         yield return new WaitForSeconds(scrollUnrollDuration);
     }
     #endregion
-    private int StoryKeyToArchiveId(int storyKey) =>
+    public int StoryKeyToArchiveId(int storyKey) =>
    (storyKey - 7) / 3 + 1; // 7→1, 10→2, 13→3...
 }
