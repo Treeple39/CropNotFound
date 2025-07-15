@@ -18,6 +18,7 @@ public class DataManager : Singleton<DataManager>
     public Dictionary<int, SkillDetails> SkillDetails { get; private set; } // Tech level requirements
     public Dictionary<int, TechLevelEventData> TechLevelEventDatas { get; private set; } // Tech level unlock triggers
     public Dictionary<int, TechLevelDetails> TechLevelDetails { get; private set; } // Tech level requirements
+    public List<RoomData> RoomDetails { get; private set; }  //≥°æ∞…Ë÷√
 
     // Runtime SO data (e.g. inventory, tech level, unlock progress)
     [Header("SO Model")]
@@ -101,7 +102,10 @@ public class DataManager : Singleton<DataManager>
         textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "TechLevelSettings");
         json = textAsset.text;
         this.TechLevelDetails = JsonConvert.DeserializeObject<Dictionary<int, TechLevelDetails>>(json);
-
+        
+        textAsset = Resources.Load<TextAsset>(_jsonConfigPath + "RoomSettings");
+        json = textAsset.text;
+        this.RoomDetails = JsonConvert.DeserializeObject<List<RoomData>>(json);
         Debug.Log($"Loaded {ItemDetails.Count} item configs.");
     }
 
@@ -188,6 +192,18 @@ public class DataManager : Singleton<DataManager>
 
         Debug.LogError($"Skill ID {itemId} not found in config.");
         return null;
+    }
+
+    public RoomData GetRandomRoom()
+    {
+        if (RoomDetails == null || RoomDetails.Count == 0)
+        {
+            Debug.LogError("RoomDetails list is empty! Cannot select a random room. Make sure RoomSettings.json is loaded correctly.");
+            return null;
+        }
+
+        int randomIndex = Random.Range(0, RoomDetails.Count);
+        return RoomDetails[randomIndex];
     }
 
 }

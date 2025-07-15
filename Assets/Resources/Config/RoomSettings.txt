@@ -1,0 +1,8 @@
+[
+  {
+    "roomName": "livingroom"
+  },
+  {
+    "roomName": "bathroom"
+  }
+]
