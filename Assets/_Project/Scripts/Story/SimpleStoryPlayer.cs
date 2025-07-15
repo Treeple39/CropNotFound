@@ -76,7 +76,8 @@ public class StoryManager : Singleton<StoryManager>
 
     [Header("提示按钮设置")]
     public GameObject archiveButtonPrefab; // 拖入刚创建的预制体
-    private GameObject _currentButton;      // 当前按钮实例
+    private GameObject _currentArchiveButton;      // 当前按钮实例
+    private Coroutine _autoHideCoroutine;
 
     private bool _isArchiveOpen = false;
 
@@ -634,26 +635,51 @@ public class StoryManager : Singleton<StoryManager>
 
     private void ShowNewCardButton()
     {
-        if (archiveButtonPrefab == null || _currentButton != null) return;
+        if (archiveButtonPrefab == null || _currentArchiveButton != null) return;
 
-        _currentButton = Instantiate(archiveButtonPrefab, FindObjectOfType<Canvas>().transform);
+        // 创建按钮
+        _currentArchiveButton = Instantiate(archiveButtonPrefab, FindObjectOfType<Canvas>().transform);
 
-        RectTransform rt = _currentButton.GetComponent<RectTransform>();
-        rt.anchoredPosition = new Vector2(-150, 200);
+        // 设置初始位置（屏幕左侧外）
+        RectTransform rt = _currentArchiveButton.GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector2(-200, 200);
 
+        // 滑动动画
         rt.DOAnchorPosX(50, 0.5f).SetEase(Ease.OutBack);
 
+        // 点击事件
+        _currentArchiveButton.GetComponent<Button>().onClick.AddListener(OnArchiveButtonClicked);
 
-        _currentButton.GetComponent<Button>().onClick.AddListener(() =>
-        {
-            UIManager.Instance.SetArchivePanelActive(true);
-            Destroy(_currentButton);
-        });
+        // 5秒后自动消失
+        _autoHideCoroutine = StartCoroutine(AutoHideButton());
+    }
+    private void OnArchiveButtonClicked()
+    {
+        if (_currentArchiveButton == null) return;
 
-        _currentButton.GetComponent<Button>().onClick.AddListener(() =>
+        // 停止自动消失的协程
+        if (_autoHideCoroutine != null)
         {
-            _isArchiveOpen = true; // 暂停剧情
-            UIManager.Instance.SetArchivePanelActive(true);
-        });
+            StopCoroutine(_autoHideCoroutine);
+            _autoHideCoroutine = null;
+        }
+
+        // // 打开图鉴面板（会自动触发暂停）
+        // UIManager.Instance.SetArchivePanelActive(true);
+
+        // 移除按钮
+        Destroy(_currentArchiveButton);
+    }
+    private IEnumerator AutoHideButton()
+    {
+        yield return new WaitForSeconds(5f);
+
+        if (_currentArchiveButton != null)
+        {
+            // 滑动消失动画
+            _currentArchiveButton.GetComponent<RectTransform>()
+                .DOAnchorPosX(-200, 0.3f)
+                .OnComplete(() => Destroy(_currentArchiveButton));
+        }
     }
 }
