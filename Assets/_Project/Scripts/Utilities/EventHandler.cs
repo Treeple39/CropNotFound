@@ -15,12 +15,13 @@ public static class EventHandler
     public static event Action<SlotUI> OnCooldownEnd;
     public static event Action<Rarity> OnRarityChanged;
     public static event Action<int, float> OnRarityUpgraded;
-    public static event Action<float, float> OnChangeSpeed; //ËÙ¶Èµ÷Õû£¬Ê±³¤
+    public static event Action<float, float> OnChangeSpeed; //ï¿½Ù¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     public static event Action<ItemUIData, float> OnMessageShow;
     public static event Action<string, float> OnSystemMessageShow;
     public static event Action<int, TechLevelUnlockEventType, int> OnTechLevelUpEvent;
     public static event Action<float> OnTechPointsChanged;
     public static event Action<int> OnNewArchiveItemGet;
+    public static event Action<bool> OnArchivePanelStateChanged;
 
     public static void CallUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
     {
@@ -85,5 +86,9 @@ public static class EventHandler
     public static void CallNewArchiveGetEvent(int archiveID)
     {
         OnNewArchiveItemGet?.Invoke(archiveID);
+    }
+    public static void CallArchivePanelStateChanged(bool isOpen)
+    {
+        OnArchivePanelStateChanged?.Invoke(isOpen);
     }
 }

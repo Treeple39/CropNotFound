@@ -16,6 +16,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject BagPanel;
     [SerializeField] private GameObject ScorePanel;
 
+    public GameObject ArchivePanel;
+
 
     protected override void Awake()
     {
@@ -55,6 +57,18 @@ public class UIManager : Singleton<UIManager>
         if (ScorePanel != null)
         {
             ScorePanel.SetActive(isActive);
+        }
+    }
+    public void SetArchivePanelActive(bool isActive)
+    {
+        if (ArchivePanel != null)
+        {
+            ArchivePanel.SetActive(isActive);
+            EventHandler.CallArchivePanelStateChanged(isActive);
+        }
+        else
+        {
+            Debug.LogError("ArchivePanel不存在");
         }
     }
 }

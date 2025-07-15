@@ -1,6 +1,7 @@
 using Inventory;
 using UnityEngine;
-using UnityEngine.SceneManagement; // 必须引用这个命名空间来管理场景
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -49,6 +50,7 @@ public class GameManager : Singleton<GameManager>
     public string Archive = "Archive";
     public string archiveBGM = "";
 
+    private Stack<string> sceneHistory = new Stack<string>();
 
 
     protected override void Awake()
@@ -69,9 +71,8 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.SetAllUIPanelsActive(false);
         Debug.Log("GameManager: 返回主菜单...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
-        SceneManager.LoadScene(mainMenuSceneName);
+        LoadSceneWithHistory(mainMenuSceneName, mainMenuBGM);
         DataManager.Instance.SetHasSeenOpeningAnimation(true);
-        PlayBGM(mainMenuBGM);
     }
 
     /// <summary>
@@ -81,8 +82,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
-        SceneManager.LoadScene(openSceneName);
-        PlayBGM(storyBGM);
+        LoadSceneWithHistory(openSceneName, storyBGM);
     }
 
 
@@ -93,9 +93,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 主菜单结束，开始加载对话场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
-        SceneManager.LoadScene(storySceneName);
-
-        PlayBGM(storyBGM);
+        LoadSceneWithHistory(storySceneName, storyBGM);
     }
 
 
@@ -105,6 +103,12 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLevel()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene != levelSceneName)
+        {
+            sceneHistory.Push(currentScene);
+            Debug.Log("Scene pushed to history: " + currentScene);
+        }
         RoomData selectedRoom = DataManager.Instance.GetRandomRoom();
 
         if (selectedRoom != null)
@@ -158,8 +162,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 前往图鉴..");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
-        SceneManager.LoadScene(Archive);
-        PlayBGM("");
+        LoadSceneWithHistory(Archive, archiveBGM);
     }
 
     public void SkipOpeningAnimation()
@@ -208,6 +211,30 @@ public class GameManager : Singleton<GameManager>
                 Debug.LogError("could not find the " + connectBGMPath + " BGM");
             }
             AudioManager.S.PlaySequencedBGM(sequencedBgm);
+        }
+    }
+    public void LoadSceneWithHistory(string newSceneName, string bgmPath = "")
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        sceneHistory.Push(currentScene);
+        Debug.Log("Scene pushed to history: " + currentScene);
+
+        UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        SceneManager.LoadScene(newSceneName);
+        PlayBGM(bgmPath);
+    }
+
+    public void GoBackToPreviousScene()
+    {
+        if (sceneHistory.Count > 0)
+        {
+            string previousScene = sceneHistory.Pop();
+            Debug.Log("Returning to previous scene: " + previousScene);
+            SceneManager.LoadScene(previousScene);
+        }
+        else
+        {
+            Debug.LogWarning("No previous scene in history!");
         }
     }
 }
