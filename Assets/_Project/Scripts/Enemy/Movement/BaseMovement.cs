@@ -67,13 +67,8 @@ public class BaseMovement : MonoBehaviour
                 }
                 isMoving = false;
             }
-
         }
-
     }
-
-
-
 
     protected virtual void FixedUpdate()
     {
@@ -129,23 +124,5 @@ public class BaseMovement : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 检查碰撞的物体是否存在BaseMovement组件
-        BaseMovement collidedMovement = collision.gameObject.GetComponent<BaseMovement>();
-        if (collidedMovement != null && !collidedMovement.canMove && collision.gameObject.tag == "Enemy")
-        {
-            // 将不可移动物体改为可移动物体
-            MakeMovable(collision.gameObject);
-        }
-    }
-
-    protected virtual void MakeMovable(GameObject gameObject)
-    {
-        BaseMovement movement = gameObject.GetComponent<BaseMovement>();
-        movement.canMove = true;
-
-        Debug.Log($"物体 {gameObject.name} 已变为可移动状态");
-    }
+    protected virtual void OnCollisionEnter2D(Collision2D collision){}
 }

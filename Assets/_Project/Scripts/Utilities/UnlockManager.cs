@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public class UnlockManager : Singleton<UnlockManager>
 {
+    [SerializeField] private TechUnlockProgess_SO techUnlockSO;
     private Dictionary<TechLevelUnlockEventType, Func<int, Details>> _unlockMethods;
 
     public void Init()
@@ -48,5 +50,37 @@ public class UnlockManager : Singleton<UnlockManager>
             contentImage = ResourceManager.LoadSprite(detail.IconPath),
             contentTypeTip = typeTip
         };
+    }
+
+    private void OnEnable()
+    {
+        EventHandler.OnTechLevelUpEvent += UnlockItem;
+        EventHandler.OnTechLevelUpEvent += UnlockEnemy;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.OnTechLevelUpEvent -= UnlockItem;
+        EventHandler.OnTechLevelUpEvent -= UnlockEnemy;
+    }
+
+    private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
+    {
+        if (eventType == TechLevelUnlockEventType.UnlockItem)
+        {
+            if (!techUnlockSO.unlockedItemIDs.Contains(num))
+                techUnlockSO.unlockedItemIDs.Add(num);
+            DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
+        }
+    }
+
+    private void UnlockEnemy(int techLevel, TechLevelUnlockEventType eventType, int num)
+    {
+        if (eventType == TechLevelUnlockEventType.UnlockMonster)
+        {
+            if (!techUnlockSO.unlockedMonsterIDs.Contains(num))
+                techUnlockSO.unlockedMonsterIDs.Add(num);
+            DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
+        }
     }
 }

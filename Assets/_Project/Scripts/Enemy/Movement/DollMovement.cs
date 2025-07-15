@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DollMovement : BaseMovement
 {
-    [SerializeField] private float moveDuration = 5f;     // 初始移动持续时间
+    [SerializeField] private float dollMoveDuration = 5f;     // 初始移动持续时间
     [SerializeField] private float dollSpeed = 3f;        // 娃娃移动速度
     [SerializeField] private float waitTimeBetweenMoves = 1f; // 两次移动间的等待时间
     [SerializeField] private float stunDuration = 0.5f;     // 眩晕持续时间
 
-    private Vector3 moveDirection;                        // 当前移动方向
-    private float moveTimer = 0f;                         // 移动计时器
+    private Vector3 dollMoveDirection;                        // 当前移动方向
+    private float dollMoveTimer = 0f;                         // 移动计时器
     private bool isFirstMove = true;                      // 是否是初始移动
     private bool isMovingForward = true;                  // 是否正在向前移动
     
@@ -22,7 +22,6 @@ public class DollMovement : BaseMovement
     public Enemy enemy;
 
     public int BigCoinCount = 2;
-
 
     protected override void Start()
     {
@@ -39,7 +38,7 @@ public class DollMovement : BaseMovement
         StartCoroutine(DelayedInit());
         StartNewMovement();
     }
-    
+
     private IEnumerator DelayedInit()
     {
         yield return null;
@@ -82,10 +81,10 @@ public class DollMovement : BaseMovement
         }
         
         // 处理移动状态
-        moveTimer += Time.deltaTime;
-        float currentMoveDuration = isFirstMove ? moveDuration : 2 * moveDuration;
+        dollMoveTimer += Time.deltaTime;
+        float currentMoveDuration = isFirstMove ? dollMoveDuration : 2 * dollMoveDuration;
         
-        if (moveTimer >= currentMoveDuration)
+        if (dollMoveTimer >= currentMoveDuration)
         {
             StopMove();
             
@@ -100,7 +99,7 @@ public class DollMovement : BaseMovement
                 isMovingForward = !isMovingForward;
             }
             
-            moveTimer = 0f;
+            dollMoveTimer = 0f;
             isWaiting = true;
             waitTimer = 0f;
             enemy.stateMachine.ChangeState(enemy.idleState);
@@ -110,13 +109,13 @@ public class DollMovement : BaseMovement
     // 开始新的移动
     private void StartNewMovement()
     {
-        moveDirection = new Vector3(
+        dollMoveDirection = new Vector3(
             Random.Range(-1f, 1f),
             Random.Range(-1f, 1f),
             0
         ).normalized;
         
-        moveTimer = 0f;
+        dollMoveTimer = 0f;
         isFirstMove = true;
         isMovingForward = true;
         MoveInCurrentDirection();
@@ -126,7 +125,7 @@ public class DollMovement : BaseMovement
     private void MoveInCurrentDirection()
     {
         if (!gameObject.activeSelf || isStunned) return;
-        Move(isMovingForward ? moveDirection : -moveDirection);
+        Move(isMovingForward ? dollMoveDirection : -dollMoveDirection);
     }
     
     // 碰撞处理

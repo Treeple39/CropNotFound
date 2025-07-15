@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
     /// 【核心】静态变量，用于跨场景指定要在MainScene中加载的房间名称。
     /// 其他脚本可以直接通过 MapManager.TargetRoomName = "livingroom"; 来设置。
     /// </summary>
-    public static string TargetRoomName;
+    public static string TargetRoomName = "livingroom";
 
     private GameObject _currentRoomInstance; // 当前实例化的房间对象
 

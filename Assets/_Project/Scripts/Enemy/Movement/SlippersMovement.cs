@@ -8,7 +8,7 @@ public class SlippersMovement : BaseMovement
     [SerializeField] private float wanderRadius = 4f;      // 随机移动半径
     [SerializeField] private float wanderInterval = 0.2f;  // 随机移动间隔
     private float wanderTimer;                            // 随机移动计时器
-    private Vector3 startPosition;                        // 初始位置
+    private Vector3 wanderStartPosition;                  // 初始位置
 
     [Header("冲刺设置")]
     [SerializeField] private float chargeSpeed = 10f;     // 冲刺速度
@@ -41,7 +41,7 @@ public class SlippersMovement : BaseMovement
         }
         
         // 保存初始位置
-        startPosition = transform.position;
+        wanderStartPosition = transform.position;
         
         // 查找玩家
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -172,7 +172,7 @@ public class SlippersMovement : BaseMovement
             wanderTimer = 0;
             
             // 生成随机位置
-            Vector3 randomPos = startPosition + Random.insideUnitSphere * wanderRadius;
+            Vector3 randomPos = wanderStartPosition + Random.insideUnitSphere * wanderRadius;
             randomPos.z = transform.position.z; // 保持z轴不变
             
             // 计算移动方向

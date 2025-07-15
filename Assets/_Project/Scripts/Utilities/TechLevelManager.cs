@@ -5,7 +5,7 @@ using static Cinemachine.DocumentationSortingAttribute;
 
 public class TechLevelManager : Singleton<TechLevelManager>
 {
-    //ȫ�ֿƼ��ȼ�
+    //????????
     public int CurrentTechLevel;
     public float CurrentPoints;
     private TechLevel_SO _runtimeTechLevel;
@@ -16,7 +16,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    //�¼����������
+    //????????????
     private List<(TechLevelUnlockEventType evtType, int id)> _pendingUnlockEvents = new();
 
     public void demoCall()
@@ -39,18 +39,18 @@ public class TechLevelManager : Singleton<TechLevelManager>
     {
         _runtimeTechLevel = DataManager.Instance.archiveTechLevel;
 
-        // ��ʼ����̬����
+        // ????????????
         CurrentTechLevel = _runtimeTechLevel.CurrentLevel;
         CurrentPoints = _runtimeTechLevel.CurrentPoints;
 
-        // ���õ������ޣ����� = CurrentLevel - 1��
+        // ???????????????? = CurrentLevel - 1??
         TechLevelDetails detail;
         if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
         {
             UIManager.Instance.TechLevelPanel.pointsLimit = detail.needPoints;
         }
 
-        // ��ʼ��UI��ʾ
+        // ?????UI???
         UIManager.Instance.TechLevelPanel.InitTechLevelUI(CurrentTechLevel, CurrentPoints);
     }
 
@@ -70,7 +70,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
 
     private void CheckLevelUp()
     {
-        // ��ȡ��һ������Ϣ������ = CurrentLevel����Ϊ0��Ӧ1����
+        // ??????????????????? = CurrentLevel?????0???1????
         TechLevelDetails nextLevelDetail;
         if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out nextLevelDetail))
         {
@@ -80,19 +80,19 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 LevelUp();
                 
                 
-                // �����µĵ������ޣ��µ�CurrentLevel��
+                // ??????????????????CurrentLevel??
                 TechLevelDetails newLevelDetail;
                 if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out newLevelDetail))
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
-                // ����UI�׼�����Ӧ��·����
-                EventHandler.CallSystemMessageShow("��Щ�������ڽ��������ʱ����һ�¡���");
+                // ????UI??????????��????
+                EventHandler.CallSystemMessageShow("??��???????????????????????????");
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
                 UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 
-                // ����Ƿ��ܼ�������
-                CheckLevelUp(); // �ݹ���
+                // ???????????????
+                CheckLevelUp(); // ?????
             }
         }
     }
@@ -116,12 +116,12 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 if (data.triggerID.Count > i && data.triggerID[i] != 0)
                 {
 
-                    //�ݴ��¼��������ȷ�Ͻ���ʱ�ٴ���
+                    //?????????????????????????
                     _pendingUnlockEvents.Add((data.triggerEvents[i], data.triggerID[i]));
                 }
                 else
                 {
-                    Debug.LogWarning($"�¼�{i}δ��ȷ����triggerID, ��ʹ��Ĭ��ID");
+                    Debug.LogWarning($"???{i}��???????triggerID, ????????ID");
                 }
             }
 
