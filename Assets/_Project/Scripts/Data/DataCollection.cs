@@ -31,6 +31,15 @@ public class SkillDetails : Details
 }
 
 [System.Serializable]
+public class RoomData
+{
+    public string roomName { get; set; }
+}
+
+
+
+
+[System.Serializable]
 public class TechLevelEventData
 {
     public int techLevel { get; set; }

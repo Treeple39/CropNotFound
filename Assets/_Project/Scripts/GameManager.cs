@@ -105,6 +105,21 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLevel()
     {
+        RoomData selectedRoom = DataManager.Instance.GetRandomRoom();
+
+        if (selectedRoom != null)
+        {
+            // 将房间名赋值给 MapManager 的静态变量
+            MapManager.TargetRoomName = selectedRoom.roomName;
+            Debug.Log($"[MainMenu] 已从JSON配置随机选择地图: {selectedRoom.roomName}");
+        }
+        else
+        {
+            // 出错时的备用方案
+            MapManager.TargetRoomName = "livingroom";
+            Debug.LogError("[MainMenu] 无法从DataManager获取随机房间, 使用默认 'livingroom'.");
+        }
+
         ScoreDetector.Instance._lastItemCount = 0;
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
