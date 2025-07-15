@@ -38,6 +38,19 @@ public class TechLevelManager : Singleton<TechLevelManager>
     public void Init()
     {
         _runtimeTechLevel = DataManager.Instance.archiveTechLevel;
+        
+        if (_runtimeTechLevel == null)
+        {
+            Debug.LogError("TechLevel_SO 实例未加载！");
+            return;
+        }
+
+        if (_runtimeTechLevel.techLevelData == null || _runtimeTechLevel.techLevelData.Count == 0)
+        {
+            Debug.LogError("科技等级数据为空！");
+            return;
+        }
+
 
         // ��ʼ����̬����
         CurrentTechLevel = _runtimeTechLevel.CurrentLevel;
@@ -45,7 +58,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
 
         // ���õ������ޣ����� = CurrentLevel - 1��
         TechLevelDetails detail;
-        if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
+        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
         {
             UIManager.Instance.TechLevelPanel.pointsLimit = detail.needPoints;
         }
@@ -72,17 +85,17 @@ public class TechLevelManager : Singleton<TechLevelManager>
     {
         // ��ȡ��һ������Ϣ������ = CurrentLevel����Ϊ0��Ӧ1����
         TechLevelDetails nextLevelDetail;
-        if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out nextLevelDetail))
+        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out nextLevelDetail))
         {
-            if(CurrentPoints >= nextLevelDetail.needPoints)
+            if (CurrentPoints >= nextLevelDetail.needPoints)
             {
                 CurrentPoints -= nextLevelDetail.needPoints;
                 LevelUp();
-                
-                
+
+
                 // �����µĵ������ޣ��µ�CurrentLevel��
                 TechLevelDetails newLevelDetail;
-                if(DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out newLevelDetail))
+                if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out newLevelDetail))
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }

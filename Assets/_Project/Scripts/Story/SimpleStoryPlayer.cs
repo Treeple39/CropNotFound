@@ -410,6 +410,8 @@ public class StoryManager : Singleton<StoryManager>
                 }
 
                 Debug.Log($"抽到稀有度为 {rarity} 的结局，触发加科技点数：{techPoints}");
+
+                
                 EventHandler.CallTechPointChange(techPoints);
                 UIManager.Instance.UILevelUpPanel.OpenTab();
             }
