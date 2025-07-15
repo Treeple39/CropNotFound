@@ -105,6 +105,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void StartLevel()
     {
+        MapManager.TargetRoomName = "livingroom";
         ScoreDetector.Instance._lastItemCount = 0;
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
