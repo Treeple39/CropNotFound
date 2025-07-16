@@ -387,21 +387,15 @@ public class StoryManager : Singleton<StoryManager>
             int chosenEndingKey = possibleEndings[randomIndex];
             Debug.Log($"从 {possibleEndings.Count} 个可能结局中，抽中了 Key: {chosenEndingKey}");
 
-            if (ArchiveManager.Instance.IsUnlocked(chosenEndingKey) == false)
+            if (ArchiveManager.Instance.IsUnlocked(StoryKeyToArchiveId(chosenEndingKey)) == false)
             {
+                Debug.Log("新角色！");
                 var item = ArchiveManager.Instance.GetItem(StoryKeyToArchiveId(chosenEndingKey));
 
                 if (item != null)
                 {
-                    ItemUIData messageData = new ItemUIData
-                    {
-                        messageImage = Resources.Load<Sprite>("Characters/" + item.imagePath),
-                        message = $"解锁了新的宝子！好耶！",
-                        messageID = -1,
-                    };
-
-                    EventHandler.CallMessageShow(messageData);
-
+                    Debug.Log("你感到有新的道路开启了……");
+                    EventHandler.CallSystemMessageShow("你感到有新的道路开启了……");
                 }
                 else
                 {
@@ -442,10 +436,7 @@ public class StoryManager : Singleton<StoryManager>
                 //UIManager.Instance.UILevelUpPanel.OpenTab();
             }
 
-            if (!ArchiveManager.Instance.IsUnlocked(chosenEndingKey))
-            {
-                ShowNewCardButton();
-            }
+            ShowNewCardButton();
 
             return chosenEndingKey;
         }

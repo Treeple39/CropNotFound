@@ -24,29 +24,30 @@ public class ArchiveManager : MonoBehaviour
         }
     }
 
-    // ========== 数据结构（严格匹配JSON字段大小写） ==========
+    // ========== 数据结构 ==========
     [System.Serializable]
     private class ArchiveData
     {
-        public List<ArchiveItem> archiveItems; // 注意和JSON中的"archiveItems"完全一致
+        public List<ArchiveItem> archiveItems;
     }
 
     [System.Serializable]
     public class ArchiveItem
     {
-        public int ID;            // 大写ID
-        public string imagePath;  // 小写imagePath
-        public bool isActivated;  // 小写isActivated
+        public int ID;
+        public string imagePath;
+        public bool isActivated;
     }
 
-    // ========== 配置路径 ==========
-    private const string RESOURCES_JSON_PATH = "CharacterArchive"; // 无后缀
+    // ========== 路径配置 ==========
+    private const string RESOURCES_JSON_PATH = "CharacterArchive";
     private string PERSISTENT_JSON_PATH => Path.Combine(Application.persistentDataPath, "CharacterArchive.json");
 
-    // ========== 成员变量 ==========
+    // ========== 状态 ==========
     private Dictionary<int, ArchiveItem> _itemDict = new Dictionary<int, ArchiveItem>();
+    private bool _isInitialized = false; // ✅ 是否已初始化过
 
-    // ========== 初始化 ==========
+    // ========== 生命周期 ==========
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -57,16 +58,36 @@ public class ArchiveManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
-        LoadOrInitializeArchive();
+
+        InitializeOnce(); // ✅ 只做一次初始化
     }
 
-    // ========== 核心方法 ==========
+    private void OnEnable()
+    {
+        if (_isInitialized)
+        {
+            RefreshFromDisk(); // ✅ 每次激活刷新一次
+        }
+    }
+
+    // ========== 初始化与刷新 ==========
+    private void InitializeOnce()
+    {
+        if (_isInitialized) return;
+
+        LoadOrInitializeArchive();
+        _isInitialized = true;
+    }
+
+    public void RefreshFromDisk()
+    {
+        TryLoadFromPersistentPath(); // ⚠️ 不再 fallback、保存，只更新
+        Debug.Log("ArchiveManager: 数据已刷新");
+    }
+
     private void LoadOrInitializeArchive()
     {
-        // 优先尝试从持久化路径加载
         if (TryLoadFromPersistentPath()) return;
-
-        // 其次尝试从Resources加载
         if (TryLoadFromResources()) return;
 
         Debug.LogError("无法加载任何存档数据！将创建空存档");
@@ -108,7 +129,7 @@ public class ArchiveManager : MonoBehaviour
             if (defaultData?.archiveItems != null)
             {
                 LoadItems(defaultData.archiveItems);
-                SaveToJson(); // 保存有效数据到持久化路径
+                SaveToJson(); // 初次生成存档
                 Debug.Log($"从Resources加载默认数据: {RESOURCES_JSON_PATH}");
                 return true;
             }
@@ -141,28 +162,33 @@ public class ArchiveManager : MonoBehaviour
         Debug.Log($"存档已保存到: {PERSISTENT_JSON_PATH}\n{json}");
     }
 
-    // ========== 公开API ==========
+    // ========== 对外接口 ==========
     public void UnlockByStoryKey(int storyKey)
     {
         int archiveId = StoryKeyToArchiveId(storyKey);
         if (_itemDict.TryGetValue(archiveId, out ArchiveItem item) && !item.isActivated)
         {
+
             item.isActivated = true;
             SaveToJson();
             Debug.Log($"解锁角色ID: {archiveId} (剧情Key: {storyKey})");
         }
+        // else
+        // {
+        //     Debug.LogError("未能解锁" + "storyKey" + storyKey + "archiveId" + archiveId);
+
+        // }
     }
 
-    public bool IsUnlocked(int archiveId) => 
+    public bool IsUnlocked(int archiveId) =>
         _itemDict.TryGetValue(archiveId, out ArchiveItem item) && item.isActivated;
 
-    public ArchiveItem GetItem(int archiveId) => 
+    public ArchiveItem GetItem(int archiveId) =>
         _itemDict.TryGetValue(archiveId, out ArchiveItem item) ? item : null;
 
-    public List<ArchiveItem> GetAllItems() => 
+    public List<ArchiveItem> GetAllItems() =>
         new List<ArchiveItem>(_itemDict.Values);
 
-    // ========== 辅助方法 ==========
-    private int StoryKeyToArchiveId(int storyKey) => 
-        (storyKey - 7) / 3 + 1; // 7→1, 10→2, 13→3...
+    private int StoryKeyToArchiveId(int storyKey) =>
+        (storyKey - 7) / 3 + 1;
 }
