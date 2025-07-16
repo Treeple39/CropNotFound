@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SlippersMovement : BaseMovement
 {
+    [Header("击退设置")]
+    [SerializeField] private float knockbackForce = 15f;    // 击退力量
+    [SerializeField] private float knockbackDuration = 0.3f; // 击退持续时间
+
     [Header("随机移动设置")]
     [SerializeField] private float wanderRadius = 4f;      // 随机移动半径
     [SerializeField] private float wanderInterval = 0.2f;  // 随机移动间隔
@@ -190,6 +194,18 @@ public class SlippersMovement : BaseMovement
         
         if (isCharging && collision.gameObject.CompareTag("Player"))
         {
+   
+            //尝试从碰撞对象获取PlayerMovement组件
+            PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                //计算击退方向（从怪物指向玩家）
+                Vector2 knockbackDirection = (collision.transform.position - transform.position).normalized;
+
+                //调用玩家的击退方法！
+                playerMovement.ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+            }
+
             // 取消延迟检查并立即结束冲刺
             CancelInvoke(nameof(CheckChargeResult));
             isCharging = false;

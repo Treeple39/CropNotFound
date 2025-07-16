@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     private float dashTimer = 0f;
     private float dashCooldownTimer = 1.0f;
+    private bool isMovementLocked = false;
 
     void Awake()
     {
@@ -94,6 +95,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isMovementLocked)
+        {
+            return;
+        }
+
         if (isDashing)
         {
             HandleDashingState();
@@ -118,6 +124,31 @@ public class PlayerMovement : MonoBehaviour
             // Rigidbody2D的Linear Drag属性会自动让飞船平滑地减速停下。
             // ★★★★★★★★★★★★★★★★★★★
         }
+    }
+
+    public void ApplyKnockback(Vector2 direction, float force, float duration)
+    {
+        // 如果正在冲刺，可能不希望被打断，可以根据你的设计决定
+        // if (isDashing) return;
+
+        // 停止之前的协程，以防连续被击退
+        StopCoroutine(nameof(KnockbackRoutine));
+        StartCoroutine(KnockbackRoutine(direction, force, duration));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector2 direction, float force, float duration)
+    {
+        // 1. 进入失控状态
+        isMovementLocked = true;
+
+        // 2. 施加一次性的击退力 (直接设置速度，效果最明显)
+        rb.velocity = direction.normalized * force;
+
+        // 3. 等待击退效果持续的时间
+        yield return new WaitForSeconds(duration);
+
+        // 4. 恢复正常控制
+        isMovementLocked = false;
     }
 
     private void HandleDirectMovement()
@@ -146,8 +177,6 @@ public class PlayerMovement : MonoBehaviour
             rb.rotation = targetAngle;
         }
     }
-
-    // --- 冲刺和计时器逻辑 (保持不变) ---
     private void HandleTimersAndInput()
     {
         if (dashCooldownTimer > 0f) { dashCooldownTimer -= Time.deltaTime; }
