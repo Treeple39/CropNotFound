@@ -54,7 +54,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
         CurrentPoints = _runtimeTechLevel.CurrentPoints;
 
         TechLevelDetails detail;
-        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
+        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out detail))
         {
             UIManager.Instance.TechLevelPanel.pointsLimit = detail.needPoints;
         }
@@ -95,7 +95,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
                 // ????UI??????????��????
-                EventHandler.CallSystemMessageShow("??��???????????????????????????");
+                EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下。");
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
                 UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 
@@ -117,7 +117,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
         TechLevelEventData data;
         if (DataManager.Instance.TechLevelEventDatas.TryGetValue(CurrentTechLevel - 1, out data))
         {
-            _pendingUnlockEvents.Clear();
+            //_pendingUnlockEvents.Clear();
 
             for (int i = 0; i < data.triggerEvents.Count; i++)
             {
