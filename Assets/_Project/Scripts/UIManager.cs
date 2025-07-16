@@ -62,6 +62,10 @@ public class UIManager : Singleton<UIManager>
         {
             ScorePanel.SetActive(isActive);
         }
+        if (TechLevelPanel != null)
+        {
+            TechLevelPanel.gameObject.SetActive(isActive);
+        }
     }
     public void SetArchivePanelActive(bool isActive)
     {

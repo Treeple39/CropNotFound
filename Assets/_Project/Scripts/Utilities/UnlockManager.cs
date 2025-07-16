@@ -9,7 +9,7 @@ public class UnlockManager : Singleton<UnlockManager>
     [SerializeField] private TechUnlockProgess_SO techUnlockSO;
     private Dictionary<TechLevelUnlockEventType, Func<int, Details>> _unlockMethods;
 
-    [Header("Ò»´ÎÐÔ½âËøÊÂ¼þ,ÔÝÓÃÓÚÒýµ¼")]
+    [Header("Ò»ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     public List<UnlockHintEntry> unlockHintList;
     public Dictionary<int, SingleUnlockHintsData> triggeredUnlockHints { get; private set; }
@@ -46,7 +46,7 @@ public class UnlockManager : Singleton<UnlockManager>
         throw new ArgumentException($"Unknown unlock type: {unlockType}");
     }
 
-    //¸øUIÓÃµÄ
+    //ï¿½ï¿½UIï¿½Ãµï¿½
     public LevelUpContentData GetContentData(TechLevelUnlockEventType unlockType, int id)
     {
         if (unlockType == TechLevelUnlockEventType.PlayStory || unlockType == TechLevelUnlockEventType.Default)
@@ -57,9 +57,9 @@ public class UnlockManager : Singleton<UnlockManager>
 
         string typeTip = unlockType switch
         {
-            TechLevelUnlockEventType.UnlockItem => "µÀ¾ß",
-            TechLevelUnlockEventType.UnlockMonster => "¹ÖÎï",
-            TechLevelUnlockEventType.UnlockSkill => "¼¼ÒÕ",
+            TechLevelUnlockEventType.UnlockItem => "ï¿½ï¿½ï¿½ï¿½",
+            TechLevelUnlockEventType.UnlockMonster => "ï¿½ï¿½ï¿½ï¿½",
+            TechLevelUnlockEventType.UnlockSkill => "ï¿½ï¿½ï¿½ï¿½",
             _ => "Î´Öª"
         };
 
@@ -86,7 +86,7 @@ public class UnlockManager : Singleton<UnlockManager>
         EventHandler.OnTechLevelUpEvent -= UnlockItem;
         EventHandler.OnTechLevelUpEvent -= UnlockEnemy;
         EventHandler.OnTechLevelUpEvent -= UnlockSkill;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -178,7 +178,7 @@ public class UnlockManager : Singleton<UnlockManager>
         {
             return;
         }
-        Debug.Log($"¼ì²âµ½ÐÂ¼¼ÄÜ½âËøÊÂ¼þ£¡ID: {skillID}");
+        Debug.Log($"ï¿½ï¿½âµ½ï¿½Â¼ï¿½ï¿½Ü½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ID: {skillID}");
         techUnlockSO.unlockedSkillIDs.Add(skillID);
         BuffApplicationManager.Instance.ApplySingleBuff(skillID);
         DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");

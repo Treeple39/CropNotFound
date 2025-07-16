@@ -92,7 +92,6 @@ public class GameManager : Singleton<GameManager>
     public void StartLog()
     {
         Debug.Log("GameManager: 主菜单结束，开始加载对话场景...");
-        UIManager.Instance.UIMessagePanel.ForceClosePanel();
         LoadSceneWithHistory(storySceneName, storyBGM);
     }
 
@@ -146,6 +145,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 前往抽卡..");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.SetAllUIPanelsActive(false);
         SceneManager.LoadScene(DrawCardsName);
         PlayBGM(drawCardsBGM);
     }

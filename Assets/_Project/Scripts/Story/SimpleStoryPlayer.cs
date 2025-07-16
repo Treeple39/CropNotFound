@@ -132,11 +132,19 @@ public class StoryManager : Singleton<StoryManager>
     private void OnEnable()
     {
         EventHandler.OnArchivePanelStateChanged += OnArchivePanelToggle;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         EventHandler.OnArchivePanelStateChanged -= OnArchivePanelToggle;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        ForceHideButton();
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+
+        ForceHideButton();
     }
 
     private void OnArchivePanelToggle(bool isOpen)
@@ -672,14 +680,26 @@ public class StoryManager : Singleton<StoryManager>
     }
     private IEnumerator AutoHideButton()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
+        HideButton();
+    }
+
+    private void HideButton()
+    {
         if (_currentArchiveButton != null)
         {
             // 滑动消失动画
             _currentArchiveButton.GetComponent<RectTransform>()
                 .DOAnchorPosX(-200, 0.3f)
                 .OnComplete(() => Destroy(_currentArchiveButton));
+        }
+    }
+    private void ForceHideButton()
+    {
+        if (_currentArchiveButton != null)
+        {
+            _currentArchiveButton.SetActive(false);
         }
     }
 }

@@ -41,6 +41,8 @@ public class TechLevelManager : Singleton<TechLevelManager>
     {
         if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation")
         {
+            Debug.Log("CurrentTechLevel" + CurrentTechLevel);
+            Debug.Log(_runtimeTechLevel.techLevelData.Count);
             //如果当前等级的事件并未激活，则唤起LevelUpPanel。
             if (_runtimeTechLevel.techLevelData[CurrentTechLevel].techLevelEventHasTrigger)
             {
@@ -52,7 +54,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
     public void Init()
     {
         _runtimeTechLevel = DataManager.Instance.archiveTechLevel;
-        
+
         if (_runtimeTechLevel == null)
         {
             Debug.LogError("TechLevel_SO 实例未加载！");
@@ -102,8 +104,8 @@ public class TechLevelManager : Singleton<TechLevelManager>
             {
                 CurrentPoints -= nextLevelDetail.needPoints;
                 LevelUp();
-                
-                
+
+
                 // ??????????????????CurrentLevel??
                 TechLevelDetails newLevelDetail;
                 if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out newLevelDetail))
@@ -111,7 +113,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
 
-                if(SceneManager.GetActiveScene().name == "MainScene")
+                if (SceneManager.GetActiveScene().name == "MainScene")
                     EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下。");
 
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
