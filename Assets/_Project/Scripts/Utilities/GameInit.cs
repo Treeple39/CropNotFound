@@ -27,7 +27,5 @@ public class GameInit : MonoBehaviour
         InventoryManager.Instance.Init();
         yield return null;
         ScoreDetector.Instance.Init();
-
-        BuffApplicationManager.Instance.ApplyAllUnlockedBuffs();
     }
 }

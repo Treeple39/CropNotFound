@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e3c2d669386a24288acb86a0236836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  techUnlockSO: {fileID: 0}
+  techUnlockSO: {fileID: 11400000, guid: 5526f43fbcdeca84293964c8dca50f9a, type: 2}
   unlockHintList:
   - key: 1002
     value:
@@ -75,3 +75,8 @@ MonoBehaviour:
       unlockType: 2
       triggered: 0
       messageText: "\u68D2\u6781\u4E86\uFF01\u53C8\u6709\u65B0\u7684\u9053\u5177\u89E3\u9501\u4E86\uFF01"
+  - key: 6000
+    value:
+      unlockType: 4
+      triggered: 0
+      messageText: "\u65B0\u7684\u6280\u80FD\u53EF\u4EE5\u4F7F\u7528\u4E86\uFF01"
