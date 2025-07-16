@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Cinemachine.DocumentationSortingAttribute;
 
 public class TechLevelManager : Singleton<TechLevelManager>
@@ -26,11 +27,25 @@ public class TechLevelManager : Singleton<TechLevelManager>
     private void OnEnable()
     {
         EventHandler.OnTechPointsChanged += AddTechPoints;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTechPointsChanged -= AddTechPoints;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation")
+        {
+            //如果当前等级的事件并未激活，则唤起LevelUpPanel。
+            if (_runtimeTechLevel.techLevelData[CurrentTechLevel].techLevelEventHasTrigger)
+            {
+                UIManager.Instance.UILevelUpPanel.OpenTab();
+            }
+        }
     }
 
     public void Init()
@@ -94,8 +109,10 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
-                // ????UI??????????��????
-                EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下。");
+
+                if(SceneManager.GetActiveScene().name == "MainScene")
+                    EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下。");
+
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
                 UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 

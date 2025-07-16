@@ -80,5 +80,4 @@ public class UILevelUpPanel : MonoBehaviour
         LevelUpPanel.SetActive(true);
         ActivateContentContainer();
     }
-
 }

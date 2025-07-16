@@ -138,7 +138,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(false);
         SceneManager.LoadScene(EndSceneName);
-        UIManager.Instance.UILevelUpPanel.OpenTab();
+        //UIManager.Instance.UILevelUpPanel.OpenTab();
         PlayBGM(endBGM);
     }
 
