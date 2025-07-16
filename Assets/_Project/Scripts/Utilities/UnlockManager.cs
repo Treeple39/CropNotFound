@@ -8,10 +8,10 @@ public class UnlockManager : Singleton<UnlockManager>
 {
     [SerializeField] private TechUnlockProgess_SO techUnlockSO;
     private Dictionary<TechLevelUnlockEventType, Func<int, Details>> _unlockMethods;
-    
+
     [Header("一次性解锁事件,暂用于引导")]
     [SerializeField]
-    public List<UnlockHintEntry> unlockHintList = new List<UnlockHintEntry>();
+    public List<UnlockHintEntry> unlockHintList;
     public Dictionary<int, SingleUnlockHintsData> triggeredUnlockHints { get; private set; }
 
 
@@ -77,6 +77,7 @@ public class UnlockManager : Singleton<UnlockManager>
         EventHandler.OnTechLevelUpEvent += UnlockItem;
         EventHandler.OnTechLevelUpEvent += UnlockEnemy;
         EventHandler.OnTechLevelUpEvent += UnlockSkill;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -111,8 +112,6 @@ public class UnlockManager : Singleton<UnlockManager>
     {
         if (triggeredUnlockHints.TryGetValue(unlockID, out SingleUnlockHintsData data) && data.triggered)
             return;
-
-        Debug.LogWarning(data.unlockType);
 
         Action action = data.unlockType switch
         {

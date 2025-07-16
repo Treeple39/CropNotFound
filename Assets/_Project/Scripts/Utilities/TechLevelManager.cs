@@ -27,6 +27,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
     private void OnEnable()
     {
         EventHandler.OnTechPointsChanged += AddTechPoints;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
