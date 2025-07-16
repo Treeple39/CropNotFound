@@ -1432,6 +1432,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: storyBGM
+      value: audio/dialog_scene
+      objectReference: {fileID: 0}
     - target: {fileID: 8300798529163907367, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1622,6 +1626,7 @@ MonoBehaviour:
   typingPitchRange: {x: 0.9, y: 1.1}
   End: 0
   creditsPanel: {fileID: 0}
+  archiveButtonPrefab: {fileID: 0}
 --- !u!114 &1797815448
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: storyBGM
+      value: audio/dialog_scene
+      objectReference: {fileID: 0}
     - target: {fileID: 8300798529163907367, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_Name
       value: GameManager

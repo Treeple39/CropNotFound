@@ -56,12 +56,14 @@ public class UnlockManager : Singleton<UnlockManager>
     {
         EventHandler.OnTechLevelUpEvent += UnlockItem;
         EventHandler.OnTechLevelUpEvent += UnlockEnemy;
+        EventHandler.OnTechLevelUpEvent += UnlockSkill;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTechLevelUpEvent -= UnlockItem;
         EventHandler.OnTechLevelUpEvent -= UnlockEnemy;
+        EventHandler.OnTechLevelUpEvent -= UnlockSkill;
     }
 
     private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
@@ -82,5 +84,21 @@ public class UnlockManager : Singleton<UnlockManager>
                 techUnlockSO.unlockedMonsterIDs.Add(num);
             DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
         }
+    }
+
+    private void UnlockSkill(int techLevel, TechLevelUnlockEventType eventType, int skillID)
+    {
+        if (eventType != TechLevelUnlockEventType.UnlockSkill)
+        {
+            return;
+        }
+        if (techUnlockSO.unlockedSkillIDs.Contains(skillID))
+        {
+            return;
+        }
+        Debug.Log($"检测到新技能解锁事件！ID: {skillID}");
+        techUnlockSO.unlockedSkillIDs.Add(skillID);
+        BuffApplicationManager.Instance.ApplySingleBuff(skillID);
+        DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
     }
 }

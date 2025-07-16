@@ -968,6 +968,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: storyBGM
+      value: audio/dialog_scene
+      objectReference: {fileID: 0}
     - target: {fileID: 8300798529163907367, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1378,6 +1382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: techUnlockSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 5526f43fbcdeca84293964c8dca50f9a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
