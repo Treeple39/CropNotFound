@@ -41,7 +41,7 @@ public class StoryManager : Singleton<StoryManager>
     // --- 内部变量 ---
     private Dictionary<int, StoryLine> storyData;
     private StoryLine currentLine;
-    private int currentLineKey = 1;
+    private int currentLineKey;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
     private Dictionary<Image, Vector2> originalPositions = new Dictionary<Image, Vector2>();
@@ -106,7 +106,25 @@ public class StoryManager : Singleton<StoryManager>
         InitializeImage(InsertImage1);
 
         HideAllImmediately();
-        ShowLine(currentLineKey);
+        if (!End)
+        {
+            LoadStory(1, 100);
+        }
+        else
+        {
+            ShowLine(1);
+        }
+    }
+
+    public void LoadStory(int firstTimeKey, int repeatKey)
+    {
+        int hasPlayed = PlayerPrefs.GetInt("Story_Played_" + storyJsonFile.name, 0);
+        int keyToStart = hasPlayed == 0 ? firstTimeKey : repeatKey;
+
+        PlayerPrefs.SetInt("Story_Played_" + storyJsonFile.name, 1);
+        PlayerPrefs.Save();
+
+        ShowLine(keyToStart);
     }
 
     private void InitializeImage(Image image)

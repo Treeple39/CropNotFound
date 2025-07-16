@@ -69,6 +69,36 @@
       "Key": 14, "ContentTitle": "14", "ContentSpeaker": "天使", "Content": "收到！我现在就去！", "NextContent": "0", "ContinueTag": "#",
       "Cha1Action": "Disappear", "CoordinateX1": 0, "Cha1ImageSource": "",
       "Cha2Action": "ShakeAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_confident"
+    },
+    {
+      "Key": 100, "ContentTitle": "100", "ContentSpeaker": "天神", "Content": "哟，又来了？今天也有新任务。", "NextContent": "101", "ContinueTag": "+",
+      "Cha1Action": "AppearAt", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_idle",
+      "Cha2Action": "AppearAt", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_doubt"
+    },
+    {
+      "Key": 101, "ContentTitle": "101", "ContentSpeaker": "天使", "Content": "天神大人，怎么又是我？", "NextContent": "102", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_think",
+      "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_sad"
+    },
+    {
+      "Key": 102, "ContentTitle": "102", "ContentSpeaker": "天神", "Content": "你的效率高嘛！放心，这次不会太难。", "NextContent": "103", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_teach",
+      "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_doubt"
+    },
+    {
+      "Key": 103, "ContentTitle": "103", "ContentSpeaker": "天使", "Content": "……行吧。目标是灵魂碎片，限时 1 分钟，对吧？", "NextContent": "104", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_watch",
+      "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
+    },
+    {
+      "Key": 104, "ContentTitle": "104", "ContentSpeaker": "天神", "Content": "完全正确，干得好可以考虑升职。", "NextContent": "105", "ContinueTag": "+",
+      "Cha1Action": "Continue", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_teach",
+      "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
+    },
+    {
+      "Key": 105, "ContentTitle": "105", "ContentSpeaker": "天使", "Content": "这可是你说的——我出发了！", "NextContent": "0", "ContinueTag": "#",
+      "Cha1Action": "", "CoordinateX1": 0, "Cha1ImageSource": "",
+      "Cha2Action": "", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
     }
   ]
 }
