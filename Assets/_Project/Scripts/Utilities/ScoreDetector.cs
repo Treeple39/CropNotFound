@@ -6,32 +6,32 @@ using UnityEngine;
 public class ScoreDetector : Singleton<ScoreDetector>
 {
     [SerializeField] public int _lastItemCount;
-    [SerializeField] public int soulAte = 2; //����������趨�Զ��ٸ���괥��һ��
+    [SerializeField] public int soulAte = 2; //??????????څ??????????????
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
-    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//����������趨�콱��Ʒ
+    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//??????????څ?????
 
-    private void OnEnable()
-    {
-        EventHandler.OnTechLevelUpEvent += UnlockItem;
-    }
+    // private void OnEnable()
+    // {
+    //     EventHandler.OnTechLevelUpEvent += UnlockItem;
+    // }
 
-    private void OnDisable()
-    {
-        EventHandler.OnTechLevelUpEvent -= UnlockItem;
-    }
+    // private void OnDisable()
+    // {
+    //     EventHandler.OnTechLevelUpEvent -= UnlockItem;
+    // }
 
-    private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
-    {
-        if (eventType == TechLevelUnlockEventType.UnlockItem)
-        {
-            if (!techUnlockSO.unlockedItemIDs.Contains(num))
-                techUnlockSO.unlockedItemIDs.Add(num);
-            DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
-        }
-    }
+    // private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
+    // {
+    //     if (eventType == TechLevelUnlockEventType.UnlockItem)
+    //     {
+    //         if (!techUnlockSO.unlockedItemIDs.Contains(num))
+    //             techUnlockSO.unlockedItemIDs.Add(num);
+    //         DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
+    //     }
+    // }
 
     /// <summary>
-    /// ����д��������ķ���
+    /// ????��????????????
     /// </summary>
     //private void UnlockEnemy(int techLevel, TechLevelUnlockEventType eventType, int num)
     //{
@@ -49,19 +49,19 @@ public class ScoreDetector : Singleton<ScoreDetector>
 
     private void Update()
     {
-        // �������itemCount�仯
+        // ???????itemCount?��
         if (Score.itemCount >= _lastItemCount + soulAte)
         {
             _lastItemCount = Score.itemCount;
 
-            //ִ�г鿨
+            //??��?
             TriggerRandomEvent();
 
-            Debug.Log("����");
+            Debug.Log("????");
         }
     }
 
-    //������������¼���δ������������
+    //????????????????��????????????
     private void TriggerRandomEvent()
     {
         float randomValue = Random.Range(0f, 1f);
