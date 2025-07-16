@@ -12,7 +12,6 @@ public class MonsterCollisionSFX : BaseSoundController // 同样继承自基类
         if (!collision.gameObject.CompareTag("Player"))
         {
             // 为了避免怪物之间互相碰撞也发出声音，可以进一步限定只在撞墙时响
-            if (collision.gameObject.CompareTag("Wall"))
             {
                 PlaySound(bumpSound); // 调用基类的播放方法
             }

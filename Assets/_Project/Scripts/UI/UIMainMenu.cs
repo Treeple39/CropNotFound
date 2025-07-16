@@ -7,9 +7,9 @@ public class UIMainMenu : MonoBehaviour
 {
     [SerializeField] private string sceneName = "Animation";
 
-    public void ContinueGame()
+    public void Skip()
     {
-        SceneManager.LoadScene(sceneName);
+        GameManager.Instance.GoToMainMenu();
     }
 
     public void NewGame() {

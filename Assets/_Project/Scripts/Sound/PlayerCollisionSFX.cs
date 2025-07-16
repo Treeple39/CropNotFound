@@ -37,7 +37,6 @@ public class PlayerCollisionSFX : BaseSoundController
         else
         {
             // 撞到非敌人对象，比如墙壁
-            if (collision.gameObject.CompareTag("Objects")|| collision.gameObject.CompareTag("Border"))
             {
                 PlaySound(genericHitSound);
             }
