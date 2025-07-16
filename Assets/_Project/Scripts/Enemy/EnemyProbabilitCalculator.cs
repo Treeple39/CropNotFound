@@ -6,26 +6,36 @@ public static class EnemyProbabilitCalculator
 {
     public static float CalculateDollProbability()
     {
-        return TechLevelManager.Instance.CurrentTechLevel;
+        return 5 - TechLevelManager.Instance.CurrentTechLevel;
+    }
+    public static float CalculateSlippersProbability()
+    {
+        if (TechLevelManager.Instance.CurrentTechLevel <= 2) return 0;
+
+        return  TechLevelManager.Instance.CurrentTechLevel * 0.8f;
     }
     public static float CalculateChairProbability()
     {
-        return 1;
+        if (TechLevelManager.Instance.CurrentTechLevel <= 3) return 0;
+
+        return  TechLevelManager.Instance.CurrentTechLevel * 0.8f;
     }
     public static float CalculateBottleProbability()
     {
-        return 1;
+        if (TechLevelManager.Instance.CurrentTechLevel <= 4) return 0;
+
+        return  TechLevelManager.Instance.CurrentTechLevel * 0.8f;
     }
     public static float CalculatePillowProbability()
     {
-        return 1;
+        if (TechLevelManager.Instance.CurrentTechLevel <= 5) return 0;
+
+        return  TechLevelManager.Instance.CurrentTechLevel * 0.8f;
     }    
     public static float CalculateBookProbability()
     {
-        return 1;
+        if (TechLevelManager.Instance.CurrentTechLevel <= 6) return 0;
+
+        return  TechLevelManager.Instance.CurrentTechLevel * 0.8f;
     }    
-    public static float CalculateSlippersProbability()
-    {
-        return 1;
-    }
 }

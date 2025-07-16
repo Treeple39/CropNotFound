@@ -137,3 +137,6 @@ desktop.ini
 
 # 忽略 Package Registry 中的 TMP 包
 /Packages/com.unity.textmeshpro/
+
+#忽略DOTween
+DOTween_1_2_780/
