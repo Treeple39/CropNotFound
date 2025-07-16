@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource bgmSource;
     private AudioSource fxSource;
     private AudioSource vocalSource;
-    private AudioMixer mixer;
+    [SerializeField] private AudioMixer mixer;
     private Coroutine bgmCoroutine;
 
     void Awake()
@@ -36,8 +36,6 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        mixer = Resources.Load<AudioMixer>("MainAudioMixer");
         bgmSource = MakeSource("BGM");
         fxSource = MakeSource("FX");
         vocalSource = MakeSource("Vocal");
@@ -122,5 +120,26 @@ public class AudioManager : MonoBehaviour
         vocalSource.clip = clip;
         vocalSource.loop = false;
         vocalSource.Play();
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        if (mixer == null)
+        {
+            Debug.Log("mixer is null");
+            return;
+        }
+        bool result = mixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f);
+        if (!result) Debug.LogWarning("参数名 BGMVolume 未在 AudioMixer 中暴露！");
+    }
+
+    public void SetFXVolume(float volume)
+    {
+        mixer.SetFloat("FXVolume", Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f);
+    }
+
+    public void SetVocalVolume(float volume)
+    {
+        mixer.SetFloat("VocalVolume", Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20f);
     }
 }
