@@ -13,8 +13,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UILevelUpPanel UILevelUpPanel;
 
     [Header("set active use")]
-    [SerializeField] private GameObject BagPanel;
-    [SerializeField] private GameObject ScorePanel;
+    [SerializeField] public GameObject BagPanel;
+    [SerializeField] public GameObject ScorePanel;
 
     public GameObject ArchivePanel;
 
@@ -41,6 +41,10 @@ public class UIManager : Singleton<UIManager>
         UIMessagePanel.InitMessages(itemUITipDatabase);
     }
 
+    public void ShowHighlight(GameObject panel)
+    {
+        //Init Shining Obj to Guide the Panel
+    }
 
     public void SetAllUIPanelsActive(bool isActive)
     {

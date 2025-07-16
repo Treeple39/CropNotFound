@@ -132,6 +132,11 @@ public class DataManager : Singleton<DataManager>
         }
         else
         {
+            if (instance is IInitializableSO init)
+            {
+                init.InitDefault();
+                Debug.Log($"Initialized default for {typeof(T)}");
+            }
             Debug.Log($"Created new {typeof(T)} instance (no JSON found)");
         }
         return instance;

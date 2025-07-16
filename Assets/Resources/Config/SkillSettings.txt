@@ -2,21 +2,21 @@
   "0": {
     "ID": 6000,
     "Name": "冲刺",
-    "skillType": "skillType.Unlock",
+    "skillType": "Unlock",
     "IconPath": "Skills/skill_dash",
     "Description": "可以使用冲刺特技了！"
   },
   "1": {
     "ID": 6001,
     "Name": "移速增加",
-    "skillType": "skillType.ValueAdd",
+    "skillType": "ValueAdd",
     "IconPath": "Skills/skill_valueAdd",
     "Description": "天使拥有更快的移速！"
   },
   "2": {
     "ID": 6002,
     "Name": "额外道具",
-    "skillType": "skillType.ItemAdd",
+    "skillType": "ItemAdd",
     "IconPath": "Skills/skill_itemAdd",
     "Description": "能用灵魂兑换道具了！"
   }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "TechUnlockProgess_SO", menuName = "PlayerData/TechUnlockProgess_SO")]
 
-public class TechUnlockProgess_SO : ScriptableObject
+public class TechUnlockProgess_SO : ScriptableObject, IInitializableSO
 {
     public List<int> unlockedItemIDs;     // 已解锁的道具
     public List<int> unlockedMonsterIDs;  // 已解锁的怪物
@@ -21,11 +21,17 @@ public class TechUnlockProgess_SO : ScriptableObject
         };
     }
 
-    // 从存档数据还原
     public void LoadFromSaveData(TechUnlockSaveData data)
     {
         unlockedItemIDs = new List<int>(data.unlockedItemIDs);
         unlockedMonsterIDs = new List<int>(data.unlockedMonsterIDs);
         unlockedSkillIDs = new List<int>(data.unlockedSkillIDs);
+    }
+
+    public void InitDefault()
+    {
+        unlockedItemIDs.Clear();
+        unlockedMonsterIDs.Clear();
+        unlockedSkillIDs.Clear();
     }
 }
