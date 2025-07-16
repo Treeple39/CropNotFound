@@ -17,6 +17,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public GameObject ScorePanel;
 
     public GameObject ArchivePanel;
+    public GameObject SettingPanel;
 
 
     protected override void Awake()

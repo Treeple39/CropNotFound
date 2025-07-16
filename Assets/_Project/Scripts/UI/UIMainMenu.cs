@@ -44,18 +44,9 @@ public class UIMainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// �����á���ť����Ӧ����
-    /// ע�⣺���GameManager��û�д������õ��߼���
-    /// ͨ��������һ��UI��壬������һ���³�����
-    /// ����Ҫ�������UIManager����������塣
     /// </summary>
     public void OnClick_OpenSettings()
     {
-        Debug.Log("UI: ����ˡ����á���ť��");
-        // ʾ������������һ��UIManager���Դ��������
-        // UIManager.Instance.OpenSettingsPanel();
-
-        // �������GameManager��û����ش��룬������ʱ���գ���������UI��������䡣
-        Debug.LogWarning("���ù�����δʵ�֣����� UIManager �����Ӵ����������߼���");
+        UIManager.Instance.SettingPanel.SetActive(true);
     }
 }
