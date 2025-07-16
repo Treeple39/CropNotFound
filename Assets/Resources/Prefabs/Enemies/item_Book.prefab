@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 1069852326904207223}
   - component: {fileID: 2989892547509190425}
   - component: {fileID: -5395888476373780338}
+  - component: {fileID: -1613122931969564794}
+  - component: {fileID: -6658647189961024279}
   m_Layer: 8
   m_Name: item_Book
   m_TagString: Enemy
@@ -120,15 +122,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec7a9dd474ca814d91c98e8fa98b4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  moveDirection: {x: 0, y: 0, z: 0}
-  minMoveTime: 0.5
-  maxMoveTime: 2
-  minBookSpeed: 2
-  maxBookSpeed: 6
-  playerDetectionRadius: 3
+  randomForceMagnitude: 10
+  torqueMagnitude: 50
+  dragWhenIdle: 0.2
+  dragWhenFleeing: 0.5
+  fleeForceMultiplier: 1.5
+  playerDetectionRadius: 2.8
   player: {fileID: 0}
-  BigCoinCount: 4
 --- !u!95 &2953838679796091593
 Animator:
   serializedVersion: 5
@@ -158,13 +158,13 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9160419230406244467}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 150
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -176,7 +176,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!60 &2989892547509190425
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -271,3 +271,114 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BigCoinCount: 4
   Rarity: 0
+--- !u!82 &-1613122931969564794
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9160419230406244467}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-6658647189961024279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9160419230406244467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f514885cf31af4a95aa7b317c1ff79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSoundDistance: 20
+  minSoundDistance: 1
+  bumpSound: {fileID: 0}

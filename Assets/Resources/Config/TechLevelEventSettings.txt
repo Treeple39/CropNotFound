@@ -64,5 +64,627 @@
       "techLevel": 11,
       "triggerEvents": ["Default"],
       "triggerID": [0]
-    }
+    },
+  "11": {
+    "techLevel": 12,
+    "triggerEvents": ["Default"],
+    "triggerID": [0]
+    },
+  "12": {
+    "techLevel": 13,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "13": {
+    "techLevel": 14,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "14": {
+    "techLevel": 15,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "15": {
+    "techLevel": 16,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "16": {
+    "techLevel": 17,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "17": {
+    "techLevel": 18,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "18": {
+    "techLevel": 19,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "19": {
+    "techLevel": 20,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "20": {
+    "techLevel": 21,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "21": {
+    "techLevel": 22,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "22": {
+    "techLevel": 23,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "23": {
+    "techLevel": 24,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "24": {
+    "techLevel": 25,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "25": {
+    "techLevel": 26,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "26": {
+    "techLevel": 27,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "27": {
+    "techLevel": 28,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "28": {
+    "techLevel": 29,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "29": {
+    "techLevel": 30,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "30": {
+    "techLevel": 31,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "31": {
+    "techLevel": 32,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "32": {
+    "techLevel": 33,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "33": {
+    "techLevel": 34,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "34": {
+    "techLevel": 35,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "35": {
+    "techLevel": 36,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "36": {
+    "techLevel": 37,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "37": {
+    "techLevel": 38,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "38": {
+    "techLevel": 39,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "39": {
+    "techLevel": 40,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "40": {
+    "techLevel": 41,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "41": {
+    "techLevel": 42,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "42": {
+    "techLevel": 43,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "43": {
+    "techLevel": 44,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "44": {
+    "techLevel": 45,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "45": {
+    "techLevel": 46,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "46": {
+    "techLevel": 47,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "47": {
+    "techLevel": 48,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "48": {
+    "techLevel": 49,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "49": {
+    "techLevel": 50,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "50": {
+    "techLevel": 51,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "51": {
+    "techLevel": 52,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "52": {
+    "techLevel": 53,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "53": {
+    "techLevel": 54,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "54": {
+    "techLevel": 55,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "55": {
+    "techLevel": 56,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "56": {
+    "techLevel": 57,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "57": {
+    "techLevel": 58,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "58": {
+    "techLevel": 59,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "59": {
+    "techLevel": 60,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "60": {
+    "techLevel": 61,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "61": {
+    "techLevel": 62,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "62": {
+    "techLevel": 63,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "63": {
+    "techLevel": 64,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "64": {
+    "techLevel": 65,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "65": {
+    "techLevel": 66,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "66": {
+    "techLevel": 67,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "67": {
+    "techLevel": 68,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "68": {
+    "techLevel": 69,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "69": {
+    "techLevel": 70,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "70": {
+    "techLevel": 71,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "71": {
+    "techLevel": 72,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "72": {
+    "techLevel": 73,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "73": {
+    "techLevel": 74,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "74": {
+    "techLevel": 75,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "75": {
+    "techLevel": 76,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "76": {
+    "techLevel": 77,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "77": {
+    "techLevel": 78,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "78": {
+    "techLevel": 79,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "79": {
+    "techLevel": 80,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "80": {
+    "techLevel": 81,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "81": {
+    "techLevel": 82,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "82": {
+    "techLevel": 83,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "83": {
+    "techLevel": 84,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "84": {
+    "techLevel": 85,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "85": {
+    "techLevel": 86,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "86": {
+    "techLevel": 87,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "87": {
+    "techLevel": 88,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "88": {
+    "techLevel": 89,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "89": {
+    "techLevel": 90,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "90": {
+    "techLevel": 91,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "91": {
+    "techLevel": 92,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "92": {
+    "techLevel": 93,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "93": {
+    "techLevel": 94,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "94": {
+    "techLevel": 95,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "95": {
+    "techLevel": 96,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "96": {
+    "techLevel": 97,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "97": {
+    "techLevel": 98,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "98": {
+    "techLevel": 99,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  },
+  "99": {
+    "techLevel": 100,
+    "triggerEvents": ["Default"],
+    "triggerID": [
+      0
+    ]
+  }
 }
+

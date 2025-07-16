@@ -431,7 +431,7 @@ public class StoryManager : Singleton<StoryManager>
 
 
                 EventHandler.CallTechPointChange(techPoints);
-                UIManager.Instance.UILevelUpPanel.OpenTab();
+                //UIManager.Instance.UILevelUpPanel.OpenTab();
             }
 
             if (!ArchiveManager.Instance.IsUnlocked(chosenEndingKey))

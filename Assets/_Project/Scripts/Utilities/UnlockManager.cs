@@ -1,11 +1,19 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using Inventory;
+using UnityEngine.SceneManagement;
 
 public class UnlockManager : Singleton<UnlockManager>
 {
     [SerializeField] private TechUnlockProgess_SO techUnlockSO;
     private Dictionary<TechLevelUnlockEventType, Func<int, Details>> _unlockMethods;
+    
+    [Header("一次性解锁事件,暂用于引导")]
+    [SerializeField]
+    public List<UnlockHintEntry> unlockHintList = new List<UnlockHintEntry>();
+    public Dictionary<int, SingleUnlockHintsData> triggeredUnlockHints { get; private set; }
+
 
     public void Init()
     {
@@ -15,6 +23,18 @@ public class UnlockManager : Singleton<UnlockManager>
             { TechLevelUnlockEventType.UnlockMonster, DataManager.Instance.GetMonsterDetail },
             { TechLevelUnlockEventType.UnlockSkill, DataManager.Instance.GetSkillDetail }
         };
+
+        techUnlockSO = DataManager.Instance.techUnlockProgess;
+
+        triggeredUnlockHints = new Dictionary<int, SingleUnlockHintsData>();
+        foreach (var entry in unlockHintList)
+        {
+            if (!triggeredUnlockHints.ContainsKey(entry.key))
+            {
+                triggeredUnlockHints.Add(entry.key, entry.value);
+            }
+        }
+
     }
 
     public Details GetUnlockDetail(TechLevelUnlockEventType unlockType, int rawID)
@@ -56,12 +76,77 @@ public class UnlockManager : Singleton<UnlockManager>
     {
         EventHandler.OnTechLevelUpEvent += UnlockItem;
         EventHandler.OnTechLevelUpEvent += UnlockEnemy;
+        EventHandler.OnTechLevelUpEvent += UnlockSkill;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTechLevelUpEvent -= UnlockItem;
         EventHandler.OnTechLevelUpEvent -= UnlockEnemy;
+        EventHandler.OnTechLevelUpEvent -= UnlockSkill;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainScene")
+        {
+            TryTriggerUnlockEventOnce(1002, () =>
+            {
+                InventoryManager.Instance.AddItem(1002);
+                UIManager.Instance.ShowHighlight(UIManager.Instance.BagPanel);
+            });
+
+            TryTriggerUnlockEventOnce(1000, () =>
+            {
+                InventoryManager.Instance.AddItem(1000);
+            });
+
+            TryTriggerUnlockEventOnce(6000);
+        }
+    }
+
+    private void TryTriggerUnlockEventOnce(int unlockID, Action onTrigger = null)
+    {
+        if (triggeredUnlockHints.TryGetValue(unlockID, out SingleUnlockHintsData data) && data.triggered)
+            return;
+
+        Debug.LogWarning(data.unlockType);
+
+        Action action = data.unlockType switch
+        {
+            TechLevelUnlockEventType.UnlockItem => () => {
+                if (techUnlockSO.unlockedItemIDs.Contains(unlockID))
+                {
+                    data.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText);
+                    onTrigger?.Invoke();
+                }
+            }
+            ,
+            TechLevelUnlockEventType.UnlockMonster => () => {
+                if (techUnlockSO.unlockedMonsterIDs.Contains(unlockID))
+                {
+                    data.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText);
+                    onTrigger?.Invoke();
+                }
+            }
+            ,
+            TechLevelUnlockEventType.UnlockSkill => () => {
+                if (techUnlockSO.unlockedSkillIDs.Contains(unlockID))
+                {
+                    data.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText);
+                    onTrigger?.Invoke();
+                }
+            }
+            ,
+            _ => null,
+        };
+
+        action.Invoke();
     }
 
     private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
@@ -82,5 +167,21 @@ public class UnlockManager : Singleton<UnlockManager>
                 techUnlockSO.unlockedMonsterIDs.Add(num);
             DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
         }
+    }
+
+    private void UnlockSkill(int techLevel, TechLevelUnlockEventType eventType, int skillID)
+    {
+        if (eventType != TechLevelUnlockEventType.UnlockSkill)
+        {
+            return;
+        }
+        if (techUnlockSO.unlockedSkillIDs.Contains(skillID))
+        {
+            return;
+        }
+        Debug.Log($"检测到新技能解锁事件！ID: {skillID}");
+        techUnlockSO.unlockedSkillIDs.Add(skillID);
+        BuffApplicationManager.Instance.ApplySingleBuff(skillID);
+        DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
     }
 }

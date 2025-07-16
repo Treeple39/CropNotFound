@@ -109,3 +109,23 @@ public class LevelUpContentData
     public Sprite contentImage;
 }
 
+[System.Serializable]
+public class SingleUnlockHintsData
+{
+    public TechLevelUnlockEventType unlockType;
+    public bool triggered;
+    public string messageText;
+
+    public void SetBool(bool i)
+    {
+        triggered = i;
+    }
+}
+
+[System.Serializable]
+public class UnlockHintEntry
+{
+    public int key;
+    public SingleUnlockHintsData value;
+}
+

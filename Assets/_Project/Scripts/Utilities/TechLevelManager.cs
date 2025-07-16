@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Cinemachine.DocumentationSortingAttribute;
 
 public class TechLevelManager : Singleton<TechLevelManager>
 {
-    //????????
     public int CurrentTechLevel;
     public float CurrentPoints;
     private TechLevel_SO _runtimeTechLevel;
@@ -16,7 +16,6 @@ public class TechLevelManager : Singleton<TechLevelManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    //????????????
     private List<(TechLevelUnlockEventType evtType, int id)> _pendingUnlockEvents = new();
 
     public void demoCall()
@@ -28,11 +27,25 @@ public class TechLevelManager : Singleton<TechLevelManager>
     private void OnEnable()
     {
         EventHandler.OnTechPointsChanged += AddTechPoints;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
         EventHandler.OnTechPointsChanged -= AddTechPoints;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation")
+        {
+            //如果当前等级的事件并未激活，则唤起LevelUpPanel。
+            if (_runtimeTechLevel.techLevelData[CurrentTechLevel].techLevelEventHasTrigger)
+            {
+                UIManager.Instance.UILevelUpPanel.OpenTab();
+            }
+        }
     }
 
     public void Init()
@@ -52,18 +65,15 @@ public class TechLevelManager : Singleton<TechLevelManager>
         }
 
 
-        // ????????????
         CurrentTechLevel = _runtimeTechLevel.CurrentLevel;
         CurrentPoints = _runtimeTechLevel.CurrentPoints;
 
-        // ???????????????? = CurrentLevel - 1??
         TechLevelDetails detail;
-        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel - 1, out detail))
+        if (DataManager.Instance.TechLevelDetails.TryGetValue(CurrentTechLevel, out detail))
         {
             UIManager.Instance.TechLevelPanel.pointsLimit = detail.needPoints;
         }
 
-        // ?????UI???
         UIManager.Instance.TechLevelPanel.InitTechLevelUI(CurrentTechLevel, CurrentPoints);
     }
 
@@ -99,8 +109,10 @@ public class TechLevelManager : Singleton<TechLevelManager>
                 {
                     UIManager.Instance.TechLevelPanel.pointsLimit = newLevelDetail.needPoints;
                 }
-                // ????UI??????????��????
-                EventHandler.CallSystemMessageShow("??��???????????????????????????");
+
+                if(SceneManager.GetActiveScene().name == "MainScene")
+                    EventHandler.CallSystemMessageShow("有些事情想在今天结束的时候考虑一下。");
+
                 UIManager.Instance.TechLevelPanel.LevelUpUI(CurrentTechLevel, CurrentPoints);
                 UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
 
@@ -122,19 +134,17 @@ public class TechLevelManager : Singleton<TechLevelManager>
         TechLevelEventData data;
         if (DataManager.Instance.TechLevelEventDatas.TryGetValue(CurrentTechLevel - 1, out data))
         {
-            _pendingUnlockEvents.Clear();
+            //_pendingUnlockEvents.Clear();
 
             for (int i = 0; i < data.triggerEvents.Count; i++)
             {
                 if (data.triggerID.Count > i && data.triggerID[i] != 0)
                 {
 
-                    //?????????????????????????
                     _pendingUnlockEvents.Add((data.triggerEvents[i], data.triggerID[i]));
                 }
                 else
                 {
-                    Debug.LogWarning($"???{i}��???????triggerID, ????????ID");
                 }
             }
 
