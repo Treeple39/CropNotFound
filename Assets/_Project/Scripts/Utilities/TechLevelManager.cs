@@ -9,6 +9,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
     public int CurrentTechLevel;
     public float CurrentPoints;
     private TechLevel_SO _runtimeTechLevel;
+    private bool _pended;
 
     protected override void Awake()
     {
@@ -39,12 +40,12 @@ public class TechLevelManager : Singleton<TechLevelManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation")
+        if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation" && scene.name != "Thank")
         {
-            Debug.Log("CurrentTechLevel" + CurrentTechLevel);
+            Debug.LogError("CurrentTechLevel" + CurrentTechLevel);
             Debug.Log(_runtimeTechLevel.techLevelData.Count);
             //如果当前等级的事件并未激活，则唤起LevelUpPanel。
-            if (_runtimeTechLevel.techLevelData[CurrentTechLevel].techLevelEventHasTrigger)
+            if (_pended)
             {
                 UIManager.Instance.UILevelUpPanel.OpenTab();
             }
@@ -152,7 +153,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
             }
 
             UIManager.Instance.UILevelUpPanel.InitContent(data.triggerEvents.Count, data.triggerEvents, data.triggerID);
-
+            _pended = true;
             _runtimeTechLevel.techLevelData[CurrentTechLevel - 1].SetBool(true);
         }
     }
@@ -163,6 +164,7 @@ public class TechLevelManager : Singleton<TechLevelManager>
             DispatchUpgradeEvent(evt.evtType, evt.id);
         }
 
+        _pended = false;
         _pendingUnlockEvents.Clear();
     }
     private void DispatchUpgradeEvent(TechLevelUnlockEventType evt, int num)

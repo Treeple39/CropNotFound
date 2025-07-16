@@ -19,6 +19,8 @@ public class TechLevel_SO : ScriptableObject, IInitializableSO
 
     public void InitDefault()
     {
+        CurrentLevel = 1;
+        CurrentPoints = 0;
         techLevelData.Clear();
         for (int i = 1; i <= 100; i++) // 初始化1-100级，每级默认未解锁
         {
