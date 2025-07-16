@@ -2,60 +2,60 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// ¹ÒÔØÔÚÖ÷²Ëµ¥³¡¾°ÖÐ£¬´¦ÀíÖ÷²Ëµ¥UI°´Å¥µÄµã»÷ÊÂ¼þ¡£
-/// Ëü»áµ÷ÓÃ GameManager µÄµ¥ÀýÀ´Ö´ÐÐ¾ßÌåµÄ³¡¾°Ìø×ª»òÓÎÏ·Âß¼­¡£
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½UIï¿½ï¿½Å¥ï¿½Äµï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GameManager ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð¾ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Ï·ï¿½ß¼ï¿½ï¿½ï¿½
 /// </summary>
 public class UIMainMenu : MonoBehaviour
 {
     /// <summary>
-    /// ¡°¿ªÊ¼¡±°´Å¥µÄÏìÓ¦º¯Êý
-    /// µ÷ÓÃGameManager¿ªÊ¼¾çÇé/¶Ô»°Á÷³Ì¡£
+    /// ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½ï¿½ï¿½GameManagerï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½/ï¿½Ô»ï¿½ï¿½ï¿½ï¿½Ì¡ï¿½
     /// </summary>
     public void OnClick_StartGame()
     {
-        Debug.Log("UI: µã»÷ÁË¡°¿ªÊ¼¡±°´Å¥¡£");
-        // ¸ù¾ÝÄãµÄGameManager£¬StartLog()ÊÇ´ÓÖ÷²Ëµ¥½øÈë¾çÇéµÄ·½·¨
+        Debug.Log("UI: ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½");
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GameManagerï¿½ï¿½StartLog()ï¿½Ç´ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
         GameManager.Instance.StartLog();
     }
 
     /// <summary>
-    /// ¡°Í¼¼ø¡±°´Å¥µÄÏìÓ¦º¯Êý
-    /// µ÷ÓÃGameManagerÇ°ÍùÍ¼¼ø³¡¾°¡£
+    /// ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½ï¿½ï¿½GameManagerÇ°ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnClick_OpenArchive()
     {
-        Debug.Log("UI: µã»÷ÁË¡°Í¼¼ø¡±°´Å¥¡£");
-        GameManager.Instance.GoToArchive();
+        Debug.Log("UI: ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½");
+        UIManager.Instance.SetArchivePanelActive(true);
     }
 
     /// <summary>
-    /// ¡°ÍË³ö¡±°´Å¥µÄÏìÓ¦º¯Êý
+    /// ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnClick_ExitGame()
     {
-        Debug.Log("UI: µã»÷ÁË¡°ÍË³ö¡±°´Å¥¡£");
-        // ÔÚUnity±à¼­Æ÷ÖÐ£¬ÕâÐÐ´úÂë²»»áÉúÐ§£¬ËùÒÔÎÒÃÇÓÃDebug.Break()À´Ä£ÄâÔÝÍ£
+        Debug.Log("UI: ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½");
+        // ï¿½ï¿½Unityï¿½à¼­ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Debug.Break()ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Í£
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        // ÔÚ±àÒëºóµÄÓÎÏ·ÖÐ£¬Õâ»á¹Ø±ÕÓÎÏ·³ÌÐò
+        // ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½
         Application.Quit();
 #endif
     }
 
     /// <summary>
-    /// ¡°ÉèÖÃ¡±°´Å¥µÄÏìÓ¦º¯Êý
-    /// ×¢Òâ£ºÄãµÄGameManagerÖÐÃ»ÓÐ´¦ÀíÉèÖÃµÄÂß¼­¡£
-    /// Í¨³£ÉèÖÃÊÇÒ»¸öUIÃæ°å£¬¶ø²»ÊÇÒ»¸öÐÂ³¡¾°¡£
-    /// ÄãÐèÒªµ÷ÓÃÄãµÄUIManagerÀ´´ò¿ªÉèÖÃÃæ°å¡£
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+    /// ×¢ï¿½â£ºï¿½ï¿½ï¿½GameManagerï¿½ï¿½Ã»ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ß¼ï¿½ï¿½ï¿½
+    /// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½UIï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â³ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UIManagerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å¡£
     /// </summary>
     public void OnClick_OpenSettings()
     {
-        Debug.Log("UI: µã»÷ÁË¡°ÉèÖÃ¡±°´Å¥¡£");
-        // Ê¾Àý£º¼ÙÉèÄãÓÐÒ»¸öUIManager¿ÉÒÔ´ò¿ªÉèÖÃÃæ°å
+        Debug.Log("UI: ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½Å¥ï¿½ï¿½");
+        // Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½UIManagerï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         // UIManager.Instance.OpenSettingsPanel();
 
-        // ÓÉÓÚÄãµÄGameManagerÖÐÃ»ÓÐÏà¹Ø´úÂë£¬ÕâÀïÔÝÊ±Áô¿Õ£¬Çë¸ù¾ÝÄãµÄUI¿ò¼ÜÀ´²¹³ä¡£
-        Debug.LogWarning("ÉèÖÃ¹¦ÄÜÉÐÎ´ÊµÏÖ£¬ÇëÔÚ UIManager ÖÐÌí¼Ó´ò¿ªÉèÖÃÃæ°åµÄÂß¼­¡£");
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GameManagerï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä¡£
+        Debug.LogWarning("ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½Î´Êµï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½ UIManager ï¿½ï¿½ï¿½ï¿½ï¿½Ó´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½");
     }
 }

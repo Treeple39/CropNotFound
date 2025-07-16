@@ -672,7 +672,7 @@ public class StoryManager : Singleton<StoryManager>
     }
     private IEnumerator AutoHideButton()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
         if (_currentArchiveButton != null)
         {
