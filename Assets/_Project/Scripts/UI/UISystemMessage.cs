@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class UISystemMessage : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] public Text messageText;
-    [SerializeField] public GameObject messageContainer;
-    [SerializeField] private Animator anim;
+    [SerializeField] private Transform scroll;
+    [SerializeField] public GameObject messageContainerPfb;
 
     private void OnEnable()
     {
@@ -27,29 +26,14 @@ public class UISystemMessage : MonoBehaviour
             return;
         }
 
-        if (messageContainer.activeSelf)
-        {
-            ForceClosePanel();
-        }
-
-        anim.SetBool("close", false);
-        messageContainer.SetActive(true);
-        messageText.text = text;
-
-        StartCoroutine(CloseTab(d));
+        GameObject newMessage = Instantiate(messageContainerPfb, scroll);
+        newMessage.GetComponent<UISystemMessageTip>().Show(text, d);
         return;
-    }
-
-    private IEnumerator CloseTab(float d)
-    {
-        yield return new WaitForSecondsRealtime(d);
-        anim.SetBool("close", true);
     }
 
     public void ForceClosePanel()
     {
-        anim.SetBool("close", true);
-        messageContainer.SetActive(false);
+        Config.RemoveAllChildren(scroll.gameObject);
         StopAllCoroutines();
     }
 }

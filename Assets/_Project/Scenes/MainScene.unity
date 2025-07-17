@@ -2413,6 +2413,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2679266852498026759, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: hintUnlockProgessSO
+      value: 
+      objectReference: {fileID: 11400000, guid: b2b626caf107fe54f9b33198098b54f0, type: 2}
+    - target: {fileID: 2679266852498026759, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
       propertyPath: techUnlockProgessSO
       value: 
       objectReference: {fileID: 11400000, guid: 5526f43fbcdeca84293964c8dca50f9a, type: 2}
@@ -2459,6 +2463,70 @@ PrefabInstance:
     - target: {fileID: 8640666055792284528, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
       propertyPath: m_Name
       value: DataManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[0].text
+      value: "\u9053\u5177"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[1].text
+      value: "\u602A\u7269"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[2].text
+      value: "\u80FD\u529B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[0].color.a
+      value: 0.41960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[0].color.b
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[0].color.g
+      value: 0.81960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[0].color.r
+      value: 0.2627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[1].color.a
+      value: 0.41960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[1].color.b
+      value: 0.81960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[1].color.g
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[1].color.r
+      value: 0.2627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[2].color.a
+      value: 0.41960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[2].color.b
+      value: 0.79607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[2].color.g
+      value: 0.1882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: textColor.Array.data[2].color.r
+      value: 0.9882353
       objectReference: {fileID: 0}
     - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
       propertyPath: unlockHintList.Array.data[0].key

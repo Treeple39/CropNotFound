@@ -3,7 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+using System;
+
+[System.Serializable]
+public class TextColor
+{
+    public string text;
+    public Color color;
+}
 
 public static class Config
 {

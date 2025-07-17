@@ -36,8 +36,16 @@ public class RoomData
     public string roomName { get; set; }
 }
 
+[System.Serializable]
+public class SingleUnlockHintsData
+{
+    public int ID { get; set; }
+    public TechLevelUnlockEventType unlockType { get; set; }
+    public int unlockID { get; set; }
+    public string messageText { get; set; }
+    public float messageDuration { get; set; }
 
-
+}
 
 [System.Serializable]
 public class TechLevelEventData
@@ -45,6 +53,7 @@ public class TechLevelEventData
     public int techLevel { get; set; }
     public List<TechLevelUnlockEventType> triggerEvents { get; set; }
     public List<int> triggerID { get; set; }
+    public List<int> unlockHintID { get; set; }
 }
 
 [System.Serializable]
@@ -107,25 +116,18 @@ public class LevelUpContentData
     public string contentTitle;
     public string contentTypeTip;
     public Sprite contentImage;
+    public Color contentTypeColor;
 }
 
 [System.Serializable]
-public class SingleUnlockHintsData
+public class UnlockHintData
 {
-    public TechLevelUnlockEventType unlockType;
+    public int ID;
     public bool triggered;
-    public string messageText;
 
     public void SetBool(bool i)
     {
         triggered = i;
     }
-}
-
-[System.Serializable]
-public class UnlockHintEntry
-{
-    public int key;
-    public SingleUnlockHintsData value;
 }
 

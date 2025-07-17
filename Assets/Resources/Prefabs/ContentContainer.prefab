@@ -129,6 +129,7 @@ MonoBehaviour:
   contentTitle: {fileID: 5206838681737252445}
   contentTypeTip: {fileID: 2427568059827658807}
   contentImage: {fileID: 2957851181960174437}
+  tipImage: {fileID: 2738792882052476245}
 --- !u!1 &1010644474981058052
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26274514, g: 0.34799817, b: 0.81960785, a: 0.41960785}
+  m_Color: {r: 0.98742133, g: 0.18941084, b: 0.7967179, a: 0.41960785}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
