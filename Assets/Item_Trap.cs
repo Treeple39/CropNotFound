@@ -46,6 +46,7 @@ public class Item_Trap : MonoBehaviour
         {
             CoinManager.Instance.CreateDeadCoin(coll.transform.position, coll.GetComponent<EnemyData>().BigCoinCount);
             Destroy(coll.gameObject);
+            Score.itemCount++;
             Out();
         }
     }
