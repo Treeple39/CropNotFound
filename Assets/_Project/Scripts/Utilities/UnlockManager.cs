@@ -131,7 +131,12 @@ public class UnlockManager : Singleton<UnlockManager>
             TechLevelUnlockEventType.UnlockItem => () => {
                 if (techUnlockSO.unlockedItemIDs.Contains(unlockID))
                 {
-                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    UnlockHintData hint = _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID);
+                    if (hint == null || hint.triggered)
+                    {
+                        return;
+                    }
+                    hint.SetBool(true);
                     EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger = new Action(() =>
                     {
@@ -146,7 +151,12 @@ public class UnlockManager : Singleton<UnlockManager>
             TechLevelUnlockEventType.UnlockMonster => () => {
                 if (techUnlockSO.unlockedMonsterIDs.Contains(unlockID))
                 {
-                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    UnlockHintData hint = _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID);
+                    if (hint == null || hint.triggered)
+                    {
+                        return;
+                    }
+                    hint.SetBool(true);
                     EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger?.Invoke();
                 }
@@ -155,7 +165,12 @@ public class UnlockManager : Singleton<UnlockManager>
             TechLevelUnlockEventType.UnlockSkill => () => {
                 if (techUnlockSO.unlockedSkillIDs.Contains(unlockID))
                 {
-                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    UnlockHintData hint = _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID);
+                    if (hint == null || hint.triggered)
+                    {
+                        return;
+                    }
+                    hint.SetBool(true);
                     EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger?.Invoke();
                 }
