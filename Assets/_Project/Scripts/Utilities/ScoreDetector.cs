@@ -10,37 +10,6 @@ public class ScoreDetector : Singleton<ScoreDetector>
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
     [SerializeField] private TechUnlockProgess_SO techUnlockSO;//??????????څ?????
 
-    // private void OnEnable()
-    // {
-    //     EventHandler.OnTechLevelUpEvent += UnlockItem;
-    // }
-
-    // private void OnDisable()
-    // {
-    //     EventHandler.OnTechLevelUpEvent -= UnlockItem;
-    // }
-
-    // private void UnlockItem(int techLevel, TechLevelUnlockEventType eventType, int num)
-    // {
-    //     if (eventType == TechLevelUnlockEventType.UnlockItem)
-    //     {
-    //         if (!techUnlockSO.unlockedItemIDs.Contains(num))
-    //             techUnlockSO.unlockedItemIDs.Add(num);
-    //         DataManager.Instance.SaveDynamicData(techUnlockSO, "TechUnlockProgess.json");
-    //     }
-    // }
-
-    /// <summary>
-    /// ????��????????????
-    /// </summary>
-    //private void UnlockEnemy(int techLevel, TechLevelUnlockEventType eventType, int num)
-    //{
-    //    if (eventType == TechLevelUnlockEventType.UnlockMonster)
-    //    {
-    //        EnemyList.Add(num);
-    //    }
-    //}
-
     public void Init()
     {
         UIManager.Instance.InitMessageUI(itemUITipDatabase);

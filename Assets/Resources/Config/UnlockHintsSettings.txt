@@ -1,0 +1,100 @@
+{
+  "0": {
+    "ID": 14000,
+    "unlockType": "UnlockItem",
+    "unlockID": 1002,
+    "messageText": "解锁了新的道具！点击右侧背包使用吧",
+    "messageDuration": 10.0
+  },
+  "1": {
+    "ID": 14001,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8001,
+    "messageText": "新的怪物出现了！是横冲直撞的拖鞋哦",
+    "messageDuration": 3.0
+  },
+  "2": {
+    "ID": 14002,
+    "unlockType": "UnlockSkill",
+    "unlockID": 6000,
+    "messageText": "点击右下角按钮或Shift键使用冲刺吧！",
+    "messageDuration": 4.0
+  },
+  "3": {
+    "ID": 14003,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8002,
+    "messageText": "新的怪物出现了！是会逃跑的板凳哦",
+    "messageDuration": 3.0
+  },
+  "4": {
+    "ID": 14004,
+    "unlockType": "UnlockItem",
+    "unlockID": 1002,
+    "messageText": "解锁了新的道具！点击右侧背包使用吧",
+    "messageDuration": 3.0
+  },
+  "5": {
+    "ID": 14005,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8003,
+    "messageText": "新的怪物出现了！是瞬间移动的奶瓶哦",
+    "messageDuration": 3.0
+  },
+  "6": {
+    "ID": 14006,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8004,
+    "messageText": "新的怪物出现了！是动如脱兔的枕头哦",
+    "messageDuration": 3.0
+  },
+  "7": {
+    "ID": 14007,
+    "unlockType": "UnlockItem",
+    "unlockID": 1000,
+    "messageText": "解锁了新的道具！点击右侧背包使用吧",
+    "messageDuration": 3.0
+  },
+  "8": {
+    "ID": 14008,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8005,
+    "messageText": "新的怪物出现了！是晕晕晃晃的书堆哦",
+    "messageDuration": 3.0
+  },
+  "9": {
+    "ID": 14009,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8006,
+    "messageText": "新的怪物出现了！是横冲直撞的凉鞋哦",
+    "messageDuration": 3.0
+  },
+  "10": {
+    "ID": 14010,
+    "unlockType": "UnlockItem",
+    "unlockID": 1001,
+    "messageText": "解锁了新的道具！点击右侧背包使用吧",
+    "messageDuration": 3.0
+  },
+  "11": {
+    "ID": 14011,
+    "unlockType": "UnlockMonster",
+    "unlockID": 8007,
+    "messageText": "新的怪物出现了！是很恐怖的巨大熊哦",
+    "messageDuration": 3.0
+  },
+  "12": {
+    "ID": 14012,
+    "unlockType": "UnlockSkill",
+    "unlockID": 6001,
+    "messageText": "你感到自己的移动速度开始变得更快了",
+    "messageDuration": 4.0
+  },
+  "13": {
+    "ID": 14013,
+    "unlockType": "UnlockSkill",
+    "unlockID": 6002,
+    "messageText": "是的，你可以在商店用灵魂兑换道具了",
+    "messageDuration": 4.0
+  }
+}

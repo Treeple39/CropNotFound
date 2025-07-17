@@ -3,17 +3,15 @@ using System;
 using UnityEngine;
 using Inventory;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class UnlockManager : Singleton<UnlockManager>
 {
-    [SerializeField] private TechUnlockProgess_SO techUnlockSO;
+    private TechUnlockProgess_SO techUnlockSO;
     private Dictionary<TechLevelUnlockEventType, Func<int, Details>> _unlockMethods;
+    private UnlockHint_SO _runtimeUnlockHints;
 
-    [Header("һ���Խ����¼�,����������")]
-    [SerializeField]
-    public List<UnlockHintEntry> unlockHintList;
-    public Dictionary<int, SingleUnlockHintsData> triggeredUnlockHints { get; private set; }
-
+    public List<TextColor> textColor;
 
     public void Init()
     {
@@ -25,16 +23,7 @@ public class UnlockManager : Singleton<UnlockManager>
         };
 
         techUnlockSO = DataManager.Instance.techUnlockProgess;
-
-        triggeredUnlockHints = new Dictionary<int, SingleUnlockHintsData>();
-        foreach (var entry in unlockHintList)
-        {
-            if (!triggeredUnlockHints.ContainsKey(entry.key))
-            {
-                triggeredUnlockHints.Add(entry.key, entry.value);
-            }
-        }
-
+        _runtimeUnlockHints = DataManager.Instance.hintUnlockProgess; 
     }
 
     public Details GetUnlockDetail(TechLevelUnlockEventType unlockType, int rawID)
@@ -57,10 +46,18 @@ public class UnlockManager : Singleton<UnlockManager>
 
         string typeTip = unlockType switch
         {
-            TechLevelUnlockEventType.UnlockItem => "����",
-            TechLevelUnlockEventType.UnlockMonster => "����",
-            TechLevelUnlockEventType.UnlockSkill => "����",
+            TechLevelUnlockEventType.UnlockItem => textColor[0].text,
+            TechLevelUnlockEventType.UnlockMonster => textColor[1].text,
+            TechLevelUnlockEventType.UnlockSkill => textColor[2].text,
             _ => "δ֪"
+        };
+
+        Color typeColor = unlockType switch
+        {
+            TechLevelUnlockEventType.UnlockItem => textColor[0].color,
+            TechLevelUnlockEventType.UnlockMonster => textColor[1].color,
+            TechLevelUnlockEventType.UnlockSkill => textColor[2].color,
+            _ => Color.gray
         };
 
         return new LevelUpContentData
@@ -68,7 +65,8 @@ public class UnlockManager : Singleton<UnlockManager>
             contentTitle = detail.Name,
             contentText = detail.Description,
             contentImage = ResourceManager.LoadSprite(detail.IconPath),
-            contentTypeTip = typeTip
+            contentTypeTip = typeTip,
+            contentTypeColor = typeColor,
         };
     }
 
@@ -93,42 +91,63 @@ public class UnlockManager : Singleton<UnlockManager>
     {
         if (scene.name == "MainScene")
         {
-            TryTriggerUnlockEventOnce(1002, () =>
-            {
-                InventoryManager.Instance.AddItem(1002);
-                UIManager.Instance.ShowHighlight(UIManager.Instance.BagPanel);
-            });
-
-            TryTriggerUnlockEventOnce(1000, () =>
-            {
-                InventoryManager.Instance.AddItem(1000);
-            });
-
-            TryTriggerUnlockEventOnce(6000);
+            TryTriggerUnlockEventOnce();
         }
     }
 
-    private void TryTriggerUnlockEventOnce(int unlockID, Action onTrigger = null)
+    //Fill in the ID to trigger the unlock event for the specified ID.
+    //If no ID is provided, it will trigger the unlock event for all words at that level.
+    private void TryTriggerUnlockEventOnce(int ID = 0, Action onTrigger = null)
     {
-        if (triggeredUnlockHints.TryGetValue(unlockID, out SingleUnlockHintsData data) && data.triggered)
-            return;
+        SingleUnlockHintsData data;
+        
+        if(ID == 0)
+        {
+            TechLevelEventData techEvent;
+            if (DataManager.Instance.TechLevelEventDatas.TryGetValue(TechLevelManager.Instance.CurrentTechLevel - 1, out techEvent))
+            {
+                if(techEvent.unlockHintID != null && techEvent.unlockHintID.Count != 0 && techEvent.unlockHintID[0] != 0)
+                for (int i = 0; i < techEvent.unlockHintID.Count; i++)
+                {
+                    data = null;
+                    if (DataManager.Instance.UnlockHintsData.TryGetValue(techEvent.unlockHintID[i] - 14000, out data))
+                    {
+                        TriggerUnlockEvent(techEvent.unlockHintID[i], data, onTrigger);
+                    }
+                }
+            }
+        }
+        if (DataManager.Instance.UnlockHintsData.TryGetValue(ID - 14000, out data)) 
+        {
+            TriggerUnlockEvent(ID, data, onTrigger);
+        }
+    }
 
+    private void TriggerUnlockEvent(int ID, SingleUnlockHintsData data, Action onTrigger)
+    {
+        int unlockID = data.unlockID;
         Action action = data.unlockType switch
         {
             TechLevelUnlockEventType.UnlockItem => () => {
                 if (techUnlockSO.unlockedItemIDs.Contains(unlockID))
                 {
-                    data.SetBool(true);
-                    EventHandler.CallSystemMessageShow(data.messageText);
-                    onTrigger?.Invoke();
+                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
+                    onTrigger = new Action(() =>
+                    {
+                        InventoryManager.Instance.AddItem(unlockID);
+                        if(unlockID == 1002)
+                            UIManager.Instance.ShowHighlight(UIManager.Instance.BagPanel);
+                    });
+                    onTrigger.Invoke();
                 }
             }
             ,
             TechLevelUnlockEventType.UnlockMonster => () => {
                 if (techUnlockSO.unlockedMonsterIDs.Contains(unlockID))
                 {
-                    data.SetBool(true);
-                    EventHandler.CallSystemMessageShow(data.messageText);
+                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger?.Invoke();
                 }
             }
@@ -136,15 +155,14 @@ public class UnlockManager : Singleton<UnlockManager>
             TechLevelUnlockEventType.UnlockSkill => () => {
                 if (techUnlockSO.unlockedSkillIDs.Contains(unlockID))
                 {
-                    data.SetBool(true);
-                    EventHandler.CallSystemMessageShow(data.messageText);
+                    _runtimeUnlockHints.unlockHintData.Find(i => i.ID == ID)?.SetBool(true);
+                    EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger?.Invoke();
                 }
             }
             ,
             _ => null,
         };
-
         action.Invoke();
     }
 
