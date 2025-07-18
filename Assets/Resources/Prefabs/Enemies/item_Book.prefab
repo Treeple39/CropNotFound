@@ -123,11 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomForceMagnitude: 10
-  torqueMagnitude: 50
+  torqueMagnitude: 80
   dragWhenIdle: 0.2
   dragWhenFleeing: 0.5
   fleeForceMultiplier: 1.5
-  playerDetectionRadius: 2.8
+  playerDetectionRadius: 3.2
   player: {fileID: 0}
 --- !u!95 &2953838679796091593
 Animator:
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigCoinCount: 4
+  BigCoinCount: 8
   Rarity: 0
 --- !u!82 &-1613122931969564794
 AudioSource:

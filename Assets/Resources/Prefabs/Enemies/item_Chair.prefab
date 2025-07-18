@@ -107,12 +107,13 @@ MonoBehaviour:
   canMove: 1
   moveDirection: {x: 0, y: 0, z: 0}
   facingright: 1
-  detectionRadius: 4
-  runAwayDuration: 2
-  runAwaySpeed: 3
+  detectionRadius: 3.2
   player: {fileID: 0}
-  isRunningAway: 0
-  BigCoinCount: 3
+  wanderSpeed: 0.5
+  dashSpeed: 15
+  dashDuration: 0.5
+  dashInterval: 0.6
+  wanderDirectionChangeInterval: 3
   enemy: {fileID: 0}
 --- !u!61 &3351295312165813891
 BoxCollider2D:
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigCoinCount: 3
+  BigCoinCount: 6
   Rarity: 0
 --- !u!82 &-7051335515686820471
 AudioSource:

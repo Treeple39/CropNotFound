@@ -130,7 +130,7 @@ MonoBehaviour:
   waitTimeBetweenMoves: 0.5
   stunDuration: 2
   enemy: {fileID: 6256669589556292288}
-  BigCoinCount: 3
+  BigCoinCount: 10
 --- !u!95 &9207089546236848635
 Animator:
   serializedVersion: 5
