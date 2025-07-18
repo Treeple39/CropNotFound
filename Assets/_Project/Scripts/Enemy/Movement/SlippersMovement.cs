@@ -5,8 +5,8 @@ using UnityEngine;
 public class SlippersMovement : BaseMovement
 {
     [Header("击退设置")]
-    [SerializeField] private float knockbackForce = 15f;    // 击退力量
-    [SerializeField] private float knockbackDuration = 0.3f; // 击退持续时间
+    [SerializeField] private float knockbackForce = 12f;    // 击退力量
+    [SerializeField] private float knockbackDuration = 0.2f; // 击退持续时间
 
     [Header("随机移动设置")]
     [SerializeField] private float wanderRadius = 4f;      // 随机移动半径
@@ -15,14 +15,14 @@ public class SlippersMovement : BaseMovement
     private Vector3 wanderStartPosition;                  // 初始位置
 
     [Header("冲刺设置")]
-    [SerializeField] private float chargeSpeed = 10f;     // 冲刺速度
-    [SerializeField] private float normalSpeed = 3f;      // 普通移动速度
-    [SerializeField] private float chargeCooldown = 2f;   // 冲刺冷却时间
+    [SerializeField] private float chargeSpeed = 9f;     // 冲刺速度
+    [SerializeField] private float normalSpeed = 2f;      // 普通移动速度
+    [SerializeField] private float chargeCooldown = 3f;   // 冲刺冷却时间
     private bool isInCooldown = false;                   // 是否在冷却中
     private bool isCharging = false;                     // 是否正在冲刺
 
     [Header("玩家检测")]
-    [SerializeField] private float detectRange = 5f;      // 检测范围
+    [SerializeField] private float detectRange = 3f;      // 检测范围
     [SerializeField] private LayerMask playerLayer;       // 玩家层级
     private Transform player;                            // 玩家Transform
 

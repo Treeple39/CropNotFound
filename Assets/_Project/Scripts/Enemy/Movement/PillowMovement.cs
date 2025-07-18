@@ -5,8 +5,8 @@ using UnityEngine;
 public class PillowMovement : BaseMovement
 {
     [Header("移动速度设置")]
-    [SerializeField] private float slowSpeed = 2.5f; // 缓慢状态下的速度
-    [SerializeField] private float fastSpeed = 10f; // 高速状态下的速度
+    [SerializeField] private float slowSpeed = 4f; // 缓慢状态下的速度
+    [SerializeField] private float fastSpeed = 8f; // 高速状态下的速度
 
     [Header("玩家检测设置")]
     [SerializeField] private float playerDetectionRadius = 3f;
@@ -23,9 +23,9 @@ public class PillowMovement : BaseMovement
     private Vector2 lastMoveDirection;
 
     // 眩晕状态的计时器
-    private float stunTimer = 0f;
+    private float stunTimer = 3f;
     // 恐慌状态的计时器
-    private float panicTimer = 0f;
+    private float panicTimer = 2f;
 
     #region 状态机
     public Enemy enemy;
