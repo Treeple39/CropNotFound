@@ -80,7 +80,7 @@
     "ID": 14011,
     "unlockType": "UnlockMonster",
     "unlockID": 8007,
-    "messageText": "新的怪物出现了！是很恐怖的巨大熊哦",
+    "messageText": "现在怪物会有极小概率掉落小道具了哦",
     "messageDuration": 3.0
   },
   "12": {

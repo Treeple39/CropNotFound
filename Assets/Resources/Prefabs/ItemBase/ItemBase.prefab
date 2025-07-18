@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948dc2da23a628c44901867cb2d4cc0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 1000
+  itemID: 1002
   spriteRenderer: {fileID: 3852573517125295061}
   coll: {fileID: 6779971779922326381}
 --- !u!114 &-9109989949723308063

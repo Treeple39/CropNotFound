@@ -43,9 +43,9 @@
   "6": 
     {
       "techLevel": 7,
-      "triggerEvents": ["UnlockMonster", "UnlockItem"],
-      "triggerID": [8006, 1001],
-      "unlockHintID": [14009,14010]
+      "triggerEvents": ["UnlockItem"],
+      "triggerID": [1001],
+      "unlockHintID": [14010]
     },
   "7": 
     {

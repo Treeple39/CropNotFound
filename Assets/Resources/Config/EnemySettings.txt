@@ -57,10 +57,10 @@
   },
   "7": {
     "ID": 8007,
-    "Name": "巨熊",
+    "Name": "道具怪",
     "EnemyType": "Doll",
     "IconPath": "Enemies/enemy_bear02",
-    "Description": "新的怪物可以捕捉了！",
+    "Description": "怪物小概率掉落道具！",
     "prefabToSpawnPath": "Enemies/item_Doll_Bear2"
   }
 }

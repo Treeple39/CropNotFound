@@ -92,7 +92,7 @@ public class CoinManager : Singleton<CoinManager>
             if (Random.value > (float)1/i)
                 return;
 
-            int itemID = 1000;
+            int itemID = 1002;
             if (Random.value < 0.3f)
                 itemID = 1001;
             else if (Random.value > 0.8f)

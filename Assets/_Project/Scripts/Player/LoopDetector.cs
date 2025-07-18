@@ -205,7 +205,7 @@ public class LoopDetector : MonoBehaviour
 
             int level = TechLevelManager.Instance.CurrentTechLevel;
             float n;
-            if (level >= 6)
+            if (level >= 7)
             {
                 n = 0.01f * level;
                 if (Random.value <= n)
