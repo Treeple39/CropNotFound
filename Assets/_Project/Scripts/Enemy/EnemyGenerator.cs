@@ -15,6 +15,9 @@ public class EnemyGenerator : MonoBehaviour
     public int ItemTotalCount = 10;    // 物品生成总数
     public float ItemMinDistance = 0.5f; // 物体最小间距
 
+    // Doll（熊）的保底概率
+    public float dollMinProbability = 0.4f;
+
     // 持续生成相关参数
     public float continuousSpawnInterval = 1.0f; // 持续生成间隔(秒)
     private float spawnTimer = 0f;
@@ -194,7 +197,13 @@ public class EnemyGenerator : MonoBehaviour
         float bookWeight = EnemyProbabilitCalculator.CalculateBookProbability();
         float slippersWeight = EnemyProbabilitCalculator.CalculateSlippersProbability();
 
-        // 计算总权重
+        // Doll概率保底
+        if (dollWeight < dollMinProbability)
+        {
+            dollWeight = dollMinProbability;
+        }
+
+        // 重新计算总权重
         float totalWeight = chairWeight + dollWeight + bottleWeight + pillowWeight + bookWeight + slippersWeight;
 
         // 随机值

@@ -6,7 +6,7 @@ public static class EnemyProbabilitCalculator
 {
     public static float CalculateDollProbability()
     {
-        return 5 - TechLevelManager.Instance.CurrentTechLevel;
+        return 10 - TechLevelManager.Instance.CurrentTechLevel;
     }
     public static float CalculateSlippersProbability()
     {
