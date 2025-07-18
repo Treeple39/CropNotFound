@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 public class UIShop : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class UIShop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinsText;
     
     [Header("物品展示区域")]
-    [SerializeField] private Transform itemsContainer;
-    [SerializeField] private GameObject itemPrefab; 
-    [SerializeField] private ScrollRect scrollRect;  
+    [SerializeField] private GameObject itemsContainer;
+    [SerializeField] private ItemUI[] ItemUIs;
+    [SerializeField] private int NowItemUISite = 0;
+    [SerializeField] private int maxDisplayItems = 18;
     
     [Header("物品数据")]
     [SerializeField] private List<Sprite> itemIcons;
@@ -30,6 +32,8 @@ public class UIShop : MonoBehaviour
     private void OnEnable()
     {
         ShopDataManager.Instance.RefreshCoins();
+        ItemUIs = GetComponentsInChildren<ItemUI>(itemsContainer);
+        maxDisplayItems = ItemUIs.Count();
         UpdateCoinsDisplay();
     }
 
@@ -45,7 +49,6 @@ public class UIShop : MonoBehaviour
         if (itemId == -1)
         {
             Debug.Log("硬币不足，无法抽卡");
-
         }
         else
         {
@@ -56,21 +59,24 @@ public class UIShop : MonoBehaviour
 
     private void ShowAcquiredItem(int itemId)
     {
-        GameObject newItem = Instantiate(itemPrefab, itemsContainer);
+        // 检查是否超过最大数量
+        if (NowItemUISite >= maxDisplayItems)
+        {
+            NowItemUISite = 0; // 回到第一个位置循环使用
+        }
 
-        ItemUI itemUI = newItem.GetComponent<ItemUI>();
+        ItemUI itemUI = ItemUIs[NowItemUISite];
         if (itemUI != null)
         {
-
             int iconIndex = itemId - 1000;
             if (iconIndex >= 0 && iconIndex < itemIcons.Count)
             {
-                itemUI.Setup(itemIcons[iconIndex], $"物品{itemId}");
+                itemUI.Setup(itemIcons[iconIndex]);
             }
         }
         
+        NowItemUISite++; // 移动到下一个位置
         Canvas.ForceUpdateCanvases();
-        scrollRect.horizontalNormalizedPosition = 1f;
     }
 
     private void OnGoBackButtonClick()

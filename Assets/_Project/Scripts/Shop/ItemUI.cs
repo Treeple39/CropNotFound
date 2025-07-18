@@ -5,11 +5,12 @@ using TMPro;
 public class ItemUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
-    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private Image bgImage;
 
-    public void Setup(Sprite icon, string itemName)
+    public void Setup(Sprite icon)
     {
         iconImage.sprite = icon;
-        nameText.text = itemName;
+        iconImage.color = Color.white;
+        bgImage.color = Color.white;
     }
 }
