@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Assets._Project.Scripts.EnemyAnim
 {

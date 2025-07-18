@@ -158,7 +158,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   enemy: {fileID: 0}
-  BigCoinCount: 3
+  BigCoinCount: 5
 --- !u!50 &4158379331577513603
 Rigidbody2D:
   serializedVersion: 4

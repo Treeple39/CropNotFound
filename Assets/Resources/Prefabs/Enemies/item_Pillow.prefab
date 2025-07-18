@@ -130,7 +130,7 @@ MonoBehaviour:
   playerDetectionRadius: 5
   panicDuration: 2
   stunDuration: 3
-  BigCoinCount: 8
+  BigCoinCount: 20
   enemy: {fileID: 0}
 --- !u!50 &4943495996917134494
 Rigidbody2D:

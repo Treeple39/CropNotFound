@@ -1,9 +1,6 @@
-using Autodesk.Fbx;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class LoopDetector : MonoBehaviour
 {

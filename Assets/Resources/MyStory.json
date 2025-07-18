@@ -56,7 +56,7 @@
       "Cha2Action": "AppearAt", "CoordinateX2": 0, "Cha2ImageSource": "ch_angel_sad"
     },
     {
-      "Key": 12, "ContentTitle": "12", "ContentSpeaker": "天神", "Content": "很好！做的好可以加绩效。", "NextContent": "0", "ContinueTag": "#",
+      "Key": 12, "ContentTitle": "12", "ContentSpeaker": "天神", "Content": "很好！做的好可以升职哦。", "NextContent": "0", "ContinueTag": "#",
       "Cha1Action": "AppearAt", "CoordinateX1": 0, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Disappear", "CoordinateX2": 0, "Cha2ImageSource": ""
     },
@@ -91,7 +91,7 @@
       "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
     },
     {
-      "Key": 104, "ContentTitle": "104", "ContentSpeaker": "天神", "Content": "完全正确，干得好可以考虑升职。", "NextContent": "105", "ContinueTag": "+",
+      "Key": 104, "ContentTitle": "104", "ContentSpeaker": "天神", "Content": "完全正确，干得好可以考虑升职哦。", "NextContent": "105", "ContinueTag": "+",
       "Cha1Action": "Continue", "CoordinateX1": -300, "Cha1ImageSource": "ch_god_teach",
       "Cha2Action": "Continue", "CoordinateX2": 300, "Cha2ImageSource": "ch_angel_confident"
     },

@@ -1,7 +1,6 @@
 using Inventory;
 using System.Collections; // 引入协程所需的命名空间
 using UnityEngine;
-using static UnityEditor.Progress;
 
 /// <summary>
 /// 控制抽奖按钮的音效序列。

@@ -113,7 +113,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 0.5
   dashInterval: 0.6
-  wanderDirectionChangeInterval: 3
+  wanderDirectionChangeInterval: 6
   enemy: {fileID: 0}
 --- !u!61 &3351295312165813891
 BoxCollider2D:
