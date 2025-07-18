@@ -19,7 +19,7 @@ public class DataManager : Singleton<DataManager>
     public Dictionary<int, TechLevelEventData> TechLevelEventDatas { get; private set; } // Tech level unlock triggers
     public Dictionary<int, TechLevelDetails> TechLevelDetails { get; private set; } // Tech level requirements
     public Dictionary<int, SingleUnlockHintsData> UnlockHintsData { get; private set; } // Tech level requirements
-    public List<RoomData> RoomDetails { get; private set; }  //³¡¾°ÉèÖÃ
+    public List<RoomData> RoomDetails { get; private set; }  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     // Runtime SO data (e.g. inventory, tech level, unlock progress)
     [Header("SO Model")]
@@ -27,6 +27,8 @@ public class DataManager : Singleton<DataManager>
     [SerializeField] private TechLevel_SO techLevelSO;
     [SerializeField] private TechUnlockProgess_SO techUnlockProgessSO;
     [SerializeField] private UnlockHint_SO hintUnlockProgessSO;
+    [SerializeField] private ShopCurrency_SO shopCurrencySO;
+
 
 
     // Animation opening flag (whether opening animation has been seen)
@@ -37,6 +39,7 @@ public class DataManager : Singleton<DataManager>
     public TechLevel_SO archiveTechLevel;
     public TechUnlockProgess_SO techUnlockProgess;
     public UnlockHint_SO hintUnlockProgess;
+    public ShopCurrency_SO playerCurrency;
 
 
     protected override void Awake()
@@ -107,7 +110,7 @@ public class DataManager : Singleton<DataManager>
         textAsset = ResourceManager.Load<TextAsset>(_jsonConfigPath + "TechLevelSettings");
         json = textAsset.text;
         this.TechLevelDetails = JsonConvert.DeserializeObject<Dictionary<int, TechLevelDetails>>(json);
-        
+
         textAsset = Resources.Load<TextAsset>(_jsonConfigPath + "RoomSettings");
         json = textAsset.text;
         this.RoomDetails = JsonConvert.DeserializeObject<List<RoomData>>(json);
@@ -124,11 +127,13 @@ public class DataManager : Singleton<DataManager>
         string techLevelSavePath = Path.Combine(_SOSavePath, "ArchiveTechLevel.json");
         string techUnlockSavePath = Path.Combine(_SOSavePath, "TechUnlockProgess.json");
         string hintUnlockSavePath = Path.Combine(_SOSavePath, "HintUnlockProgess.json");
+        string currencySavePath = Path.Combine(_SOSavePath, "PlayerCurrency.json");
 
         playerBag = JsonOverwriteSO(inventorySavePath, bagSO);
         archiveTechLevel = JsonOverwriteSO(techLevelSavePath, techLevelSO);
         techUnlockProgess = JsonOverwriteSO(techUnlockSavePath, techUnlockProgessSO);
         hintUnlockProgess = JsonOverwriteSO(hintUnlockSavePath, hintUnlockProgessSO);
+        playerCurrency = JsonOverwriteSO(currencySavePath, shopCurrencySO);
     }
 
     private T JsonOverwriteSO<T>(string jsonPath, T model) where T : ScriptableObject
@@ -171,6 +176,9 @@ public class DataManager : Singleton<DataManager>
 
         string hintUnlockJson = JsonUtility.ToJson(hintUnlockProgess);
         File.WriteAllText(Path.Combine(_SOSavePath, "HintUnlockProgess.json"), hintUnlockJson);
+
+        string currencyJson = JsonUtility.ToJson(playerCurrency); 
+        File.WriteAllText(Path.Combine(_SOSavePath, "PlayerCurrency.json"), currencyJson);
 
         Debug.Log($"[SaveAllDynamicData] Saving unlocked items: {string.Join(",", techUnlockProgess.unlockedItemIDs)}");
     }
