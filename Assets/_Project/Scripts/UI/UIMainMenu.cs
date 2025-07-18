@@ -18,6 +18,13 @@ public class UIMainMenu : MonoBehaviour
         GameManager.Instance.StartLog();
     }
 
+    public void OnClick_Main()
+    {
+        Debug.Log("UI: ����ˡ���ʼ����ť��");
+        // �������GameManager��StartLog()�Ǵ����˵��������ķ���
+        GameManager.Instance.GoToMainMenu();
+    }
+
     public void OnClick_StartPlay()
     {
         Debug.Log("UI: ����ˡ���ʼ����ť��");
@@ -58,6 +65,7 @@ public class UIMainMenu : MonoBehaviour
 
     public void OnClick_OpenShop()
     {
-        UIManager.Instance.SetShopPanelActive(true);
+        //UIManager.Instance.SetShopPanelActive(true);
+        GameManager.Instance.DrawItem();
     }
 }
