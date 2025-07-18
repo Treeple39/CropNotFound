@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Resources;
+using System;
 
 public class DataManager : Singleton<DataManager>
 {
@@ -40,6 +41,8 @@ public class DataManager : Singleton<DataManager>
     public TechUnlockProgess_SO techUnlockProgess;
     public UnlockHint_SO hintUnlockProgess;
     public ShopCurrency_SO playerCurrency;
+
+    public static event Action OnAllDataLoaded;
 
 
     protected override void Awake()
@@ -134,6 +137,9 @@ public class DataManager : Singleton<DataManager>
         techUnlockProgess = JsonOverwriteSO(techUnlockSavePath, techUnlockProgessSO);
         hintUnlockProgess = JsonOverwriteSO(hintUnlockSavePath, hintUnlockProgessSO);
         playerCurrency = JsonOverwriteSO(currencySavePath, shopCurrencySO);
+
+        Debug.Log("所有动态数据加载完成");
+        OnAllDataLoaded?.Invoke();
     }
 
     private T JsonOverwriteSO<T>(string jsonPath, T model) where T : ScriptableObject
@@ -177,7 +183,7 @@ public class DataManager : Singleton<DataManager>
         string hintUnlockJson = JsonUtility.ToJson(hintUnlockProgess);
         File.WriteAllText(Path.Combine(_SOSavePath, "HintUnlockProgess.json"), hintUnlockJson);
 
-        string currencyJson = JsonUtility.ToJson(playerCurrency); 
+        string currencyJson = JsonUtility.ToJson(playerCurrency);
         File.WriteAllText(Path.Combine(_SOSavePath, "PlayerCurrency.json"), currencyJson);
 
         Debug.Log($"[SaveAllDynamicData] Saving unlocked items: {string.Join(",", techUnlockProgess.unlockedItemIDs)}");
@@ -228,7 +234,7 @@ public class DataManager : Singleton<DataManager>
             return null;
         }
 
-        int randomIndex = Random.Range(0, RoomDetails.Count);
+        int randomIndex = UnityEngine.Random.Range(0, RoomDetails.Count);
         return RoomDetails[randomIndex];
     }
 

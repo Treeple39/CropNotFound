@@ -128,6 +128,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
+        ShopDataManager.Instance.RefreshHasAdd();
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
 
