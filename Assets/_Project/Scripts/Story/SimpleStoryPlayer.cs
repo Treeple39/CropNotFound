@@ -370,22 +370,21 @@ public class StoryManager : Singleton<StoryManager>
 
         // 2. 根据分数确定可抽的卡池等级
         List<Rarity> availablePool = new List<Rarity>();
-        if (currentScore <= 1000)
+        if (currentScore <= 500)
         {
             availablePool.Add(Rarity.B);
         }
-        else if (currentScore <= 3000)
+        else if (currentScore <= 1200)
         {
             availablePool.Add(Rarity.A);
             availablePool.Add(Rarity.B);
         }
-        else if (currentScore <= 8000)
+        else if (currentScore <= 2000)
         {
             availablePool.Add(Rarity.S);
             availablePool.Add(Rarity.A);
-            availablePool.Add(Rarity.B);
         }
-        else // 5000+
+        else // 2000+
         {
             availablePool.Add(Rarity.SSS);
             availablePool.Add(Rarity.S);

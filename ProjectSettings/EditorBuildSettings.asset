@@ -26,7 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Thank.unity
     guid: dae94fb2bfe194e85b425aeaa1077592
-  - enabled: 1
-    path: Assets/_Project/Scenes/DRAWITEM.unity
-    guid: d6740ce7c0c3dd34e9f8cfa2a177f1f6
   m_configObjects: {}
