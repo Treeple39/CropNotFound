@@ -6,7 +6,7 @@ using CustomStorySystem; // 确保你的数据结构命名空间被正确引用
 using DG.Tweening;      // 确保你已导入DOTween插件
 using System.Linq;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting; // 引入Linq以使用 .Where() 和 .ToList()
+using Unity.VisualScripting;
 
 public class StoryManager : Singleton<StoryManager>
 {
@@ -568,7 +568,18 @@ public class StoryManager : Singleton<StoryManager>
         {
             if (End)
             {
-                GameManager.Instance.GoToThanks();
+                bool hasEntered = PlayerPrefs.GetInt("HasEnteredThankScene", 0) == 1;
+                if (ArchiveManager.Instance != null && ArchiveManager.Instance.IsAllCollected() && !hasEntered)
+                {
+                    PlayerPrefs.SetInt("HasEnteredThankScene", 1);
+                    PlayerPrefs.Save();
+                    GameManager.Instance.GoToThanks();
+                }
+                else
+                {
+                    GameManager.Instance.GoToMainMenu();
+                }
+
             }
             else
             {
@@ -577,6 +588,8 @@ public class StoryManager : Singleton<StoryManager>
         }
         else Debug.LogError("找不到GameManager实例！无法加载关卡。");
     }
+
+
 
     #region 动画协程
     IEnumerator FadeImage(Image image, float targetAlpha)

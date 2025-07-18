@@ -191,4 +191,26 @@ public class ArchiveManager : MonoBehaviour
 
     private int StoryKeyToArchiveId(int storyKey) =>
         (storyKey - 7) / 3 + 1;
+
+    /// <summary>
+    /// 检查是否所有图鉴项目均已激活
+    /// </summary>
+    public bool IsAllCollected()
+    {
+        // 如果没有数据，直接返回false
+        if (_itemDict == null || _itemDict.Count == 0)
+        {
+            Debug.LogWarning("存档数据为空！");
+            return false;
+        }
+
+        foreach (var item in _itemDict.Values)
+        {
+            if (!item.isActivated)
+            {
+                return false; // 发现未激活项
+            }
+        }
+        return true; // 全部已激活
+    }
 }
