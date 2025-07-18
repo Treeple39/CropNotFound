@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//²ÉÓÃJson¹ÜÀíÓÎÏ·ÄÚ¾²Ì¬×ÊÔ´
+//ï¿½ï¿½ï¿½ï¿½Jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½Ú¾ï¿½Ì¬ï¿½ï¿½Ô´
 [System.Serializable]
 
 public class ItemDetails : Details
@@ -63,9 +63,9 @@ public class TechLevelDetails
     public float needPoints { get; set; }
 }
 
-//²ÉÓÃScriptObject¹ÜÀíÓÎÏ·ÄÚ¶¯Ì¬×ÊÔ´
+//ï¿½ï¿½ï¿½ï¿½ScriptObjectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½Ú¶ï¿½Ì¬ï¿½ï¿½Ô´
 [System.Serializable]
-public struct InventoryItem //struct£ºÖµÀàĞÍ
+public struct InventoryItem //structï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 {
     public int itemID;
     public int itemAmount;
@@ -84,9 +84,9 @@ public struct RarityData
 [System.Serializable]
 public class ItemUIData   
 {
-    public int messageID;       // ÎïÆ·±àºÅ
-    public Sprite messageImage; // ¶ÔÓ¦Í¼Æ¬
-    public string message;   // ¶ÔÓ¦ÎÄ±¾
+    public int messageID;       // ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
+    public Sprite messageImage; // ï¿½ï¿½Ó¦Í¼Æ¬
+    public string message;   // ï¿½ï¿½Ó¦ï¿½Ä±ï¿½
 }
 
 [System.Serializable]
@@ -130,4 +130,3 @@ public class UnlockHintData
         triggered = i;
     }
 }
-

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -16,14 +17,81 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public GameObject BagPanel;
     [SerializeField] public GameObject ScorePanel;
 
-    public GameObject ArchivePanel;
-    public GameObject SettingPanel;
+    [SerializeField] public GameObject ArchivePanel;
+    [SerializeField] public GameObject SettingPanel;
+    [SerializeField] public GameObject ShopPanel;
+    [SerializeField] private GameObject ShopButton;
+    private bool _isSubscribed = false;
 
+
+
+    private const int SHOP_UNLOCK_LEVEL = 10;
+    private bool _isDataReady = false;
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
+    }
+    private void OnEnable()
+    {
+        if (!_isSubscribed)
+        {
+            DataManager.OnAllDataLoaded += OnDataLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            _isSubscribed = true;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_isSubscribed)
+        {
+            DataManager.OnAllDataLoaded -= OnDataLoaded;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            _isSubscribed = false;
+        }
+    }
+
+    private void OnDataLoaded()
+    {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            _isDataReady = true;
+            RefreshShopButtonState();
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu")
+        {
+            StartCoroutine(DelayedRefresh(10));
+        }
+        else
+        {
+            ShopButton.SetActive(false);
+        }
+    }
+
+    private IEnumerator DelayedRefresh(int frames)
+    {
+        for (int i = 0; i < frames; i++)
+            yield return null;
+
+        RefreshShopButtonState();
+    }
+
+    public void RefreshShopButtonState()
+    {
+        if (!_isDataReady || ShopButton == null)
+            return;
+
+        if (TechLevelManager.Instance != null && TechLevelManager.Instance.CurrentTechLevel >= SHOP_UNLOCK_LEVEL)
+        {
+            ShopButton.SetActive(true);
+        }
+
     }
 
     public void FadeUIDuration(CanvasGroup UIPanel, float fadeStrength, float duration)
@@ -79,5 +147,46 @@ public class UIManager : Singleton<UIManager>
         {
             Debug.LogError("ArchivePanel不存在");
         }
+    }
+
+    public void SetShopPanelActive(bool isActive)
+    {
+        // 层级1：检查基础对象
+        if (ShopPanel == null || BagPanel == null)
+        {
+            Debug.LogError($"缺失引用: ShopPanel={ShopPanel}, BagPanel={BagPanel}");
+            return;
+        }
+
+        // 层级2：检查关键数据
+        if (isActive && (DataManager.Instance?.playerCurrency == null))
+        {
+            Debug.LogWarning("玩家货币数据未就绪，延迟打开商店");
+            StartCoroutine(DelayedOpenShop());
+            return;
+        }
+
+        // 层级3：安全操作
+        try
+        {
+            ShopPanel.SetActive(isActive);
+            BagPanel.SetActive(isActive);
+
+            // 如果是打开操作，刷新数据
+            if (isActive)
+            {
+                ShopDataManager.Instance?.RefreshCoins();
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"商店面板操作失败: {e.Message}");
+        }
+    }
+    private IEnumerator DelayedOpenShop()
+    {
+        yield return new WaitUntil(() => DataManager.Instance?.playerCurrency != null);
+        ShopPanel.SetActive(true);
+        BagPanel.SetActive(true);
     }
 }

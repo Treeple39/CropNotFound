@@ -55,4 +55,9 @@ public class UIMainMenu : MonoBehaviour
     {
         UIManager.Instance.SettingPanel.SetActive(true);
     }
+
+    public void OnClick_OpenShop()
+    {
+        UIManager.Instance.SetShopPanelActive(true);
+    }
 }
