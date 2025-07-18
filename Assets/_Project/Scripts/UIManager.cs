@@ -9,8 +9,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UIMessagePanel UIMessagePanel;
     [SerializeField] public UISystemMessage UISystemMessagePanel;
     [SerializeField] public UITechLevel TechLevelPanel;
-
-
     [SerializeField] public UILevelUpPanel UILevelUpPanel;
 
     [Header("set active use")]
@@ -23,7 +21,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject ShopButton;
     private bool _isSubscribed = false;
 
-
+    [Header("fade use")]
+    [SerializeField] private CanvasGroup fadePanel;
 
     private const int SHOP_UNLOCK_LEVEL = 10;
     private bool _isDataReady = false;
@@ -189,4 +188,40 @@ public class UIManager : Singleton<UIManager>
         ShopPanel.SetActive(true);
         BagPanel.SetActive(true);
     }
+
+    public void FadeIn(bool _out = false, float duration = 1.0f)
+    {
+        fadePanel.gameObject.SetActive(true);
+        fadePanel.alpha = 0;
+        if (_out)
+        {
+            fadePanel.DOFade(1, duration).OnComplete(() => {
+                fadePanel.DOFade(0, duration);
+                fadePanel.gameObject.SetActive(false);
+            });
+            return;
+        }
+        fadePanel.DOFade(1, duration).OnComplete(() =>
+        {
+            fadePanel.gameObject.SetActive(false);
+        });
+        }
+
+    public void FadeOut(bool _in = false, float duration = 1.0f)
+    {
+        fadePanel.gameObject.SetActive(true);
+        fadePanel.alpha = 1;
+        if (_in)
+        {
+            fadePanel.DOFade(0, duration).OnComplete(() => {
+                fadePanel.DOFade(1, duration);
+                fadePanel.gameObject.SetActive(false);
+            });
+            return;
+        }
+        fadePanel.DOFade(0, duration).OnComplete(() =>
+        {
+            fadePanel.gameObject.SetActive(false);
+        });
+        }
 }

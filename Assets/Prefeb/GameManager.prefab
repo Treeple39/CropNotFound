@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd66f89dcdb341ef943575b2d82c01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openSceneName: OpeningAnimation
+  openSceneName: 
   openBGM: 
   mainMenuSceneName: MainMenu
-  mainMenuBGM: audio/mainmenu_sound
+  mainMenuBGM: audio/last
   storySceneName: StoryTest
-  storyBGM: audio/dialogue_scene
+  storyBGM: audio/cg_dialogue_bgm_02
   levelSceneName: MainScene
   levelsequenceBeginBGM: audio/ExppHead -  - Salida - Stereo Out
   levelsequenceBodyBGM: audio/ExppBody -  - Salida - Stereo Out
@@ -60,7 +60,7 @@ MonoBehaviour:
   EndSceneName: EndScene
   endBGM: audio/last
   DrawCardsName: DrawCards
-  drawCardsBGM: "audio/\u7ED3\u7B97\u573A\u666F"
+  drawCardsBGM: audio/chouka
   Thanks: Thank
   thankBGM: audio/ExppBody -  - Salida - Stereo Out
   Archive: Archive
@@ -102,5 +102,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentTechLevel: 0
-  CurrentPoins: 0
-  _runtimeTechLevel: {fileID: 11400000, guid: 85d735d2bdd4dab49834f12c95182391, type: 2}
+  CurrentPoints: 0

@@ -71,6 +71,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.SetAllUIPanelsActive(false);
         Debug.Log("GameManager: 返回主菜单...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.FadeOut();
         LoadSceneWithHistory(mainMenuSceneName, mainMenuBGM);
         DataManager.Instance.SetHasSeenOpeningAnimation(true);
     }
@@ -82,6 +83,7 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.FadeOut();
         LoadSceneWithHistory(openSceneName, storyBGM);
     }
 
@@ -126,6 +128,7 @@ public class GameManager : Singleton<GameManager>
         ScoreDetector.Instance._lastItemCount = 0;
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
+        UIManager.Instance.FadeOut();
         UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
         ShopDataManager.Instance.RefreshHasAdd();

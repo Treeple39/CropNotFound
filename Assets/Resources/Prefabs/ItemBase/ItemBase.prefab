@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 242214791
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8a3b21e8683fb1b44a8fe81775472c87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e46bcb128d9e0e41903120339b64ece, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: 8472266111047456445}
   - component: {fileID: 6779971779922326381}
   - component: {fileID: 1207589159484698346}
+  - component: {fileID: -9109989949723308063}
+  - component: {fileID: 6614978285454965416}
   m_Layer: 0
   m_Name: ItemBase
   m_TagString: Untagged
@@ -161,7 +163,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.89, y: 1.97}
   m_EdgeRadius: 0
 --- !u!114 &1207589159484698346
 MonoBehaviour:
@@ -175,4 +177,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948dc2da23a628c44901867cb2d4cc0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 1001
+  itemID: 1000
+  spriteRenderer: {fileID: 3852573517125295061}
+  coll: {fileID: 6779971779922326381}
+--- !u!114 &-9109989949723308063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322456571186310579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0d4019473005540b3e615d2babde18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3
+  maxSpeed: 5
+  decayRate: 2
+--- !u!114 &6614978285454965416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322456571186310579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674873ebbd7137c4989ac59cd8f82339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectRange: 5
+  moveSpeed: 7
+  minDistance: 0.5
+  addItemEffectPrefab: {fileID: 801950652384433813, guid: d0d85fd104cbf9c43a7f5f5c2d7a7169, type: 3}
+  item: {fileID: 1207589159484698346}
+  coinGet: {fileID: 8300000, guid: 843628edc5eeb46e5b6f2dd0fa01854e, type: 3}

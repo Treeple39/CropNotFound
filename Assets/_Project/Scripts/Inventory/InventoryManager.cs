@@ -41,6 +41,15 @@ namespace Inventory
             EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
         }
 
+        public void AddItem5(int itemID)
+        {
+            var index = GetItemIndexInBag(itemID);
+            AddItemAtIndex(itemID, index, 5); //暂时写一个，之后扩充叠加功能
+
+            //刷新UI
+            EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
+        }
+
 
         public void RemoveItem(int itemID, int removeAmount)
         {

@@ -66,7 +66,6 @@
       "techLevel": 10,
       "triggerEvents": ["UnlockSkill", "PlayStory"],
       "triggerID": [6002,0],
-      "unlockHintID": [14013]
     },
   "10": 
     {

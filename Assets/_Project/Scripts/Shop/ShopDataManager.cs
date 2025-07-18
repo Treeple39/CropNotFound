@@ -10,12 +10,7 @@ public class ShopDataManager : Singleton<ShopDataManager>
     private readonly int[] _itemIds = { 1000, 1001, 1002 };
     [SerializeField] private LotteryButtonSoundController lotteryButtonSoundController;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    private void OnEnable()
+    public void Init()
     {
         RefreshCoins();
     }

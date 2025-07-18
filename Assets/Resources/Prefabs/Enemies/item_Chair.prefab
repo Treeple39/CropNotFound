@@ -350,4 +350,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSoundDistance: 20
   minSoundDistance: 1
-  bumpSound: {fileID: 8300000, guid: cd9f7f832516ebc4fb83c0dd350d0a64, type: 3}
+  bumpSound: {fileID: 0}

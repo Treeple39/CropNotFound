@@ -42,10 +42,12 @@ public class TechLevelManager : Singleton<TechLevelManager>
     {
         if (scene.name != "MainScene" && scene.name != "MainMenu" && scene.name != "OpeningAnimation" && scene.name != "Thank")
         {
-            Debug.LogError("CurrentTechLevel" + CurrentTechLevel);
+            Debug.Log("CurrentTechLevel" + CurrentTechLevel);
             Debug.Log(_runtimeTechLevel.techLevelData.Count);
             //如果当前等级的事件并未激活，则唤起LevelUpPanel。
-            if (_pended)
+            int latestLevel = CheckPendingEvent();
+
+            if (_pended || latestLevel != 0)
             {
                 UIManager.Instance.UILevelUpPanel.OpenTab();
             }
@@ -127,6 +129,25 @@ public class TechLevelManager : Singleton<TechLevelManager>
     }
     #endregion
 
+    public int CheckPendingEvent()
+    {
+        int latestLevel = 0;
+        if (CurrentTechLevel >= 2)
+        {
+            for (int i = 2; i <= CurrentTechLevel; i++)
+            {
+                if (_runtimeTechLevel.EventHasTrigger(i))
+                {
+                    continue;
+                }
+                PendEvent(i-1);
+                latestLevel = i;
+            }
+        }
+        UIManager.Instance.UILevelUpPanel.InitLevel(CurrentTechLevel - 1, CurrentTechLevel);
+        return latestLevel;
+    }
+
     private void LevelUp()
     {
         CurrentTechLevel += 1;
@@ -135,11 +156,14 @@ public class TechLevelManager : Singleton<TechLevelManager>
         if (_runtimeTechLevel.EventHasTrigger(CurrentTechLevel))
             return;
 
-        TechLevelEventData data;
-        if (DataManager.Instance.TechLevelEventDatas.TryGetValue(CurrentTechLevel - 1, out data))
-        {
-            //_pendingUnlockEvents.Clear();
+        CheckPendingEvent();
+    }
 
+    private void PendEvent(int level)
+    {
+        TechLevelEventData data;
+        if (DataManager.Instance.TechLevelEventDatas.TryGetValue(level, out data))
+        {
             for (int i = 0; i < data.triggerEvents.Count; i++)
             {
                 if (data.triggerID.Count > i && data.triggerID[i] != 0)
@@ -154,9 +178,10 @@ public class TechLevelManager : Singleton<TechLevelManager>
 
             UIManager.Instance.UILevelUpPanel.InitContent(data.triggerEvents.Count, data.triggerEvents, data.triggerID);
             _pended = true;
-            _runtimeTechLevel.techLevelData[CurrentTechLevel - 1].SetBool(true);
+            _runtimeTechLevel.techLevelData[level].SetBool(true);
         }
     }
+
     public void TriggerPendingUnlockEvents()
     {
         foreach (var evt in _pendingUnlockEvents)

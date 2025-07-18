@@ -92,6 +92,7 @@ public class UnlockManager : Singleton<UnlockManager>
         if (scene.name == "MainScene")
         {
             TryTriggerUnlockEventOnce();
+            // if 6002 open shop
         }
     }
 
@@ -140,7 +141,7 @@ public class UnlockManager : Singleton<UnlockManager>
                     EventHandler.CallSystemMessageShow(data.messageText, data.messageDuration);
                     onTrigger = new Action(() =>
                     {
-                        InventoryManager.Instance.AddItem(unlockID);
+                        InventoryManager.Instance.AddItem5(unlockID);
                         if(unlockID == 1002)
                             UIManager.Instance.ShowHighlight(UIManager.Instance.BagPanel);
                     });

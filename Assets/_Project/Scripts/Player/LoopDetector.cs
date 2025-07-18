@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class LoopDetector : MonoBehaviour
 {
@@ -183,7 +184,7 @@ public class LoopDetector : MonoBehaviour
             if (IsPointInPolygon(pos2d, loopPts))
             {
                 Score.itemCount++;
-                CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<EnemyData>().BigCoinCount);
+                CoinManager._instance.CreateDeadCoin(obj.transform.position, obj.gameObject.GetComponent<EnemyData>().BigCoinCount);         
 
                 Destroy(obj.gameObject);
                 objectsToDestroy.Add(obj.gameObject);
@@ -201,6 +202,16 @@ public class LoopDetector : MonoBehaviour
             // 销毁GameObject
             Debug.Log("Destroy" + objToDestroy.GetType());
             Destroy(objToDestroy);
+
+            int level = TechLevelManager.Instance.CurrentTechLevel;
+            float n;
+            if (level >= 6)
+            {
+                n = 0.01f * level;
+                if (Random.value <= n)
+                    CoinManager._instance.CreateDeadItem(objToDestroy.transform.position);
+                n = 0;
+            }
         }
     }
     private IEnumerator DelayedDestroy(Transform objTransform, float delay)

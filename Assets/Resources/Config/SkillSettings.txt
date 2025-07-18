@@ -16,7 +16,7 @@
   "2": {
     "ID": 6002,
     "Name": "额外道具",
-    "skillType": "ItemAdd",
+    "skillType": "Unlock",
     "IconPath": "Skills/skill_itemAdd",
     "Description": "能用灵魂兑换道具了！"
   }

@@ -1,3 +1,4 @@
+using Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,6 +15,7 @@ public class CoinManager : Singleton<CoinManager>
 
     [SerializeField] public GameObject coinPrefab; // ���Ԥ����
     [SerializeField] public GameObject bigCoinPrefab;
+    [SerializeField] public GameObject ItemBasePrefab;
     private const int maxCoinCount = 100; // ���������
 
     [SerializeField] private int spawnAreaMinX = -40; // ��С���ɷ�Χ
@@ -81,5 +83,26 @@ public class CoinManager : Singleton<CoinManager>
         GameObject newCoin = Instantiate(bigCoinPrefab, position, Quaternion.identity);
         BigCoin bigCoin = newCoin.GetComponent<BigCoin>();
         bigCoin.scoreCount = bigCoinCount;
+    }
+
+    public void CreateDeadItem(Vector3 position)
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            if (Random.value > (float)1/i)
+                return;
+
+            int itemID = 1000;
+            if (Random.value < 0.3f)
+                itemID = 1001;
+            else if (Random.value > 0.8f)
+                itemID = 1002;
+            else
+                itemID = 1000;
+
+            GameObject newItem = Instantiate(ItemBasePrefab, position, Quaternion.identity);
+            Item item = ItemBasePrefab.GetComponent<Item>();
+            item.Init(itemID);
+        }
     }
 }
