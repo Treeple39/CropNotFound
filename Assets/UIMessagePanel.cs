@@ -10,16 +10,17 @@ public class UIMessagePanel : MonoBehaviour
     [SerializeField] public Text messageText;
     [SerializeField] public GameObject messageContainer;
     [SerializeField] private Animator anim;
-    [SerializeField] private List<ItemUIData> iTEM;
+    [SerializeField] private List<ItemUIData> iTEM; 
 
-    private itemUITipDatabase itemUIDataList; // ����itemID��ͼƬ/�ı��Ĺ���
-    private Dictionary<int, ItemUIData> _itemUIDict; // ���ֵ���ٲ���?
+    private itemUITipDatabase itemUIDataList;
+    private Dictionary<int, ItemUIData> _itemUIDict;
 
     private void Start()
     {
-        ///δ���Ž��ؿ���ʼ�� ����н���?
-        ScoreDetector.Instance._lastItemCount = 0;
-
+        if (ScoreDetector.Instance != null)
+        {
+            ScoreDetector.Instance._lastItemCount = 0;
+        }
     }
 
     public void InitMessages(itemUITipDatabase itemUIDataList)
@@ -27,9 +28,12 @@ public class UIMessagePanel : MonoBehaviour
         this.itemUIDataList = itemUIDataList;
 
         _itemUIDict = new Dictionary<int, ItemUIData>();
-        foreach (var data in this.itemUIDataList.ItemUIDatas)
+        if (this.itemUIDataList != null && this.itemUIDataList.ItemUIDatas != null)
         {
-            _itemUIDict[data.messageID] = data;
+            foreach (var data in this.itemUIDataList.ItemUIDatas)
+            {
+                _itemUIDict[data.messageID] = data;
+            }
         }
     }
 
@@ -45,37 +49,30 @@ public class UIMessagePanel : MonoBehaviour
 
     private void OnShowRandomMessage(ItemUIData itemUIData, float d)
     {
-        if (itemUIDataList.ItemUIDatas.Count == 0)
+        if (_itemUIDict == null || _itemUIDict.Count == 0)
         {
+            Debug.LogError("UIMessagePanel 的数据未初始化或为空，无法显示消息！");
             return;
         }
+
         anim.SetBool("close", false);
         messageContainer.SetActive(true);
 
-        if (itemUIData != null && itemUIData.messageID == -1)
+        if (itemUIData != null)
         {
             eventImage.sprite = itemUIData.messageImage;
             messageText.text = itemUIData.message;
-            StartCoroutine(CloseTab(d));
-            return;
+            StartCoroutine(CloseTab(5));
+            return; 
         }
+        List<ItemUIData> messages = new List<ItemUIData>(_itemUIDict.Values);
+        ItemUIData randomMessage = messages[Random.Range(0, messages.Count)];
 
-        if (d >2.0f)
-        {
-            
-            eventImage.sprite = itemUIData.messageImage;
-            messageText.text = itemUIData.message;
-            StartCoroutine(CloseTab(3));
-        }
-
-        ItemUIData randomMessage;
-
-        if(_itemUIDict.TryGetValue(Random.Range(0, _itemUIDict.Count-3), out randomMessage)&&d<3)
-
+        if (randomMessage != null)
         {
             eventImage.sprite = randomMessage.messageImage;
             messageText.text = randomMessage.message;
-            StartCoroutine(CloseTab(d));
+            StartCoroutine(CloseTab(d)); // 使用事件传入的持续时间
         }
     }
 
@@ -91,5 +88,4 @@ public class UIMessagePanel : MonoBehaviour
         messageContainer.SetActive(false);
         StopAllCoroutines();
     }
-
 }
