@@ -1,13 +1,10 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.UI;
+using System.Collections; // 引入协程所需的命名空间
 
 [RequireComponent(typeof(PlayableDirector))]
 public class OpeningAnimationManager : MonoBehaviour
 {
-    [Header("UI References")]
-    [SerializeField] private Button skipButton; // 拖拽UI跳过按钮到Inspector
-
     private PlayableDirector timelineDirector;
 
     private void Awake()
@@ -18,77 +15,65 @@ public class OpeningAnimationManager : MonoBehaviour
 
     private void Start()
     {
-        // 初始化跳过按钮状态
-        skipButton.gameObject.SetActive(ShouldShowSkipButton());
-
-        // 绑定Timeline结束事件
-        timelineDirector.stopped += OnTimelineFinished;
-
-        // 绑定跳过按钮事件
-        skipButton.onClick.AddListener(SkipAnimation);
-    }
-
-    private void Update()
-    {
-        // 当跳过按钮可见时，检测任意按键跳过
-        if (skipButton.gameObject.activeSelf && Input.anyKeyDown)
+        if (DataManager.Instance.HasSeenOpeningAnimation())
         {
-            SkipAnimation();
+            timelineDirector.Stop();
+            // 启动一个协程，在延迟后跳转场景
+            StartCoroutine(AutomaticSkipAfterDelay());
+        }
+        else
+        {
+            timelineDirector.stopped += OnTimelineFinished;
+            timelineDirector.Play();
         }
     }
 
     /// <summary>
-    /// 判断是否应该显示跳过按钮
+    /// 协程：在指定的延迟后跳转到主菜单。
+    /// 仅在玩家已经看过开场动画时被调用。
     /// </summary>
-    private bool ShouldShowSkipButton()
+    private IEnumerator AutomaticSkipAfterDelay()
     {
-        return DataManager.Instance.HasSeenOpeningAnimation();
+        // 等待4秒
+        yield return new WaitForSeconds(5f);
+
+        // 跳转到主菜单
+        GoToNextScene();
     }
 
     /// <summary>
-    /// Timeline播放结束时自动调用
+    /// 当Timeline完整播放结束时，由系统自动调用。
+    /// 仅在玩家第一次观看动画时被触发。
     /// </summary>
     private void OnTimelineFinished(PlayableDirector _)
     {
-        // 首次播放时标记为已观看
-        if (!DataManager.Instance.HasSeenOpeningAnimation())
-        {
-            DataManager.Instance.SetHasSeenOpeningAnimation(true);
-        }
+        // 标记为已观看
+        DataManager.Instance.SetHasSeenOpeningAnimation(true);
 
-        // 确保GameManager存在后跳转
+        // 跳转到主菜单
+        GoToNextScene();
+    }
+
+    /// <summary>
+    /// 封装了跳转场景的逻辑，方便复用并进行安全检查。
+    /// </summary>
+    private void GoToNextScene()
+    {
         if (GameManager.Instance != null)
         {
             GameManager.Instance.GoToMainMenu();
         }
         else
         {
-            Debug.LogError("GameManager实例未找到！");
+            Debug.LogError("场景跳转失败：GameManager 实例未找到！");
         }
     }
 
     /// <summary>
-    /// 手动跳过动画
+    /// 在对象销毁时，清理事件绑定，防止内存泄漏。
     /// </summary>
-    private void SkipAnimation()
-    {
-        // 立即标记为已观看（即使未播放完）
-        DataManager.Instance.SetHasSeenOpeningAnimation(true);
-
-        // 跳转到主菜单
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.GoToMainMenu();
-        }
-        else
-        {
-            Debug.LogError("跳转失败：GameManager未初始化");
-        }
-    }
-
     private void OnDestroy()
     {
-        // 清理事件绑定
         if (timelineDirector != null)
         {
             timelineDirector.stopped -= OnTimelineFinished;

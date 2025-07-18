@@ -6,9 +6,9 @@ using UnityEngine;
 public class ScoreDetector : Singleton<ScoreDetector>
 {
     [SerializeField] public int _lastItemCount;
-    [SerializeField] public int soulAte = 2; //??????????څ??????????????
+    [SerializeField] public int soulAte = 2; 
     [SerializeField] private itemUITipDatabase itemUITipDatabase;
-    [SerializeField] private TechUnlockProgess_SO techUnlockSO;//??????????څ?????
+    [SerializeField] private TechUnlockProgess_SO techUnlockSO;
 
     public void Init()
     {
@@ -18,19 +18,16 @@ public class ScoreDetector : Singleton<ScoreDetector>
 
     private void Update()
     {
-        // ???????itemCount?��
         if (Score.itemCount >= _lastItemCount + soulAte)
         {
             _lastItemCount = Score.itemCount;
 
-            //??��?
             TriggerRandomEvent();
 
             Debug.Log("????");
         }
     }
 
-    //????????????????��????????????
     private void TriggerRandomEvent()
     {
         float randomValue = Random.Range(0f, 1f);
@@ -38,7 +35,7 @@ public class ScoreDetector : Singleton<ScoreDetector>
         {   // 0.0-0.6 (60%)
             EventHandler.CallMessageShow();
         }
-        else if (randomValue < 0.9f && randomValue > 0.6f)
+        else if (randomValue < 0.9f && randomValue > 0.6f && techUnlockSO.unlockedItemIDs.Count > 0)
         {  // 0.6-0.9 (30%)
             
             int temp = Random.Range(0, techUnlockSO.unlockedItemIDs.Count);

@@ -18,6 +18,12 @@ public class UIMainMenu : MonoBehaviour
         GameManager.Instance.StartLog();
     }
 
+    public void OnClick_StartPlay()
+    {
+        Debug.Log("UI: ����ˡ���ʼ����ť��");
+        // �������GameManager��StartLog()�Ǵ����˵��������ķ���
+        GameManager.Instance.StartLevel();
+    }
     /// <summary>
     /// ��ͼ������ť����Ӧ����
     /// ����GameManagerǰ��ͼ��������

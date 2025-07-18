@@ -4,23 +4,39 @@ using UnityEngine;
 
 public class ChairMovement : BaseMovement
 {
-    [SerializeField] private float detectionRadius = 2f;      // 检测玩家的半径
-    [SerializeField] private float runAwayDuration = 1f;      // 逃跑持续时间（秒）
-    [SerializeField] private float runAwaySpeed = 3f;         // 逃跑速度
-    [SerializeField] private Transform player;                // 玩家对象引用
-    
-    public bool isRunningAway = false;                       // 是否正在逃跑
-    private float runAwayTimer = 0f;                          // 逃跑计时器
+    [Header("玩家检测")]
+    [SerializeField] private float detectionRadius = 3f;
+    [SerializeField] private Transform player;
 
-    public int BigCoinCount = 3;
+    [Header("椅子行为设置")]
+    [Tooltip("正常状态下的缓慢持续移动速度")]
+    [SerializeField] private float wanderSpeed = 0.5f;
 
-   
+    [Tooltip("玩家靠近后，冲刺的速度")]
+    [SerializeField] private float dashSpeed = 8f;
+
+    [Tooltip("每次冲刺持续的时间（秒）")]
+    [SerializeField] private float dashDuration = 0.25f;
+
+    [Tooltip("玩家靠近后，两次冲刺之间的间隔时间（秒）")]
+    [SerializeField] private float dashInterval = 1.5f;
+
+    // --- 核心状态标志位和计时器 ---
+    private bool isRunningAway = false;
+    private float dashCooldownTimer = 0f;
+
+    // --- 用于持续缓慢移动的变量 ---
+    private Vector2 wanderDirection;
+    private float wanderDirectionChangeTimer;
+    [Tooltip("缓慢移动时，改变方向的频率（秒）")]
+    [SerializeField] private float wanderDirectionChangeInterval = 3f;
+
+
     #region 状态机
     public Enemy enemy;
     private bool isInitialized = false;
     #endregion
 
-    // Start方法覆盖
     protected override void Start()
     {
         base.Start();
@@ -32,97 +48,127 @@ public class ChairMovement : BaseMovement
             return;
         }
 
-        // 如果未指定玩家，尝试在场景中查找玩家对象
         if (player == null)
         {
-            
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
-            if (player == null)
-            {
-                Debug.LogWarning("未找到玩家对象，椅子将无法检测玩家");
-            }
-           
         }
-        // 设置椅子的基础属性
-        moveSpeed = runAwaySpeed;
+
+        // 初始化游荡方向
+        PickNewWanderDirection();
+        wanderDirectionChangeTimer = wanderDirectionChangeInterval;
 
         StartCoroutine(DelayedInit());
     }
 
     private IEnumerator DelayedInit()
     {
-        yield return null;
-
-        if (enemy.idleState == null || enemy.fleeState == null)
-        {
-            Debug.LogError("Enemy状态未初始化!");
-            yield break;
-        }
+        yield return new WaitUntil(() => enemy.idleState != null && enemy.fleeState != null);
         isInitialized = true;
+        enemy.stateMachine.Initialize(enemy.idleState);
+        isRunningAway = false;
     }
 
-    // Update方法覆盖
     protected override void Update()
     {
         base.Update();
-        
-        // 检查玩家并处理逃跑行为
-        if (player != null)
+        if (!isInitialized) return;
+
+        // --- 1. 状态决策 ---
+        bool isPlayerNearby = (player != null && Vector3.Distance(transform.position, player.position) <= detectionRadius);
+
+        if (isPlayerNearby && !isRunningAway)
         {
-            // 检测玩家是否在范围内
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            
-            // 如果玩家在检测范围内且椅子当前不在逃跑状态，开始逃跑
-            if (distanceToPlayer <= detectionRadius && !isRunningAway && !IsMoving)
-            {
-                StartRunningAway();
-            }
-            
-            // 如果正在逃跑，更新逃跑计时
-            if (isRunningAway)
-            {
-                runAwayTimer += Time.deltaTime;
-                
-                // 如果逃跑时间到，停止逃跑
-                if (runAwayTimer >= runAwayDuration)
-                {
-                    StopRunningAway();
-                }
-            }
+            StartFleeing();
+        }
+        else if (!isPlayerNearby && isRunningAway)
+        {
+            StopFleeing();
+        }
+
+        // --- 2. 行为执行 ---
+        // 关键：如果正在冲刺中，则让冲刺完成，不执行其他移动
+        if (IsMoving)
+        {
+            // 注意：IsMoving是由BaseMovement的Move方法设置的，在dashDuration后会自动变回false
+            return;
+        }
+
+        if (isRunningAway)
+        {
+            // 处于逃跑状态时，执行间歇性冲刺
+            HandleDashing();
+        }
+        else
+        {
+            // 处于空闲状态时，执行持续缓慢游荡
+            HandleWandering();
         }
     }
-    
-    // 开始逃跑
-    private void StartRunningAway()
-    {
-        if (!canMove) return;
-        
-        enemy.stateMachine.ChangeState(enemy.fleeState);
 
+    private void StartFleeing()
+    {
         isRunningAway = true;
-        runAwayTimer = 0f;
-        
-        // 计算远离玩家的方向
-        Vector3 awayFromPlayerDirection = (transform.position - player.position).normalized;
-        
-        // 使用基类的Move方法移动
-        Move(awayFromPlayerDirection, runAwayDuration);
-        
-        Debug.Log("椅子发现了玩家，开始逃跑！");
+        enemy.stateMachine.ChangeState(enemy.fleeState);
+        dashCooldownTimer = 0;
+        StopMove(); // 立即停止当前的缓慢移动，准备冲刺
+        Debug.Log("椅子发现玩家，进入受惊状态！");
     }
-    
-    // 停止逃跑
-    private void StopRunningAway()
+
+    private void StopFleeing()
     {
         isRunningAway = false;
-        runAwayTimer = 0f;
         enemy.stateMachine.ChangeState(enemy.idleState);
-        StopMove();
-
-        Debug.Log("椅子停止逃跑");
+        StopMove(); // 确保停止所有移动
+        PickNewWanderDirection(); // 为接下来的缓慢移动选择一个新方向
+        Debug.Log("椅子恢复平静。");
     }
-    
-    // 在编辑器中显示检测范围
+
+    /// <summary>
+    /// 执行间歇性冲刺的逻辑 (此部分逻辑已正确)
+    /// </summary>
+    private void HandleDashing()
+    {
+        dashCooldownTimer -= Time.deltaTime;
+        if (dashCooldownTimer <= 0)
+        {
+            moveSpeed = dashSpeed;
+            Vector2 randomDirection = Random.insideUnitCircle.normalized;
+            // Move方法会设置IsMoving = true，并在dashDuration后结束
+            Move(randomDirection, dashDuration);
+            dashCooldownTimer = dashInterval;
+        }
+    }
+
+    /// <summary>
+    /// 执行持续缓慢游荡的逻辑 (已修改为持续移动)
+    /// </summary>
+    private void HandleWandering()
+    {
+        // 更新方向改变计时器
+        wanderDirectionChangeTimer -= Time.deltaTime;
+        if (wanderDirectionChangeTimer <= 0)
+        {
+            PickNewWanderDirection();
+        }
+
+        // 设置移动速度
+        moveSpeed = wanderSpeed;
+        // 假设BaseMovement的rb是public或protected的。
+        if (rb != null) // rb 是 BaseMovement 中的 Rigidbody2D
+        {
+            rb.velocity = wanderDirection * moveSpeed;
+        }
+    }
+
+    /// <summary>
+    /// 为持续缓慢移动选择一个新的随机方向
+    /// </summary>
+    private void PickNewWanderDirection()
+    {
+        wanderDirection = Random.insideUnitCircle.normalized;
+        wanderDirectionChangeTimer = wanderDirectionChangeInterval;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

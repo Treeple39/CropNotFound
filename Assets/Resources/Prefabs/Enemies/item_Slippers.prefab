@@ -146,19 +146,19 @@ MonoBehaviour:
   canMove: 1
   moveDirection: {x: 0, y: 0, z: 0}
   facingright: 1
-  knockbackForce: 15
+  knockbackForce: 12
   knockbackDuration: 0.3
   wanderRadius: 5
   wanderInterval: 1.5
-  chargeSpeed: 12
+  chargeSpeed: 10
   normalSpeed: 3
-  chargeCooldown: 5
-  detectRange: 8
+  chargeCooldown: 3
+  detectRange: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
   enemy: {fileID: 0}
-  BigCoinCount: 5
+  BigCoinCount: 3
 --- !u!50 &4158379331577513603
 Rigidbody2D:
   serializedVersion: 4
@@ -355,4 +355,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSoundDistance: 20
   minSoundDistance: 1
-  bumpSound: {fileID: 0}
+  bumpSound: {fileID: 8300000, guid: c1d0ab488c8291943a4248d962c5e28b, type: 3}

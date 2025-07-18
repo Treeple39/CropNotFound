@@ -126,14 +126,17 @@ MonoBehaviour:
   canMove: 1
   moveDirection: {x: 0, y: 0, z: 0}
   facingright: 1
-  minStayTime: 3
-  maxStayTime: 7
+  minStayTime: 2
+  maxStayTime: 8
   teleportRadius: 10
   maxTeleportAttempts: 10
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
-  BigCoinCount: 5
+  startCircleRadius: 2
+  endCircleRadius: 0.1
+  startMoveSpeed: 3
+  endMoveSpeed: 30
   enemy: {fileID: 0}
 --- !u!95 &7617343873979773874
 Animator:
@@ -240,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigCoinCount: 5
+  BigCoinCount: 4
   Rarity: 0
 --- !u!108 &3489618050169199934
 Light:
@@ -414,4 +417,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSoundDistance: 20
   minSoundDistance: 1
-  bumpSound: {fileID: 0}
+  bumpSound: {fileID: 8300000, guid: cd9f7f832516ebc4fb83c0dd350d0a64, type: 3}

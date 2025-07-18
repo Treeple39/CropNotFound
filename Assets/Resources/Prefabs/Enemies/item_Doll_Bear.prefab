@@ -130,7 +130,7 @@ MonoBehaviour:
   waitTimeBetweenMoves: 0.5
   stunDuration: 2
   enemy: {fileID: 6256669589556292288}
-  BigCoinCount: 2
+  BigCoinCount: 1
 --- !u!95 &9207089546236848635
 Animator:
   serializedVersion: 5
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigCoinCount: 2
+  BigCoinCount: 1
   Rarity: 0
 --- !u!82 &4503499352103448258
 AudioSource:
@@ -348,4 +348,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSoundDistance: 20
   minSoundDistance: 1
-  bumpSound: {fileID: 0}
+  bumpSound: {fileID: 8300000, guid: 01ab765555323f44f85a68ba02c9c7e6, type: 3}
