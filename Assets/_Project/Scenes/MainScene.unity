@@ -1111,7 +1111,7 @@ MonoBehaviour:
   maxSoundDistance: 20
   minSoundDistance: 1
   hitBySlippersSound: {fileID: 8300000, guid: 0aa0259a399e12946bde6cbfa428ad61, type: 3}
-  touchBearSound: {fileID: 0}
+  touchBearSound: {fileID: 8300000, guid: 01ab765555323f44f85a68ba02c9c7e6, type: 3}
   genericHitSound: {fileID: 8300000, guid: c1d0ab488c8291943a4248d962c5e28b, type: 3}
 --- !u!82 &1304247847
 AudioSource:
@@ -2733,6 +2733,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2059895561110925821, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4984014277993912381, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5923237709092049984, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2819,6 +2847,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7922090350090810328, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7922090350090810328, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
