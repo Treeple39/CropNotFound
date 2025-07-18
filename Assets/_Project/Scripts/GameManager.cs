@@ -79,6 +79,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.FadeOut();
         LoadSceneWithHistory(mainMenuSceneName, mainMenuBGM);
+        Score.ResetScore();
         DataManager.Instance.SetHasSeenOpeningAnimation(true);
     }
 
@@ -170,7 +171,6 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("GameManager: 前往致谢..");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(Thanks);
-        Score.ResetScore();
         PlayBGM("");
     }
 
