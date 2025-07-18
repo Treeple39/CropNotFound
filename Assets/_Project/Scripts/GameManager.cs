@@ -144,6 +144,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
         ShopDataManager.Instance.RefreshHasAdd();
+        EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, InventoryManager.Instance._runtimeInventory.itemList);
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
 
