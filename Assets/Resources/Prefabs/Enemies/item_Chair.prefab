@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0fb04a7158b824a844da9667a7a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BigCoinCount: 12
+  BigCoinCount: 6
   Rarity: 0
 --- !u!82 &-7051335515686820471
 AudioSource:

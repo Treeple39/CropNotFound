@@ -13,7 +13,7 @@ public static class Score
     public static int coinCount = 0;
     public static void ResetScore()
     {
-        //ShopDataManager.Instance.RefreshCoins();
+        ShopDataManager.Instance.RefreshCoins();
         score = 0;
         itemCount = 0;
         coinCount = 0;

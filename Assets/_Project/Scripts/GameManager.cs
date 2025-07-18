@@ -28,12 +28,6 @@ public class GameManager : Singleton<GameManager>
     public string levelsequenceBodyBGM = "";
     public string levelsequenceConnectBGM = "";
 
-    [Tooltip("抽道具场景")]
-    public string SceneName = "DRAWITEM";
-    public string sequenceBeginBGM = "";
-    public string sequenceBodyBGM = "";
-    public string sequenceConnectBGM = "";
-
 
 
     [Tooltip("结算场景")]
@@ -101,12 +95,6 @@ public class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager: 主菜单结束，开始加载对话场景...");
         LoadSceneWithHistory(storySceneName, storyBGM);
-    }
-
-    public void DrawItem()
-    {
-        Debug.Log("完蛋了");
-        LoadSceneWithHistory(SceneName, storyBGM);
     }
 
 
