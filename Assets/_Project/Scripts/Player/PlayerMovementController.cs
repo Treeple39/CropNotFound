@@ -40,11 +40,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<PlayerInputController>();
         
-        // 如果没有通过Inspector指定UI防误触管理器，尝试在场景中查找
-        if (uiTouchManager == null)
-        {
-            uiTouchManager = FindObjectOfType<UI_PreventAccidentalTouch>();
-        }
     }
 
     void Update()
@@ -55,11 +50,13 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.OnChangeSpeed += OnBoostPlayerSpeed;
+        uiTouchManager = UIManager.Instance.GetComponent<UI_PreventAccidentalTouch>();
     }
 
     private void OnDisable()
     {
         EventHandler.OnChangeSpeed -= OnBoostPlayerSpeed;
+        uiTouchManager = null;
     }
 
     private void OnBoostPlayerSpeed(float speedBoostMultiplier, float speedBoostDuration)

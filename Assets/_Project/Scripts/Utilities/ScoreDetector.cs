@@ -38,7 +38,7 @@ public class ScoreDetector : Singleton<ScoreDetector>
         else if (randomValue < 0.9f && randomValue > 0.6f && techUnlockSO.unlockedItemIDs.Count > 0)
         {  // 0.6-0.9 (30%)
             
-            int temp = Random.Range(0, techUnlockSO.unlockedItemIDs.Count);
+            int temp = Random.Range(0, techUnlockSO.unlockedItemIDs.Count - 3);
 
             int selectedItemId = techUnlockSO.unlockedItemIDs[temp];
             InventoryManager.Instance.AddItem(selectedItemId);

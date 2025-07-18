@@ -18,14 +18,13 @@ public class GameInit : MonoBehaviour
         yield return null;
         UnlockManager.Instance.Init();
         yield return null;
-        //UIManager.Instance.Init();
-        //yield return null;
         InventoryManager.Instance.Init();
         yield return null;
         TechLevelManager.Instance.Init();
         yield return null;
-        yield return new WaitUntil(() => InventoryManager.Instance != null);
         ScoreDetector.Instance.Init();
+        yield return null;
         ShopDataManager.Instance.Init();
+        yield return null;
     }
 }

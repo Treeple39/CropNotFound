@@ -185,6 +185,8 @@ public class LoopDetector : MonoBehaviour
 
                 Destroy(obj.gameObject);
                 objectsToDestroy.Add(obj.gameObject);
+
+                EventHandler.CallTechPointChange(0.5f);
             }
         }
 
