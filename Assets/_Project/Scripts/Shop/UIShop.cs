@@ -29,14 +29,15 @@ public class UIShop : Singleton<UIShop>
 
     private void Start()
     {
-        drawCardButton.onClick.AddListener(OnDrawCardButtonClick);
-        goBackButton.onClick.AddListener(OnGoBackButtonClick);
-        UpdateCoinsDisplay();
-        ShopDataManager.Instance.RefreshCoins();
+        
     }
 
     private void OnEnable()
     {
+        UpdateCoinsDisplay();
+        ShopDataManager.Instance.RefreshCoins();
+        drawCardButton.onClick.AddListener(OnDrawCardButtonClick);
+        goBackButton.onClick.AddListener(OnGoBackButtonClick);
         if (itemsContainer != null)
         {
             ItemUIs = itemsContainer.GetComponentsInChildren<ItemUI>(true);
@@ -47,7 +48,7 @@ public class UIShop : Singleton<UIShop>
             return;
         }
 
-        // 添加长度验证
+
         if (ItemUIs == null || ItemUIs.Length == 0)
         {
             Debug.LogError("No ItemUI components found");
@@ -60,7 +61,6 @@ public class UIShop : Singleton<UIShop>
     }
     private void OnDisable()
     {
-        // 在UIShop中添加
         drawCardButton.onClick.RemoveAllListeners();
         goBackButton.onClick.RemoveAllListeners();
     }
@@ -114,7 +114,7 @@ public class UIShop : Singleton<UIShop>
         }
         else
         {
-            ItemUIs[iconIndex].Setup(itemIcons[iconIndex], Color.white);
+            ItemUIs[NowItemUISite].Setup(itemIcons[iconIndex], Color.white);
         }
 
         NowItemUISite++;

@@ -21,6 +21,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public GameObject SettingPanel;
     [SerializeField] public GameObject ShopPanel;
     [SerializeField] private GameObject ShopButton;
+    [SerializeField] private GameObject MainLevelShopButton;
+
     private bool _isSubscribed = false;
     [HideInInspector] public bool joystickCanBeActive;
 
@@ -157,14 +159,12 @@ public class UIManager : Singleton<UIManager>
 
     public void SetShopPanelActive(bool isActive)
     {
-        // 层级1：检查基础对象
         if (ShopPanel == null || BagPanel == null)
         {
             Debug.LogError($"缺失引用: ShopPanel={ShopPanel}, BagPanel={BagPanel}");
             return;
         }
 
-        // 层级2：检查关键数据
         if (isActive && (DataManager.Instance?.playerCurrency == null))
         {
             Debug.LogWarning("玩家货币数据未就绪，延迟打开商店");
@@ -172,13 +172,11 @@ public class UIManager : Singleton<UIManager>
             return;
         }
 
-        // 层级3：安全操作
         try
         {
             ShopPanel.SetActive(isActive);
             BagPanel.SetActive(isActive);
 
-            // 如果是打开操作，刷新数据
             if (isActive)
             {
                 ShopDataManager.Instance?.RefreshCoins();

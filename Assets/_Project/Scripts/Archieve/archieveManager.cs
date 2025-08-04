@@ -59,21 +59,16 @@ public class ArchiveManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
 
-        InitializeOnce(); // ✅ 只做一次初始化
+        InitializeOnce();
     }
 
     private void OnEnable()
     {
-        if (_isInitialized)
-        {
-            RefreshFromDisk(); // ✅ 每次激活刷新一次
-        }
+        RefreshFromDisk();
     }
 
-    // ========== 初始化与刷新 ==========
     private void InitializeOnce()
     {
-        if (_isInitialized) return;
 
         LoadOrInitializeArchive();
         _isInitialized = true;
@@ -81,7 +76,7 @@ public class ArchiveManager : MonoBehaviour
 
     public void RefreshFromDisk()
     {
-        TryLoadFromPersistentPath(); // ⚠️ 不再 fallback、保存，只更新
+        TryLoadFromPersistentPath(); 
         Debug.Log("ArchiveManager: 数据已刷新");
     }
 

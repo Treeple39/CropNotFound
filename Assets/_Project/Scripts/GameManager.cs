@@ -147,7 +147,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.RefreshJoystick();
         UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
-        ShopDataManager.Instance.RefreshHasAdd();
+
         EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, InventoryManager.Instance._runtimeInventory.itemList);
         playSequenceBGM(levelsequenceBeginBGM, levelsequenceBodyBGM, levelsequenceConnectBGM);
     }
@@ -159,6 +159,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(false);
+        ShopDataManager.Instance.AddCoins(Mathf.RoundToInt(Score.score));
         SceneManager.LoadScene(EndSceneName);
         //UIManager.Instance.UILevelUpPanel.OpenTab();
         PlayBGM(endBGM);
