@@ -206,7 +206,7 @@ public class LoopDetector : MonoBehaviour
             float n;
             if (level >= 7)
             {
-                n = 0.01f * level;
+                n = 0.02f * level;
                 if (Random.value <= n)
                     CoinManager._instance.CreateDeadItem(objToDestroy.transform.position);
                 n = 0;

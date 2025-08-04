@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public static class EventHandler
 {
+    public static event Action<InputMode> OnInputModeChanged;
     public static event Action<InventoryLocation, List<InventoryItem>> UpdateInventoryUI;
     public static event Action<ItemType, ItemDetails> ItemSpellUse;
     public static event Action<SlotUI, float> OnCooldownStart;
@@ -23,6 +24,10 @@ public static class EventHandler
     public static event Action<int> OnNewArchiveItemGet;
     public static event Action<bool> OnArchivePanelStateChanged;
 
+    public static void CallInputModeChanged(InputMode inputMode)
+    {
+        OnInputModeChanged?.Invoke(inputMode);
+    }
     public static void CallUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
     {
         UpdateInventoryUI?.Invoke(location, list);

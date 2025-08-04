@@ -11,15 +11,18 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UITechLevel TechLevelPanel;
     [SerializeField] public UILevelUpPanel UILevelUpPanel;
 
+
     [Header("set active use")]
     [SerializeField] public GameObject BagPanel;
     [SerializeField] public GameObject ScorePanel;
 
+    [SerializeField] public GameObject JoyStick;
     [SerializeField] public GameObject ArchivePanel;
     [SerializeField] public GameObject SettingPanel;
     [SerializeField] public GameObject ShopPanel;
     [SerializeField] private GameObject ShopButton;
     private bool _isSubscribed = false;
+    [HideInInspector] public bool joystickCanBeActive;
 
     [Header("fade use")]
     [SerializeField] private CanvasGroup fadePanel;
@@ -81,6 +84,10 @@ public class UIManager : Singleton<UIManager>
         RefreshShopButtonState();
     }
 
+    public void RefreshJoystick()
+    {
+        JoyStick.SetActive(joystickCanBeActive);
+    }
     public void RefreshShopButtonState()
     {
         if (!_isDataReady || ShopButton == null)

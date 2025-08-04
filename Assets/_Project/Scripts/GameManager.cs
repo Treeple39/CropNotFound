@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
     }
     private void Start()
     {
-        PlayBGM(mainMenuBGM);
+        //PlayBGM(mainMenuBGM);
     }
 
     /// <summary>
@@ -76,6 +76,7 @@ public class GameManager : Singleton<GameManager>
     {
         UIManager.Instance.SetAllUIPanelsActive(false);
         Debug.Log("GameManager: 返回主菜单...");
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.FadeOut();
         LoadSceneWithHistory(mainMenuSceneName, mainMenuBGM);
@@ -89,6 +90,7 @@ public class GameManager : Singleton<GameManager>
     public void StartStory()
     {
         Debug.Log("GameManager: 开始加载开场动画场景...");
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.FadeOut();
         LoadSceneWithHistory(openSceneName, storyBGM);
@@ -142,6 +144,7 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("GameManager: 对话场景结束，开始加载关卡场景...");
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.FadeOut();
+        UIManager.Instance.RefreshJoystick();
         UIManager.Instance.SetAllUIPanelsActive(true);
         SceneManager.LoadScene(levelSceneName);
         ShopDataManager.Instance.RefreshHasAdd();
@@ -152,6 +155,8 @@ public class GameManager : Singleton<GameManager>
     public void GoToEndScene()
     {
         Debug.Log("GameManager: 前往结算..");
+        ButtonDispatcher.Instance.Clear();
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(false);
         SceneManager.LoadScene(EndSceneName);
@@ -162,6 +167,7 @@ public class GameManager : Singleton<GameManager>
     public void GoToCardScene()
     {
         Debug.Log("GameManager: 前往抽卡..");
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(false);
         SceneManager.LoadScene(DrawCardsName);
@@ -170,6 +176,7 @@ public class GameManager : Singleton<GameManager>
     public void GoToThanks()
     {
         Debug.Log("GameManager: 前往致谢..");
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         SceneManager.LoadScene(Thanks);
         PlayBGM("");
@@ -178,6 +185,7 @@ public class GameManager : Singleton<GameManager>
     public void GoToArchive()
     {
         Debug.Log("GameManager: 前往图鉴..");
+        UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         LoadSceneWithHistory(Archive, archiveBGM);
     }

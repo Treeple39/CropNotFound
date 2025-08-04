@@ -434,7 +434,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemyHighlightColor: {r: 1, g: 0.14707795, b: 0.015686274, a: 1}
   minPointsForLoop: 10
   minLoopArea: 1
   loopDisplayTime: 5
@@ -585,7 +584,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322085268527907197}
-  - component: {fileID: 7343905805381169654}
   - component: {fileID: 8915022199747962519}
   - component: {fileID: 5129840739595395112}
   - component: {fileID: 199726033264466261}
@@ -616,19 +614,6 @@ Transform:
   - {fileID: 3658286965627207051}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7343905805381169654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774501593398078508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da61bc23440c6495d9ef0fb34855d57c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashKey: 304
 --- !u!114 &8915022199747962519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +633,9 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 1
   dashEffectPrefab: {fileID: 4914167191793436596, guid: 01aab98d12b68e64e8bfec745f78d774, type: 3}
+  speedChangeChSprite: {fileID: 0}
+  uiTouchManager: {fileID: 0}
+  inputController: {fileID: 0}
 --- !u!50 &5129840739595395112
 Rigidbody2D:
   serializedVersion: 4
@@ -5876,7 +5864,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3731408436044695844}
-  - component: {fileID: 1168752263691566186}
   m_Layer: 7
   m_Name: FootstepPlayer
   m_TagString: Untagged
@@ -5899,24 +5886,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3658286965627207051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1168752263691566186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022616319526739052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c406dd52435431088673e24ca092fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footsteps:
-  - {fileID: 8300000, guid: e3cb3566cc9fe46dda955e7ba4b10bd2, type: 3}
-  - {fileID: 8300000, guid: dc9274a5bf7894a198c4713078c5c431, type: 3}
-  - {fileID: 8300000, guid: 289d8b7710fc643138b2ab19478fb853, type: 3}
-  baseInterval: 0.4
-  intervalVariance: 0.1
 --- !u!1 &6290127078067677195
 GameObject:
   m_ObjectHideFlags: 0

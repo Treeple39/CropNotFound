@@ -18,6 +18,8 @@ public class GameInit : MonoBehaviour
         yield return null;
         UnlockManager.Instance.Init();
         yield return null;
+        InputManager.Instance.Init();
+        yield return null;
         InventoryManager.Instance.Init();
         yield return null;
         TechLevelManager.Instance.Init();

@@ -8,7 +8,7 @@ public class CameraFollowInput : MonoBehaviour
     [SerializeField] private float smoothTime = 0.2f;
 
     [Header("Input Mode")]
-    [SerializeField] private bool useDeviceTilt = false;
+    [SerializeField] public bool useDeviceTilt = false;
     [SerializeField] private float tiltSensitivity = 2f;
 
     private Vector3 originalPosition;

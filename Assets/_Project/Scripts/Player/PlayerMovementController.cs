@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PlayerInputController))]
 public class PlayerMovement : MonoBehaviour
 {
     //在角色管理器出来之前，暂时先单例吧
@@ -27,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public UI_PreventAccidentalTouch uiTouchManager;
 
     private Rigidbody2D rb;
-    private PlayerInputController inputController;
+    public InputManager inputController;
 
     private bool isDashing;
     private float dashTimer = 0f;
@@ -38,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-        inputController = GetComponent<PlayerInputController>();
-        
     }
 
     void Update()
@@ -49,12 +46,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        inputController = InputManager.Instance;
         EventHandler.OnChangeSpeed += OnBoostPlayerSpeed;
-        uiTouchManager = UIManager.Instance.GetComponent<UI_PreventAccidentalTouch>();
+        uiTouchManager = inputController.uiTouchManager;
     }
 
     private void OnDisable()
     {
+        inputController = null;
         EventHandler.OnChangeSpeed -= OnBoostPlayerSpeed;
         uiTouchManager = null;
     }
@@ -111,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
             }
             
             // ★★★★★【核心修改】★★★★★
-            // 只有在玩家按住鼠标左键时，才执行引导逻辑
+            // 只有在玩家按住鼠标左键或虚拟摇杆生效时，才执行引导逻辑
             if (inputController.IsMovementEngaged)
             {
                 HandleInstantRotation();
@@ -150,7 +149,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDirectMovement()
     {
-        Vector2 directionVector = inputController.MouseWorldPosition - rb.position;
+        Vector2 directionVector;
+        if (InputManager.Instance.IsUsingJoystick())
+        {
+            directionVector = InputManager.Instance.JoystickDirection;
+        }
+        else
+        {
+            directionVector = inputController.MouseWorldPosition - rb.position;
+        }
         float distanceToMouse = directionVector.magnitude;
         float speedRatio = 0f;
 

@@ -87,7 +87,7 @@ public class CoinManager : Singleton<CoinManager>
 
     public void CreateDeadItem(Vector3 position)
     {
-        for (int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 6; i++)
         {
             if (Random.value > (float)1/i)
                 return;
