@@ -1,6 +1,9 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+
+using UnityEngine.UI;
 
 
 public class InputManager : Singleton<InputManager>
@@ -11,25 +14,27 @@ public class InputManager : Singleton<InputManager>
         DontDestroyOnLoad(gameObject);
     }
 
-    // ÊäÈë×´Ì¬
+
     public Vector2 MouseWorldPosition { get; private set; }
     public bool DashPressed;
     public bool IsMovementEngaged { get; private set; }
     public Vector2 JoystickDirection { get; private set; } = Vector2.zero;
 
-    // ÅäÖÃ²ÎÊý
-    [Header("°´¼üÉèÖÃ")]
-    public KeyCode dashKey = KeyCode.LeftShift;
 
-    [Header("´¥ÆÁÉèÖÃ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public KeyCode dashKey = KeyCode.LeftShift;
+    public bool dashButtonClicked = false;
+    public Button dashButton;
+
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public float touchDeadZone = 50f;
     public float maxTouchDistance = 300f;
     public float joystickScale = 4.4f;
 
-    [Header("ÊäÈë·½Ê½")]
+    [Header("ï¿½ï¿½ï¿½ë·½Ê½")]
     public InputMode inputMode = InputMode.FullScreenTouch;
 
-    [Header("ÐéÄâÒ¡¸ËÒýÓÃ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½Ò¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public Joystick virtualJoystick;
 
     [HideInInspector] public UI_PreventAccidentalTouch uiTouchManager;
@@ -53,7 +58,7 @@ public class InputManager : Singleton<InputManager>
 
     public void SystemChangeMode(InputMode mode)
     {
-        if(inputMode == mode)
+        if (inputMode == mode)
         {
             return;
         }
@@ -72,11 +77,11 @@ public class InputManager : Singleton<InputManager>
                 break;
         }
 
-        if(SceneManager.GetActiveScene().name == "MainScene")
+        if (SceneManager.GetActiveScene().name == "MainScene")
         {
             UIManager.Instance.RefreshJoystick();
         }
-        
+
     }
 
     private void OnEnable()
@@ -127,7 +132,8 @@ public class InputManager : Singleton<InputManager>
 
         if (!shouldBlock)
         {
-            DashPressed = Input.GetMouseButtonDown(1) || Input.GetKeyDown(dashKey);
+            DashPressed = Input.GetMouseButtonDown(1) || Input.GetKeyDown(dashKey) || dashButtonClicked;
+            dashButtonClicked = false;
             IsMovementEngaged = Input.GetMouseButton(0);
         }
         else
@@ -170,6 +176,7 @@ public class InputManager : Singleton<InputManager>
                 touch.fingerId != movementFingerId)
             {
                 DashPressed = true;
+                Debug.Log("Touch Dash");
             }
         }
     }
@@ -194,5 +201,42 @@ public class InputManager : Singleton<InputManager>
     public bool IsUsingJoystick()
     {
         return inputMode == InputMode.VirtualJoystick;
+    }
+
+    public void OnDashButtonClick()
+    {
+
+        dashButtonClicked = true;
+    }
+    public void TryBindDashButton(Button dashButton)
+    {
+        dashButton.onClick.RemoveAllListeners();
+        dashButton.onClick.AddListener(OnDashButtonClick);
+        Debug.Log("[InputManager] Dash Button successfully bound.");
+    }
+
+    private IEnumerator WaitAndBindDashButton(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        GameObject dashButtonObj = GameObject.Find("DashIcon");
+        if (dashButtonObj != null)
+        {
+            Button dashButton = dashButtonObj.GetComponent<Button>();
+            if (dashButton != null)
+            {
+                dashButton.onClick.RemoveAllListeners();
+                dashButton.onClick.AddListener(OnDashButtonClick);
+                Debug.Log("[InputManager] Dash button successfully bound.");
+            }
+            else
+            {
+                Debug.LogWarning("[InputManager] Found GameObject 'DashButton' but no Button component.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[InputManager] DashButton not found in scene.");
+        }
     }
 }

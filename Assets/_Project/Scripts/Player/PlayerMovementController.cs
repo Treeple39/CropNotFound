@@ -201,6 +201,8 @@ public class PlayerMovement : MonoBehaviour
             Quaternion effectRotation = Quaternion.Euler(0, 0, angle + 90f);
             Instantiate(dashEffectPrefab, transform.position, effectRotation);
         }
+        Debug.Log("Dash!");
+        //inputController.DashPressed = false;
     }
 
     private void HandleDashingState()

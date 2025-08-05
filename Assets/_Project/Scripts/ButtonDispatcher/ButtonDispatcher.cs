@@ -9,7 +9,6 @@ public class ButtonDispatcher : Singleton<ButtonDispatcher>
 
     private void OnEnable()
     {
-        //°´Å¥°ó¶¨(²âÊÔ)
         Register("dash", () => InputManager.Instance.DashPressed = true);
     }
 
@@ -19,7 +18,7 @@ public class ButtonDispatcher : Singleton<ButtonDispatcher>
         if (!dispatchTable.ContainsKey(key))
             dispatchTable.Add(key, callback);
         else
-            dispatchTable[key] = callback; // ÔÊÐí¸²¸Ç
+            dispatchTable[key] = callback; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     public bool TryGet(string key, out Action callback)
@@ -27,6 +26,6 @@ public class ButtonDispatcher : Singleton<ButtonDispatcher>
         return dispatchTable.TryGetValue(key, out callback);
     }
 
-    // Çå³ýËùÓÐ×¢²á£¨ÓÃÓÚÇÐ»»³¡¾°Ê±£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½á£¨ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     public void Clear() => dispatchTable.Clear();
 }
