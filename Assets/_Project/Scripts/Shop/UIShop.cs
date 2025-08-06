@@ -26,6 +26,7 @@ public class UIShop : Singleton<UIShop>
     [Header("默认状态")]
     [SerializeField] private Sprite defaultIcon;
     [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+    [SerializeField] private GameObject UFXPrefab;
 
     private void Start()
     {
@@ -115,6 +116,7 @@ public class UIShop : Singleton<UIShop>
         else
         {
             ItemUIs[NowItemUISite].Setup(itemIcons[iconIndex], Color.white);
+            Instantiate(UFXPrefab, ItemUIs[NowItemUISite].transform);
         }
 
         NowItemUISite++;

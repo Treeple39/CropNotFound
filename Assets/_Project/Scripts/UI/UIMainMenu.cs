@@ -65,7 +65,6 @@ public class UIMainMenu : MonoBehaviour
 
     public void OnClick_OpenShop()
     {
-        //UIManager.Instance.SetShopPanelActive(true);
-        GameManager.Instance.DrawItem();
+        UIManager.Instance.SetShopPanelActive(true);
     }
 }
