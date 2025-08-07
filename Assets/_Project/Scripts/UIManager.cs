@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -27,6 +28,11 @@ public class UIManager : Singleton<UIManager>
 
     [Header("fade use")]
     [SerializeField] private CanvasGroup fadePanel;
+
+    [Header("UFX use")]
+    [HideInInspector] public List<FxImagePos> RewardFxImagePosSet = new List<FxImagePos>();
+    [SerializeField] private GameObject flyShopGoodsPrefab;
+    [SerializeField] private Transform bagUITransform;
 
     private const int SHOP_UNLOCK_LEVEL = 10;
     private bool _isDataReady = false;
@@ -211,5 +217,45 @@ public class UIManager : Singleton<UIManager>
         {
             fadePanel.gameObject.SetActive(false);
         });
+    }
+
+    public IEnumerator GoodsFlytoBag()
+    {
+        if (RewardFxImagePosSet.Count > 0)
+        {
+            Vector2 targetPosition = bagUITransform.position;
+
+            for (int i = 0; i < RewardFxImagePosSet.Count; i++)
+            {
+                GameObject flygoods = Instantiate(flyShopGoodsPrefab, RewardFxImagePosSet[i].pos, Quaternion.identity, UIManager.Instance.transform);
+                flygoods.GetComponentInChildren<Image>().sprite = RewardFxImagePosSet[i].image;
+                StartCoroutine(FlyToTarget(flygoods, targetPosition));
+            }
+
+            RewardFxImagePosSet.Clear();
         }
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    private IEnumerator FlyToTarget(GameObject item, Vector2 targetPos)
+    {
+        yield return new WaitForSeconds(1.8f);
+
+        float duration = 0.8f;
+        float elapsed = 0f;
+        Vector2 startPos = item.transform.position;
+
+        AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = curve.Evaluate(elapsed / duration);
+            item.transform.position = Vector2.Lerp(startPos, targetPos, t);
+            item.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t * 0.5f);
+            yield return null;
+        }
+
+        Destroy(item);
+    }
 }

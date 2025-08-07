@@ -4,6 +4,7 @@ using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class UIShop : Singleton<UIShop>
 {
@@ -16,12 +17,16 @@ public class UIShop : Singleton<UIShop>
 
     [Header("物品展示区域")]
     [SerializeField] private GameObject itemsContainer;
+    [SerializeField] private GameObject shopGoodsPrefab;
     [SerializeField] private ItemUI[] ItemUIs;
     [SerializeField] private int NowItemUISite = 0;
     [SerializeField] private int maxDisplayItems = 18;
 
     [Header("物品数据")]
     [SerializeField] private List<Sprite> itemIcons;
+
+    [Header("稀有度配置")]
+    [SerializeField] private RarityDatabase rarityDatabase;
 
     [Header("默认状态")]
     [SerializeField] private Sprite defaultIcon;
@@ -36,12 +41,21 @@ public class UIShop : Singleton<UIShop>
     private void OnEnable()
     {
         UpdateCoinsDisplay();
-        ShopDataManager.Instance.RefreshCoins();
+        int coins = ShopDataManager.Instance.RefreshCoins();
         drawCardButton.onClick.AddListener(OnDrawCardButtonClick);
         goBackButton.onClick.AddListener(OnGoBackButtonClick);
         if (itemsContainer != null)
         {
-            ItemUIs = itemsContainer.GetComponentsInChildren<ItemUI>(true);
+            int goodsNum = coins / ShopDataManager.Instance.costPerDraw;
+            goodsNum = goodsNum > 15 ? 15 : goodsNum;
+            List<ItemUI> items = new();
+
+            for (int i = 0; i < goodsNum; i++)
+            {
+                items.Add(Instantiate(shopGoodsPrefab, itemsContainer.transform).GetComponentInChildren<ItemUI>(true));
+            }
+            
+            ItemUIs = items.ToArray();
         }
         else
         {
@@ -62,10 +76,13 @@ public class UIShop : Singleton<UIShop>
     }
     private void OnDisable()
     {
+        UIManager.Instance.StartCoroutine(UIManager.Instance.GoodsFlytoBag());
         drawCardButton.onClick.RemoveAllListeners();
         goBackButton.onClick.RemoveAllListeners();
-    }
+        ItemUIs = null;
+        Config.RemoveAllChildren(itemsContainer);
 
+    }
 
     private void ResetAllItems()
     {
@@ -75,7 +92,7 @@ public class UIShop : Singleton<UIShop>
         {
             if (itemUI != null)
             {
-                itemUI.Setup(defaultIcon, defaultColor);
+                itemUI.Setup(defaultIcon, defaultColor, 0, rarityDatabase.GetRarityData(Rarity.Common));
             }
         }
     }
@@ -87,20 +104,20 @@ public class UIShop : Singleton<UIShop>
 
     private void OnDrawCardButtonClick()
     {
-        int itemId = ShopDataManager.Instance.DrawItem();
+        ShopItem shopItem = ShopDataManager.Instance.DrawItem();
 
-        if (itemId == -1)
+        if (shopItem == null)
         {
             Debug.Log("硬币不足，无法抽卡");
         }
         else
         {
             UpdateCoinsDisplay();
-            ShowAcquiredItem(itemId);
+            ShowAcquiredItem(shopItem);
         }
     }
 
-    private void ShowAcquiredItem(int itemId)
+    private void ShowAcquiredItem(ShopItem shopItem)
     {
         if (NowItemUISite >= ItemUIs.Length)
         {
@@ -108,14 +125,22 @@ public class UIShop : Singleton<UIShop>
             return;
         }
 
-        int iconIndex = itemId - 1000;
+        int iconIndex = shopItem.itemId - 1000;
         if (iconIndex < 0 || iconIndex >= itemIcons.Count)
         {
-            Debug.LogError($"Invalid icon index: {iconIndex} for item {itemId}");
+            Debug.LogError($"Invalid icon index: {iconIndex} for item {shopItem.itemId}");
         }
         else
         {
-            ItemUIs[NowItemUISite].Setup(itemIcons[iconIndex], Color.white);
+            ItemUIs[NowItemUISite].Setup
+            (
+                itemIcons[iconIndex], 
+                Color.white, 
+                shopItem.amount,
+                rarityDatabase.GetRarityData((Rarity)System.Enum.Parse(typeof(Rarity), DataManager.Instance.GetItemDetail(shopItem.itemId).itemRarity)),
+                DataManager.Instance.GetItemDetail(shopItem.itemId).Name,
+                true
+            );
             Instantiate(UFXPrefab, ItemUIs[NowItemUISite].transform);
         }
 

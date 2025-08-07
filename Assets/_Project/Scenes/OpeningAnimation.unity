@@ -664,8 +664,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4509702499997229000, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000076293945
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5375917075382995427, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: bagUITransform
+      value: 
+      objectReference: {fileID: 1557303083}
+    - target: {fileID: 5375917075382995427, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: flyShopGoodsPrefab
+      value: 
+      objectReference: {fileID: 6630200967597257927, guid: ed081d7af4f955f4baf943039fea84c0, type: 3}
     - target: {fileID: 5923237709092049984, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1077,6 +1085,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1557303083 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4792013452049844095, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+  m_PrefabInstance: {fileID: 690694347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1684050426
 GameObject:
   m_ObjectHideFlags: 0

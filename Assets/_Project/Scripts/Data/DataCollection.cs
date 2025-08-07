@@ -9,6 +9,7 @@ using UnityEngine;
 public class ItemDetails : Details
 {
     public string itemType { get; set; }
+    public string itemRarity { get; set; }
     public string itemSpriteOnWorld { get; set; }
     public float itemUseRadius { get; set; }
     public bool canPickedup { get; set; }
@@ -129,4 +130,19 @@ public class UnlockHintData
     {
         triggered = i;
     }
+}
+
+[System.Serializable]
+public class FxImagePos
+{
+    public Sprite image;
+    public Vector3 pos;
+    public RarityData Rarity;
+}
+
+[System.Serializable]
+public class ShopItem
+{
+    public int itemId;
+    public int amount;
 }
