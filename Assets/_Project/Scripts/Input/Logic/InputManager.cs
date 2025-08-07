@@ -123,11 +123,16 @@ public class InputManager : Singleton<InputManager>
                 HandleMouseInput();
             }
         }
+        HandleDashInput();
     }
 
     private void HandleMouseInput()
     {
         MouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private void HandleDashInput()
+    {
         bool shouldBlock = uiTouchManager != null && uiTouchManager.ShouldBlockCharacterMovement;
 
         if (!shouldBlock)
@@ -171,13 +176,13 @@ public class InputManager : Singleton<InputManager>
                 if (!IsMovementEngaged) movementFingerId = null;
             }
 
-            if (touch.phase == TouchPhase.Began &&
-                movementFingerId.HasValue &&
-                touch.fingerId != movementFingerId)
-            {
-                DashPressed = true;
-                Debug.Log("Touch Dash");
-            }
+            // if (touch.phase == TouchPhase.Began &&
+            //     movementFingerId.HasValue &&
+            //     touch.fingerId != movementFingerId)
+            // {
+            //     DashPressed = true;
+            //     Debug.Log("Touch Dash");
+            // }
         }
     }
 
@@ -190,6 +195,7 @@ public class InputManager : Singleton<InputManager>
         IsMovementEngaged = !shouldBlock && inputDir.magnitude > 0.1f;
 
         JoystickDirection = IsMovementEngaged ? inputDir : Vector2.zero;
+        Debug.Log($"Joystick direction: {virtualJoystick.Direction}");
     }
 
 

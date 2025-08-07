@@ -20,7 +20,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public GameObject ArchivePanel;
     [SerializeField] public GameObject SettingPanel;
     [SerializeField] public GameObject ShopPanel;
-    [SerializeField] private GameObject ShopButton;
     [SerializeField] private GameObject MainLevelShopButton;
 
     private bool _isSubscribed = false;
@@ -62,7 +61,6 @@ public class UIManager : Singleton<UIManager>
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             _isDataReady = true;
-            RefreshShopButtonState();
         }
     }
 
@@ -72,10 +70,6 @@ public class UIManager : Singleton<UIManager>
         {
             StartCoroutine(DelayedRefresh(10));
         }
-        else
-        {
-            ShopButton.SetActive(false);
-        }
     }
 
     private IEnumerator DelayedRefresh(int frames)
@@ -83,24 +77,13 @@ public class UIManager : Singleton<UIManager>
         for (int i = 0; i < frames; i++)
             yield return null;
 
-        RefreshShopButtonState();
     }
 
     public void RefreshJoystick()
     {
         JoyStick.SetActive(joystickCanBeActive);
     }
-    public void RefreshShopButtonState()
-    {
-        if (!_isDataReady || ShopButton == null)
-            return;
 
-        if (TechLevelManager.Instance != null && TechLevelManager.Instance.CurrentTechLevel >= SHOP_UNLOCK_LEVEL)
-        {
-            ShopButton.SetActive(true);
-        }
-
-    }
 
     public void FadeUIDuration(CanvasGroup UIPanel, float fadeStrength, float duration)
     {

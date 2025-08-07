@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("特效")]
     public GameObject dashEffectPrefab;
     public Sprite speedChangeChSprite;
-    
+
     [Header("UI交互")]
     [Tooltip("UI防误触管理器")]
     public UI_PreventAccidentalTouch uiTouchManager;
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ResetSpeed(float speedBoostMultiplier, float speedBoostDuration)
     {
         yield return new WaitForSecondsRealtime(speedBoostDuration);
-        UpdateMaxVelocity(1/speedBoostMultiplier);
+        UpdateMaxVelocity(1 / speedBoostMultiplier);
     }
 
 
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
                 // 如果应该阻止移动，不执行移动逻辑
                 return;
             }
-            
+
             // ★★★★★【核心修改】★★★★★
             // 只有在玩家按住鼠标左键或虚拟摇杆生效时，才执行引导逻辑
             if (inputController.IsMovementEngaged)
@@ -192,7 +192,22 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
-        Vector2 dashDirection = transform.up;
+        Vector2 dashDirection;
+
+        if (inputController.IsUsingJoystick())
+        {
+            dashDirection = inputController.JoystickDirection.normalized;
+        }
+        else
+        {
+            dashDirection = (inputController.MouseWorldPosition - rb.position).normalized;
+        }
+
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection = transform.up;
+        }
+        
         rb.velocity = dashDirection * dashSpeed;
         if (dashEffectPrefab != null)
         {
