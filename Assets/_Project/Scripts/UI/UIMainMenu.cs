@@ -11,6 +11,10 @@ public class UIMainMenu : MonoBehaviour
     /// ����ʼ����ť����Ӧ����
     /// ����GameManager��ʼ����/�Ի����̡�
     /// </summary>
+    /// 
+
+    public string shopLockMessage;
+
     public void OnClick_StartGame()
     {
         Debug.Log("UI: ����ˡ���ʼ����ť��");
@@ -65,6 +69,11 @@ public class UIMainMenu : MonoBehaviour
 
     public void OnClick_OpenShop()
     {
-        UIManager.Instance.SetShopPanelActive(true);
+        if(TechLevelManager.Instance.CurrentTechLevel >= 10)
+            UIManager.Instance.SetShopPanelActive(true);
+        else
+        {
+            EventHandler.CallSystemMessageShow(shopLockMessage, 3f);
+        }
     }
 }

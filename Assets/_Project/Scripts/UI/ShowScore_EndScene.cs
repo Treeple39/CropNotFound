@@ -6,19 +6,40 @@ using UnityEngine.UI;
 public class ShowScore_EndScene : MonoBehaviour
 {
     private Text _text;
-    
-    void Start()
+    [SerializeField] private bool update;
+    private NumberCounterTMP numberCounterTMP;
+    private NumberCounter numberCounter;
+
+    void Awake()
     {
         _text = GetComponent<Text>();
+        if (numberCounterTMP == null || numberCounter == null)
+        {
+            TryGetComponent<NumberCounterTMP>(out numberCounterTMP);
+            TryGetComponent<NumberCounter>(out numberCounter);
+        }
     }
-    // Update is called once per frame
-    void Update()
+
+    private void OnEnable()
     {
         ShowScore();
     }
 
+    private void FixedUpdate()
+    {
+        if (update)
+        {
+            _text.text = Score.score.ToString();
+        }
+    }
+
     void ShowScore()
     {
-        _text.text = Score.score.ToString();
+        if(numberCounterTMP != null)
+            numberCounterTMP.SetValue((int)Score.score);
+        else if(numberCounter != null)
+            numberCounter.SetValue((int)Score.score);
+        else
+            _text.text = Score.score.ToString();
     }
 }

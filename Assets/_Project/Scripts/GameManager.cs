@@ -44,6 +44,7 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("抽卡场景")]
     public string DrawCardsName = "DrawCards";
     public string drawCardsBGM = "";
+    public string JiesuanMessage;
 
 
     [Tooltip("Thanks")]
@@ -153,11 +154,19 @@ public class GameManager : Singleton<GameManager>
     public void GoToEndScene()
     {
         Debug.Log("GameManager: 前往结算..");
+        if(Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
         ButtonDispatcher.Instance.Clear();
         UIManager.Instance.JoyStick.SetActive(false);
         UIManager.Instance.UIMessagePanel.ForceClosePanel();
         UIManager.Instance.SetAllUIPanelsActive(false);
-        ShopDataManager.Instance.AddCoins(Mathf.RoundToInt(Score.score));
+        if (TechLevelManager.Instance.CurrentTechLevel >= 10)
+        {
+            ShopDataManager.Instance.AddCoins(Mathf.RoundToInt(Score.score));
+            EventHandler.CallSystemMessageShow(JiesuanMessage, 1.8f);
+        }
         SceneManager.LoadScene(EndSceneName);
         //UIManager.Instance.UILevelUpPanel.OpenTab();
         PlayBGM(endBGM);

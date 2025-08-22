@@ -12,6 +12,7 @@ public class UnlockManager : Singleton<UnlockManager>
     private UnlockHint_SO _runtimeUnlockHints;
 
     public List<TextColor> textColor;
+    public Sprite WowChSprite;
 
     public void Init()
     {
@@ -93,6 +94,18 @@ public class UnlockManager : Singleton<UnlockManager>
         {
             TryTriggerUnlockEventOnce();
             // if 6002 open shop
+        }
+
+        if(scene.name == "EndScene" && Score.score > 10000)
+        {
+            ItemUIData messageData = new ItemUIData
+            {
+                messageImage = WowChSprite,
+                message = $"你竟然获得了 {Score.score} g灵魂! 太难以置信了",
+                messageID = -1,
+            };
+
+            EventHandler.CallMessageShow(messageData);
         }
     }
 

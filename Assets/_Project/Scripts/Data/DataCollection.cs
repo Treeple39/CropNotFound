@@ -135,6 +135,7 @@ public class UnlockHintData
 [System.Serializable]
 public class FxImagePos
 {
+    public bool canfly;
     public Sprite image;
     public Vector3 pos;
     public RarityData Rarity;

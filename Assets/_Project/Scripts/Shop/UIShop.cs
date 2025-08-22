@@ -6,14 +6,15 @@ using System.Linq;
 using Unity.VisualScripting;
 using System.Collections;
 
-public class UIShop : Singleton<UIShop>
+public class UIShop : MonoBehaviour
 {
     [Header("按钮设置")]
     [SerializeField] private Button drawCardButton;
+    [SerializeField] private Button drawAllCardButton;
     [SerializeField] private Button goBackButton;
 
     [Header("货币显示")]
-    [SerializeField] private Text coinsText;
+    [SerializeField] private NumberCounterTMP coinsNumberCounter;
 
     [Header("物品展示区域")]
     [SerializeField] private GameObject itemsContainer;
@@ -28,24 +29,25 @@ public class UIShop : Singleton<UIShop>
     [Header("稀有度配置")]
     [SerializeField] private RarityDatabase rarityDatabase;
 
-    [Header("默认状态")]
+    [Header("默认配置")]
     [SerializeField] private Sprite defaultIcon;
     [SerializeField] private Color defaultColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
     [SerializeField] private GameObject UFXPrefab;
-
-    private void Start()
-    {
-        
-    }
+    [SerializeField] private string flowOutMessage;
+    [SerializeField] private string CoinsOutMessage;
+    [SerializeField] private Sprite moneySprite;
 
     private void OnEnable()
     {
         UpdateCoinsDisplay();
         int coins = ShopDataManager.Instance.RefreshCoins();
-        drawCardButton.onClick.AddListener(OnDrawCardButtonClick);
+
         goBackButton.onClick.AddListener(OnGoBackButtonClick);
+        NowItemUISite = 0;
         if (itemsContainer != null)
         {
+            Config.RemoveAllChildren(itemsContainer);
+
             int goodsNum = coins / ShopDataManager.Instance.costPerDraw;
             goodsNum = goodsNum > 15 ? 15 : goodsNum;
             List<ItemUI> items = new();
@@ -76,12 +78,12 @@ public class UIShop : Singleton<UIShop>
     }
     private void OnDisable()
     {
+        NowItemUISite = 0;
         UIManager.Instance.StartCoroutine(UIManager.Instance.GoodsFlytoBag());
         drawCardButton.onClick.RemoveAllListeners();
         goBackButton.onClick.RemoveAllListeners();
         ItemUIs = null;
         Config.RemoveAllChildren(itemsContainer);
-
     }
 
     private void ResetAllItems()
@@ -99,16 +101,22 @@ public class UIShop : Singleton<UIShop>
 
     private void UpdateCoinsDisplay()
     {
-        coinsText.text = $"硬币: {ShopDataManager.Instance.GetCurrentCoins()}";
+        coinsNumberCounter.SetValue(ShopDataManager.Instance.GetCurrentCoins());
     }
 
-    private void OnDrawCardButtonClick()
+    public void OnDrawCardButtonClick()
     {
+        if (NowItemUISite >= ItemUIs.Length)
+        {
+            EventHandler.CallSystemMessageShow(flowOutMessage,1.2f);
+            return;
+        }
+
         ShopItem shopItem = ShopDataManager.Instance.DrawItem();
 
         if (shopItem == null)
         {
-            Debug.Log("硬币不足，无法抽卡");
+            EventHandler.CallSystemMessageShow(CoinsOutMessage, 1.2f);
         }
         else
         {
@@ -117,11 +125,54 @@ public class UIShop : Singleton<UIShop>
         }
     }
 
+    public void OnDrawAllCardButtonClick()
+    {
+        if (NowItemUISite >= ItemUIs.Length)
+        {
+            EventHandler.CallSystemMessageShow(flowOutMessage, 1.2f);
+            return;
+        }
+
+        int k = NowItemUISite;
+
+        for (int i = 0; i < maxDisplayItems - k; i++)
+        {
+            ShopItem shopItem = ShopDataManager.Instance.DrawItem();
+
+            if (shopItem == null)
+            {
+                EventHandler.CallSystemMessageShow(CoinsOutMessage, 1.2f);
+            }
+            else
+            {
+                ShowAcquiredItem(shopItem);
+            }
+        }
+        UpdateCoinsDisplay();
+    }
+
     private void ShowAcquiredItem(ShopItem shopItem)
     {
         if (NowItemUISite >= ItemUIs.Length)
         {
             Debug.LogError($"Index out of range: {NowItemUISite}/{ItemUIs.Length}");
+            return;
+        }
+
+        if (shopItem.itemId == -1)
+        {
+            ItemUIs[NowItemUISite].Setup
+            (
+                moneySprite,
+                Color.white,
+                shopItem.amount,
+                rarityDatabase.GetRarityData(Rarity.Legendary),
+                "灵魂",
+                true,
+                false
+            );
+            Instantiate(UFXPrefab, ItemUIs[NowItemUISite].transform);
+            NowItemUISite++;
             return;
         }
 
@@ -149,6 +200,7 @@ public class UIShop : Singleton<UIShop>
 
     private void OnGoBackButtonClick()
     {
+        coinsNumberCounter.SetValue(0);
         UIManager.Instance.SetShopPanelActive(false);
     }
 

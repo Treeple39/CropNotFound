@@ -94,7 +94,7 @@
     "ID": 14013,
     "unlockType": "UnlockSkill",
     "unlockID": 6002,
-    "messageText": "是的，你可以在商店用灵魂兑换道具了",
+    "messageText": "下次回主菜单，你可以在商店用灵魂兑换道具了",
     "messageDuration": 4.0
   }
 }

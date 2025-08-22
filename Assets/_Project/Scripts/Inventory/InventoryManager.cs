@@ -47,7 +47,7 @@ namespace Inventory
             AddItemAtIndex(itemID, index, amount); //暂时写一个，之后扩充叠加功能
 
             //刷新UI
-            EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
+            //EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, _runtimeInventory.itemList);
         }
 
         public void AddItem5(int itemID)

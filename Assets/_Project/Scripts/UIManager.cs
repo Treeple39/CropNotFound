@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Inventory;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -11,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] public UISystemMessage UISystemMessagePanel;
     [SerializeField] public UITechLevel TechLevelPanel;
     [SerializeField] public UILevelUpPanel UILevelUpPanel;
+    [SerializeField] public InventoryUI BagUIPanel;
 
 
     [Header("set active use")]
@@ -33,6 +35,7 @@ public class UIManager : Singleton<UIManager>
     [HideInInspector] public List<FxImagePos> RewardFxImagePosSet = new List<FxImagePos>();
     [SerializeField] private GameObject flyShopGoodsPrefab;
     [SerializeField] private Transform bagUITransform;
+
 
     private const int SHOP_UNLOCK_LEVEL = 10;
     private bool _isDataReady = false;
@@ -164,7 +167,6 @@ public class UIManager : Singleton<UIManager>
         try
         {
             ShopPanel.SetActive(isActive);
-            BagPanel.SetActive(isActive);
 
             if (isActive)
             {
@@ -180,7 +182,6 @@ public class UIManager : Singleton<UIManager>
     {
         yield return new WaitUntil(() => DataManager.Instance?.playerCurrency != null);
         ShopPanel.SetActive(true);
-        BagPanel.SetActive(true);
     }
 
     public void FadeIn(bool _out = false, float duration = 1.0f)
@@ -227,11 +228,15 @@ public class UIManager : Singleton<UIManager>
 
             for (int i = 0; i < RewardFxImagePosSet.Count; i++)
             {
+                if (!RewardFxImagePosSet[i].canfly)
+                    continue;
                 GameObject flygoods = Instantiate(flyShopGoodsPrefab, RewardFxImagePosSet[i].pos, Quaternion.identity, UIManager.Instance.transform);
-                flygoods.GetComponentInChildren<Image>().sprite = RewardFxImagePosSet[i].image;
+                flygoods.GetComponent<FlyShopGoods>().Setup(RewardFxImagePosSet[i]);
                 StartCoroutine(FlyToTarget(flygoods, targetPosition));
             }
 
+            BagPanel.SetActive(true);
+            BagUIPanel.bagUIAnim.SetBool("opened", true);
             RewardFxImagePosSet.Clear();
         }
         yield return new WaitForSeconds(0.5f);
@@ -255,6 +260,8 @@ public class UIManager : Singleton<UIManager>
             item.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t * 0.5f);
             yield return null;
         }
+        yield return null;
+        EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, InventoryManager.Instance._runtimeInventory.itemList);
 
         Destroy(item);
     }

@@ -170,6 +170,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8287077037445645446, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
+      propertyPath: JiesuanMessage
+      value: "\u672C\u6B21\u6536\u96C6\u7684\u7075\u9B42\u5DF2\u8BA1\u5165\u5546\u5E97\u8D26\u6237\uFF01"
+      objectReference: {fileID: 0}
     - target: {fileID: 8300798529163907367, guid: 928d42fb67f8f4703add68f0447584bd, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -235,6 +239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9075586343934972578, guid: e6c0ceceea346054f9f717b33c8306a8, type: 3}
+      propertyPath: WowChSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fcba40d3b2e0d4ce491e50136d73ee4c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -662,18 +670,18 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3865886981529664249, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4509702499997229000, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5375917075382995427, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
-      propertyPath: bagUITransform
-      value: 
-      objectReference: {fileID: 1557303083}
-    - target: {fileID: 5375917075382995427, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
-      propertyPath: flyShopGoodsPrefab
-      value: 
-      objectReference: {fileID: 6630200967597257927, guid: ed081d7af4f955f4baf943039fea84c0, type: 3}
+    - target: {fileID: 5658058779976474334, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5923237709092049984, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -756,10 +764,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6740672053417690329, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_Size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6740672053417690329, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
-      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7841799672586160402, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
@@ -1085,11 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &1557303083 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4792013452049844095, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
-  m_PrefabInstance: {fileID: 690694347}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1684050426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1381,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266524525829712161, guid: 7e76918c517acbd45a705f45207421d6, type: 3}
+      propertyPath: inputMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266524525829712161, guid: 7e76918c517acbd45a705f45207421d6, type: 3}
       propertyPath: virtualJoystick
       value: 
       objectReference: {fileID: 1347290774}
@@ -1406,6 +1409,6 @@ SceneRoots:
   - {fileID: 1989743951}
   - {fileID: 729840140}
   - {fileID: 201740227}
-  - {fileID: 690694347}
   - {fileID: 1053632150}
   - {fileID: 835226714715260625}
+  - {fileID: 690694347}

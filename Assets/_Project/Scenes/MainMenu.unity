@@ -250,7 +250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.00008010864, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: 105.0179, y: 48.926}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &186057503
@@ -2333,6 +2333,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1736803362065859735, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736803362065859735, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1758413822287523066, guid: a83bce9a99e7647d6848619e71c58bf3, type: 3}
@@ -7234,6 +7238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91893f027c47d9b4faaa45226b888d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopLockMessage: "\u60F3\u8FDB\u5929\u795E\u7684\u5546\u5E97\uFF1F\u5148\u5347\u523010\u7EA7\u8BC1\u660E\u4F60\u7684\u5B9E\u529B\u5427"
 --- !u!114 &1345643247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8358,11 +8363,11 @@ RectTransform:
   - {fileID: 186057502}
   m_Father: {fileID: 1417771050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 835, y: 883}
-  m_SizeDelta: {x: 184.53, y: 186.48}
-  m_Pivot: {x: 0.7435148, y: 0.018585468}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -32, y: -32}
+  m_SizeDelta: {x: 184.53003, y: 186.47998}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1906505097
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ namespace Inventory
     {
         [Header("µÀ¾ß±³°ü")]
         [SerializeField] private GameObject bagUIPanel;
-        private Animator bagUIAnim;
+        public Animator bagUIAnim;
         public bool bagOpened;
 
         [SerializeField] private SlotUI[] bagSlots;
@@ -37,7 +37,6 @@ namespace Inventory
             {
                 bagSlots[i].slotIndex = i;
             }
-            bagOpened = bagUIPanel.activeInHierarchy;
         }
 
         private void OnUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
