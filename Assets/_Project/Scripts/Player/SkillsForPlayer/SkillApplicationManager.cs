@@ -4,7 +4,7 @@ using UnityEngine;
 public class BuffApplicationManager : Singleton<BuffApplicationManager> // 推荐也做成单例
 {
     [Header("数据引用")]
-    [SerializeField] private MyDataSO techUnlockProgress; // 改为引用你的 SO
+    [SerializeField] private TechUnlockProgess_SO techUnlockProgress; // 改为引用你的 SO
     [SerializeField] private SkillBuffMapping_SO skillBuffMapping;   // 技能ID->Buff脚本的映射
 
     [Header("目标对象")]
